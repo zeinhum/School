@@ -1,0 +1,91 @@
+@model List<SchoolResultSystem.Web.Models.SubjectModel>
+
+@{
+    ViewData["Title"] = "Manage Subjects";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/principal.css" />
+
+<div class="principal-container">
+    <h1>📚 Manage Subjects for Class @ViewBag.ClassName</h1>
+    <p class="subtitle">Add, update, or remove subjects for this class.</p>
+
+    <!-- Form Section -->
+    <form method="post" action="/Principal/SaveSubject" class="form-card">
+        <input type="hidden" name="ClassName" value="@ViewBag.ClassName" />
+        <p>@ViewBag.ClassName</p>
+
+        <div class="form-group">
+            <label for="SubjectCode">Subject Code</label>
+            <input type="text" id="SubjectCode" name="SubjectCode" placeholder="S001" required />
+        </div>
+
+        <div class="form-group">
+            <label for="SubjectName">Subject Name</label>
+            <input type="text" id="SubjectName" name="SubjectName" placeholder="Mathematics" required />
+        </div>
+
+        <div class="form-group">
+            <label for="TheoryFullMark">Theory Full Mark</label>
+            <input type="number" id="TheoryFullMark" name="TheoryFullMark" required />
+        </div>
+        <div class="form-group">
+            <label for="TheoryCreditHour">Theory Credit Hour</label>
+            <input type="number" id="TheoryCreditHour" name="TheoryCreditHour" required />
+        </div>
+
+        <div class="form-group">
+            <label for="PracticalFullMark">Practical Full Mark</label>
+            <input type="number" id="PracticalFullMark" name="PracticalFullMark" required />
+        </div>
+
+        <div class="form-group">
+            <label for="PracticalCreditHour">Credit Hour</label>
+            <input type="number" id="PracticalCreditHour" name="PracticalCreditHour" required />
+        </div>
+
+        <button type="submit" class="btn-primary">💾 Save Subject</button>
+    </form>
+
+    <!-- Table Section -->
+    <h2 class="table-title">Existing Subjects</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Theory Full Mark</th>
+                <th>Practical Full Mark</th>
+                <th>Credit Hour</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.SubjectCode</td>
+                        <td>@s.SubjectName</td>
+                        <td>@s.TheoryFullMark</td>
+                        <td>@s.CrHTheory</td>
+                        <td>@s.PracticalFullMark</td>
+                        <td>@s.CrHPractical</td>
+                        <td>
+                            <a href="/Principal/EditSubject?id=@s.SubjectCode" class="btn-primary">Edit</a>
+                            <a href="/Principal/DeleteSubject?id=@s.SubjectCode" class="btn-danger">🗑️ Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">No subjects added yet.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

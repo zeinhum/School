@@ -1,0 +1,70 @@
+@model List<SchoolResultSystem.Web.Models.ClassModel>
+
+@{
+    ViewData["Title"] = "Manage Classes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/principal.css" />
+
+<div class="principal-container">
+    <h1>🏫 Manage Classes</h1>
+    <p class="subtitle">Add, update, or remove school classes.</p>
+
+    <!-- Form Section -->
+    <form method="post" action="/Principal/SaveClass" class="form-card">
+        <div class="form-group">
+            <label for="ClassId">Class ID</label>
+            <input type="text" id="ClassId" name="ClassId" placeholder="C001" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ClassName">Class Name</label>
+            <input type="text" id="ClassName" name="ClassName" placeholder="Class 8A" required />
+        </div>
+
+        <div class="form-group">
+            <label for="TeacherId">Assign Teacher (ID)</label>
+            <input type="text" id="TeacherId" name="TeacherId" placeholder="T001" />
+        </div>
+
+        <button type="submit" class="btn-primary">💾 Save Class</button>
+    </form>
+
+    <!-- Table Section -->
+    <h2 class="table-title">Existing Classes</h2>
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Class ID</th>
+                <th>Class Name</th>
+                <th>Teacher ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0)
+            {
+                foreach (var c in Model)
+                {
+                    <tr>
+                        <td>@c.ClassId</td>
+                        <td>@c.ClassName</td>
+                        <td>@c.TeacherId</td>
+                        <td>
+                            <a href="/Principal/ManageSubjects?id=@c.ClassName" class="btn-primary">Subjects</a>
+                            <a href="/Principal/ViewClass?id=@c.ClassId" class="btn-primary">View</a>
+                            <a href="/Principal/DeleteClass?id=@c.ClassId" class="btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">No classes added yet.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,41 @@
+@model SchoolResultSystem.Web.Models.UserModel
+
+@{
+    ViewData["Title"] = "Admin Setup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-setup.css" />
+
+<div class="main-interface">
+    <div class="welcome">
+        <p>Please set up the Admin account for your school</p>
+       <p class="error">@{ if (!string.IsNullOrEmpty(ViewBag.error)) {
+            @ViewBag.error} }</p>
+        
+    </div>
+
+    <div class="form-container">
+        <form method="post" action="/Principal/SetupPrincipal/SavePrincipal" class="form-card">
+
+            <div class="form-group">
+                <label for="Username">Username*</label>
+                <input type="text" id="Username" name="Username" placeholder="Admin Username" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password*</label>
+                <input type="password" id="Passwords" name="Passwords" placeholder="Passwords" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email*</label>
+                <input type="email" id="Email" name="Email" placeholder="admin@example.com" required />
+            </div>
+
+            <input type="hidden" name="Role" value="Admin" />
+
+            <button type="submit" class="btn-primary">Create Admin Account</button>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,22 @@
+@model SchoolResultSystem.Web.Models.UserModel
+
+@{
+    ViewData["Title"] = "Welcome";
+    Layout = null; // optional: set layout if you have one
+}
+
+<div class="test">
+    <p>Test model</p>
+    @if (Model != null)
+    {
+        <p>User ID: @Model.Id</p>
+        <p>Username: @Model.UserName</p>
+        <p>Password: @Model.Passwords</p>
+        <p>Role: @Model.Role</p>
+        <p>Role: @Model.TeacherName</p>
+    }
+    else
+    {
+        <p>Model is null. No user data to display.</p>
+    }
+</div>

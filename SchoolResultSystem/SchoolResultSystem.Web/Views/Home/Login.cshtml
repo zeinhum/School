@@ -1,0 +1,24 @@
+@model SchoolResultSystem.Web.Models.SchoolInfoModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null; <!-- Optional: no navbar -->
+}
+
+<link rel="stylesheet" href="~/css/login.css" />
+
+<div class="login-container">
+    <h3>Singin into @Model.Name</h3>
+    @if(TempData["error"] !=null){
+        <p class="error">@TempData["error"]</p>
+    }
+    <form method="post" action="/Login/Authenticate" class="login-form">
+        <label>Username</label>
+        <input type="text" name="username" required placeholder="username"/>
+
+        <label>Password</label>
+        <input type="password" name="password" required placeholder="password"/>
+
+        <button type="submit">Login</button>
+    </form>
+    <p class="helpline">Helpline : @Model.Phone // Email: @Model.Email</p>
+</div>

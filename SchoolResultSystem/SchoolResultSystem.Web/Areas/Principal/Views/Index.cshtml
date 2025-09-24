@@ -1,0 +1,49 @@
+@model SchoolResultSystem.Web.Models.Principal.PrincipalDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-dashboard.css" />
+<div class="body-container">
+  <!-- Top Navbar -->
+  <header class="navbar">
+    <div class="logo">Logo</div>
+    <h1 class="title">&lt;School&gt; Dashboard</h1>
+    <button class="btn logout">Logout</button>
+  </header>
+
+  <main class="container">
+    <!-- Left Section -->
+    <section class="left">
+      <!-- Teachers Assigned -->
+      <div class="card">
+        <h2>Teachers Assigned</h2>
+        <div class="item">
+          <span>Teacher 1</span>
+          <button class="btn danger">Delete</button>
+        </div>
+      </div>
+
+      <!-- Classes -->
+      <div class="card">
+        <h2>Classes</h2>
+        <div class="item">
+          <span>Class 1</span>
+          <div class="actions">
+            <button class="btn">View Students</button>
+            <button class="btn">Assign Teacher</button>
+            <button class="btn">Add Subjects</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Right Section -->
+    <aside class="right">
+      <button class="btn primary">Create Teacher Account</button>
+      <button class="btn primary">Create Class</button>
+      <button class="btn primary">Create Exam</button>
+    </aside>
+  </main>
+</div>

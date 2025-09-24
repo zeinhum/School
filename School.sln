@@ -1,0 +1,29 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.2.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SchoolResultSystem", "SchoolResultSystem", "{733BAC27-2D0D-C715-F825-DAE5E40F2E0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SchoolResultSystem.Web", "SchoolResultSystem\SchoolResultSystem.Web\SchoolResultSystem.Web.csproj", "{6B016AA0-8039-0E38-25D9-E91353F54FE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6B016AA0-8039-0E38-25D9-E91353F54FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B016AA0-8039-0E38-25D9-E91353F54FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B016AA0-8039-0E38-25D9-E91353F54FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B016AA0-8039-0E38-25D9-E91353F54FE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6B016AA0-8039-0E38-25D9-E91353F54FE9} = {733BAC27-2D0D-C715-F825-DAE5E40F2E0F}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {16446AD4-894A-4916-98A6-3F11D1C4AC4A}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Nanu School";
+}
+
+<link rel="stylesheet" href="~/css/index.css" />
+
+<div class="hero">
+    <h1>🎓 School Result Publication System</h1>
+    <p style="colored:red;">@TempData["loginError"]</p>
+    <p>
+        A simple, reliable, and <b>open-source</b> platform designed to 
+        simplify result publication in schools. 
+        Built with care to <b>ease the hectic manual work</b> of teachers and principals, 
+        while ensuring <b>data integrity and privacy</b>.
+    </p>
+
+    <div>
+        <a href="@Url.Action("SetupPrincipalView", "SetupPrincipal", new { area = "Principal" })">🚀 Get Started</a>
+
+
+    </div>
+
+    <div class="info">
+        <p>🔒 <b>Privacy First:</b> Runs on <b>localhost</b> – all data stays on your school’s PC, not in the cloud.</p>
+        <p>⚡ <b>Efficiency:</b> Automates result management, report generation, and reduces staff workload.</p>
+        <p>🤝 <b>Collaboration:</b> Teachers and principals can securely work together on the same system.</p>
+    </div>
+
+    <footer>
+        Powered by <b>Nanu Ai</b> | Open Source Software
+    </footer>
+</div>

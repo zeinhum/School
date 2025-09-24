@@ -1,0 +1,43 @@
+.hero {
+    text-align: center;
+    padding: 50px;
+    font-family: sans-serif;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    font-size: 1.2rem;
+    max-width: 700px;
+    margin: 0 auto 30px auto;
+}
+
+.hero a {
+    background: #0078D7;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    display: inline-block;
+    transition: background 0.3s ease;
+}
+
+.hero a:hover {
+    background: #005fa3;
+}
+
+.hero .info {
+    margin-top: 50px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.hero footer {
+    margin-top: 80px;
+    font-size: 0.8rem;
+    color: #777;
+}
