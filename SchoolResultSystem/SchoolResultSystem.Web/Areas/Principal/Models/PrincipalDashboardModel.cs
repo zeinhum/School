@@ -1,13 +1,11 @@
 using SchoolResultSystem.Web.Models;
-namespace SchoolResultSystem.Web.Models.Principal
+using System.Collections.Generic;
+namespace SchoolResultSystem.Web.Areas.Principal.Models
 {
-    using System.Collections.Generic;
 
     public class PrincipalDashboardModel
     {
-        public string SchoolName { get; set; } = "Your School";
-        public string AdminName { get; set; } = "Admin";
-
+        public string? SchoolName { get; set; }
         public List<UserModel>? Teachers { get; set; }
         public List<ClassModel>? Classes { get; set; }
     }

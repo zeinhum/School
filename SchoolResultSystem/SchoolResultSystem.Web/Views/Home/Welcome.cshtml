@@ -1,22 +1,28 @@
-@model SchoolResultSystem.Web.Models.UserModel
+@model List<SchoolResultSystem.Web.Models.UserModel> 
 
 @{
     ViewData["Title"] = "Welcome";
-    Layout = null; // optional: set layout if you have one
+    Layout = null; 
 }
 
 <div class="test">
-    <p>Test model</p>
-    @if (Model != null)
+    <h1>User List</h1>
+    @if (Model != null && Model.Any())
     {
-        <p>User ID: @Model.Id</p>
-        <p>Username: @Model.UserName</p>
-        <p>Password: @Model.Passwords</p>
-        <p>Role: @Model.Role</p>
-        <p>Role: @Model.TeacherName</p>
+        
+        @foreach(var user in Model)
+        {
+            <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
+                <p>User ID: @user.TeacherId</p>
+                <p>Username: @user.UserName</p>
+                <p>Password: @user.Password</p>
+                <p>Role: @user.Role</p>
+                <p>Teacher Name: @user.TeacherName</p>
+            </div>
+        }
     }
     else
     {
-        <p>Model is null. No user data to display.</p>
+        <p>No user data to display.</p>
     }
 </div>

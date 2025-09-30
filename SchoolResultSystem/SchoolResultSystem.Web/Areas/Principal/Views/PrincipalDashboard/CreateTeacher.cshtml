@@ -1,0 +1,44 @@
+@model SchoolResultSystem.Web.Models.UserModel
+
+@{
+    ViewData["Title"] = "Admin Setup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-setup.css" />
+
+<div class="main-interface">
+    <div class="welcome">
+        <h2>Create teacher account for the school</h2>
+        @if(!string.IsNullOrEmpty(ViewBag.success)){<p>@ViewBag.success</p>}
+        @if(!string.IsNullOrEmpty(ViewBag.error)){<p class="error">@ViewBag.error</p>}
+    </div>
+
+    <div class="form-container">
+        <form method="post" action="/Principal/PrincipalDashboard/SaveTeacher" class="form-card">
+
+            <div class="form-group">
+                <label for="TeacherName">Username*</label>
+                <input type="text" id="TeacherName" name="TeacherName" placeholder="Teacher's name" required />
+            </div>
+            <div class="form-group">
+                <label for="Username">Username*</label>
+                <input type="text" id="Username" name="UserName" placeholder="Teacher's Username" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Password">Password*</label>
+                <input type="password" id="Passwords" name="Passwords" placeholder="Passwords" required />
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email*</label>
+                <input type="email" id="Email" name="Email" placeholder="Teacher@example.com" required />
+            </div>
+
+            <input type="hidden" name="Role" value="Teacher" />
+
+            <button type="submit" class="btn-primary">Create Account</button>
+        </form>
+    </div>
+</div>

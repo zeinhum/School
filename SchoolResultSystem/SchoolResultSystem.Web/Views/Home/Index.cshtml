@@ -4,29 +4,64 @@
 
 <link rel="stylesheet" href="~/css/index.css" />
 
+<div class="main-container">
 <div class="hero">
-    <h1>🎓 School Result Publication System</h1>
-    <p style="colored:red;">@TempData["loginError"]</p>
-    <p>
-        A simple, reliable, and <b>open-source</b> platform designed to 
-        simplify result publication in schools. 
-        Built with care to <b>ease the hectic manual work</b> of teachers and principals, 
-        while ensuring <b>data integrity and privacy</b>.
+    <h1 class="title">📊 Education Quality Control System</h1>
+    <p style="color:red;">@ViewBag.error</p>
+
+    <p class="subtitle">
+        A powerful platform to <b>analyze, monitor, and improve</b> the quality of education.  
+        From <b>student progress tracking</b> to <b>teacher performance analytics</b>, 
+        we give schools the tools to grow smarter every exam cycle.
     </p>
 
-    <div>
-        <a href="@Url.Action("SetupPrincipalView", "SetupPrincipal", new { area = "Principal" })">🚀 Get Started</a>
+    <div class="cta">
+        <a href="@Url.Action("SetupPrincipalView", "SetupPrincipal", new { area = "Principal" })" class="start-btn">🚀 Get Started</a>
+    </div>
+</div>
 
-
+<div class="features">
+    <div class="feature-card">
+        <h2>📈 Student Progress</h2>
+        <p>
+            Visualize each student’s academic journey.  
+            See growth trends, compare performance across subjects, and ensure no one is left behind.
+        </p>
     </div>
 
-    <div class="info">
-        <p>🔒 <b>Privacy First:</b> Runs on <b>localhost</b> – all data stays on your school’s PC, not in the cloud.</p>
-        <p>⚡ <b>Efficiency:</b> Automates result management, report generation, and reduces staff workload.</p>
-        <p>🤝 <b>Collaboration:</b> Teachers and principals can securely work together on the same system.</p>
+    <div class="feature-card">
+        <h2>👩‍🏫 Teacher Performance</h2>
+        <p>
+            Measure teacher impact through detailed performance analytics.  
+            Track how teaching quality reflects in student outcomes over time.
+        </p>
     </div>
 
-    <footer>
-        Powered by <b>Nanu Ai</b> | Open Source Software
-    </footer>
+    <div class="feature-card">
+        <h2>📚 Subject Insights</h2>
+        <p>
+            Identify strong and weak areas across subjects.  
+            Use data-driven insights to make curriculum improvements and raise overall learning quality.
+        </p>
+    </div>
+
+    <div class="feature-card">
+        <h2>📝 Smart Result Management</h2>
+        <p>
+            Publishing results is just the start.  
+            Automate grading, generate detailed reports, and integrate them into the bigger quality framework.
+        </p>
+    </div>
+</div>
+
+<div class="info">
+    <h3>Why Choose Nanu School?</h3>
+    <p>🔒 <b>Privacy First:</b> Runs on <b>localhost</b> – your school data stays secure on your machine.</p>
+    <p>⚡ <b>Efficiency:</b> Automates result tracking, teacher evaluations, and student monitoring.</p>
+    <p>🤝 <b>Collaboration:</b> Teachers, principals, and staff can securely collaborate with shared insights.</p>
+</div>
+
+<footer>
+    <p>Powered by <b>Nanu Ai</b> | Open Source Software</p>
+</footer>
 </div>

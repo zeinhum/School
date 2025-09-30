@@ -6,7 +6,7 @@ namespace SchoolResultSystem.Web.Controllers
 {
     public class LoginController : Controller
     {
-        private readonly SchoolDbContext? _db;
+        private readonly SchoolDbContext _db;
 
         public LoginController(SchoolDbContext db)
         {
@@ -21,7 +21,7 @@ namespace SchoolResultSystem.Web.Controllers
             try
             {
                 var user = _db.Users
-                              .FirstOrDefault(u => u.UserName == username && u.Passwords == password);
+                              .FirstOrDefault(u => u.UserName == username && u.Password == password);
 
                 if (user != null)
                 {

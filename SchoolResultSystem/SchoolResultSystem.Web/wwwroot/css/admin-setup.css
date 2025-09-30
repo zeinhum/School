@@ -4,16 +4,6 @@
     padding: 0;
     box-sizing: border-box;
 }
-
-body, html {
-    height: 100%;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #cdced3;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-}
 .main-interface {
     border-radius: 10px;
     border: solid #a39d9d 1px;

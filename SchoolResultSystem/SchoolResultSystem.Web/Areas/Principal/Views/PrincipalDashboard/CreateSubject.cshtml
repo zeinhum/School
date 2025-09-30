@@ -1,0 +1,50 @@
+@model SchoolResultSystem.Web.Models.UserModel
+
+@{
+    ViewData["Title"] = "Admin Setup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-setup.css" />
+
+<div class="main-interface">
+    <div class="welcome">
+        <h2>Save a subject that is taught in the school.</h2>
+        @if(!string.IsNullOrEmpty(ViewBag.success)){<p>@ViewBag.success</p>}
+        @if(!string.IsNullOrEmpty(ViewBag.error)){<p class="error">@ViewBag.error</p>}
+    </div>
+
+    <div class="form-container">
+        <form method="post" action="/Principal/PrincipalDashboard/SaveSubject" class="form-card">
+
+            <div class="form-group">
+                <label for="SubjectName">Subject Name*</label>
+                <input type="text" id="SubjectName" name="SubjectName" placeholder="e.g. Nuclear Science" required />
+            </div>
+            <div class="form-group">
+                <label for="SubjectCode">Subject Code</label>
+                <input type="text" id="SubjectCode" name="SubjectCode" placeholder="e.g. NS01" required />
+            </div>
+
+            <div class="form-group">
+                <label for="TheoryFullMark">Theory Full Mark</label>
+                <input type="number" id="TheoryFullMark" name="TheoryFullMark" placeholder="e.g. 75" required />
+            </div>
+
+            <div class="form-group">
+                <label for="">Total Theory teaching credit hour</label>
+                <input type="number" id="CrHTheory" name="CrHTheory" placeholder="e.g. 3" required />
+            </div>
+            <div class="form-group">
+                <label for="PracticalFullMark">Practical Full Mark</label>
+                <input type="number" id="PracticalFullMark" name="PracticalFullMark" placeholder="e.g. 25" required />
+            </div>
+            <div class="form-group">
+                <label for="CrHPractical">Total teaching credit hour</label>
+                <input type="number" id="CrHPractical" name="CrHPractical" placeholder="e.g. 1" required />
+            </div>
+
+            <button type="submit" class="btn-primary">Save Subject</button>
+        </form>
+    </div>
+</div>

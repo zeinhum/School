@@ -1,43 +1,93 @@
+.main-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: #f0f2f5;
+    min-height: 100vh;
+    background: url("/image/logico.png"); 
+
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}   
 .hero {
     text-align: center;
-    padding: 50px;
-    font-family: sans-serif;
+    padding: 4rem 2rem;
+    color: #ffffff;
+
+    background: rgb(3 118 121 / 85%);
 }
 
-.hero h1 {
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+
+
+.hero .title {
+    font-size: 2.8rem;
+    margin-bottom: 1rem;
 }
 
-.hero p {
+.hero .subtitle {
     font-size: 1.2rem;
     max-width: 700px;
-    margin: 0 auto 30px auto;
+    margin: 0 auto 2rem auto;
+    color: #f6f6f6;
 }
 
-.hero a {
-    background: #0078D7;
-    color: white;
-    padding: 12px 25px;
-    border-radius: 6px;
+.start-btn {
+    background: #ff9800;
+    color: #fff;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
     text-decoration: none;
+    font-size: 1.2rem;
     font-weight: bold;
-    display: inline-block;
-    transition: background 0.3s ease;
+    transition: 0.3s ease;
 }
 
-.hero a:hover {
-    background: #005fa3;
+.start-btn:hover {
+    background: #e68900;
 }
 
-.hero .info {
-    margin-top: 50px;
-    font-size: 0.9rem;
-    color: #555;
+.features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    padding: 3rem 2rem;
+    color:white;
 }
 
-.hero footer {
-    margin-top: 80px;
-    font-size: 0.8rem;
-    color: #777;
+.feature-card {
+    background: rgb(3 118 121 / 85%);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-card h2 {
+    margin-bottom: 0.8rem;
+    font-size: 1.3rem;
+    color: #f5f4f4;
+}
+
+.info {
+    text-align: center;
+    padding: 2rem;
+    background: rgba(1 1 1 0.5);
+    
+}
+
+footer {
+    position:absolute;
+    width:100%;
+    text-align: center;
+    padding: 1rem;
+    background: rgb(3 118 121 / 85%);
+    color: #fff;
+    margin-top: 2rem;
+    bottom:0px;
 }

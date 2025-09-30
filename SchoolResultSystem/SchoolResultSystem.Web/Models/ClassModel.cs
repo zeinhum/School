@@ -6,10 +6,12 @@ namespace SchoolResultSystem.Web.Models
     public class ClassModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // auto increment
-        public int ClassId { get; set; }  
-
-        public string? ClassName { get; set; }
-        public int? TeacherId { get; set; }  // assuming Teacher is another entity
+        public int ClassId { get; set; } = 0;
+        [Required]
+        public string ClassName { get; set; } = null!;
+        [Required]
+        public bool IsActive { get; set; } = true;
+        
+         
     }
 }

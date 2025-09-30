@@ -1,0 +1,68 @@
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@model SchoolResultSystem.Web.Areas.Principal.Models.PrincipalDashboardModel
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-dashboard.css" />
+<script src="~/js/principalDashboard.js" type="module" defer></script>
+
+<div class="body-container">
+    <header class="navbar">
+        <div class="logo">Logo</div>
+        <h1 class="title">@Model.SchoolName</h1>
+        <button class="btn logout">Logout</button>
+    </header>
+
+    <main class="container">
+        <section class="left">
+            <div class="card">
+                <h2>Teachers Assigned</h2>
+                
+                @if (Model.Teachers != null && Model.Teachers.Any())
+                {
+                    @foreach(var Teacher in Model.Teachers)
+                    {
+                        <div class="item">
+                            <span>@Teacher.TeacherName</span>
+                            <button class="btn danger" data-action="DeleteTeacher" data-id="@Teacher.TeacherId">Deactivate</button>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No teachers are currently assigned.</p>
+                }
+            </div>
+
+            <div class="card">
+                <h2>Classes</h2>
+                
+                @if (Model.Classes != null && Model.Classes.Any())
+                {
+                    @foreach(var cls in Model.Classes)
+                    {
+                        <div class="item">
+                            <span>@cls.ClassName</span>
+                            <div class="actions">
+                                <button class="btn" data-id="@cls.ClassId" data-action="ClassStudentView">Subject-Teacher</button>
+                                <button class="btn" data-id="@cls.ClassId" data-action="ClassTeacherView">Students</button>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <p>No class has been created yet.</p>
+                }
+            </div>
+        </section>
+
+        <aside class="right">
+            <button class="btn primary" data-action="CreateTeacher">Create Teacher Account</button>
+            <button class="btn primary" data-action="CreateClass">Create Class</button>
+            <button class="btn primary" data-action="CreateSubject">Create Subject</button>
+        </aside>
+    </main>
+</div>

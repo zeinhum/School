@@ -1,0 +1,66 @@
+@using SchoolResultSystem.Web.Models;
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var subjects = ViewBag.Subjects as List<SubjectModel>;
+    var teachers = ViewBag.Teachers as List<UserModel>;
+}
+
+<h3>Add Subject Teacher to the class: @ViewBag.ClassName</h3>
+
+<form asp-action="AddSubjectTeacherMultiple" method="post" id="subjectTeacherForm">
+    <input type="hidden" name="classId" value="@ViewBag.ClassId" />
+
+    <table class="table" id="subjectTeacherTable">
+        <thead>
+            <tr>
+                <th>Subject Code</th>
+                <th>Subject Name</th>
+                <th>Assigned Teacher</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <select name="SubjectCode[]" class="form-control subject-select" required>
+                        <option value="">-- Select Subject --</option>
+                        @if (subjects != null)
+                        {
+                            foreach (var s in subjects)
+                            {
+                                <option value="@s.SCode">@s.SCode</option>
+                            }
+                        }
+                    </select>
+                </td>
+                <td class="subject-name"></td>
+                <td>
+                    <select name="UserId[]" class="form-control" required>
+                        <option value="">-- Select Teacher --</option>
+                        @if (teachers != null)
+                        {
+                            foreach (var t in teachers)
+                            {
+                                <option value="@t.TeacherId">@t.TeacherName</option>
+                            }
+                        }
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-success add-row">+</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <button type="submit" class="btn btn-primary">Save All</button>
+</form>
+
+<!-- Include external JS file -->
+<script src="~/js/addSubjectTeacher.js"></script>
+<script>
+    // Pass subjects data to JS
+    window.subjectsData = @Html.Raw(JsonSerializer.Serialize(subjects));
+</script>

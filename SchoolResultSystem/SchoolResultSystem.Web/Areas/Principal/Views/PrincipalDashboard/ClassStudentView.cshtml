@@ -1,0 +1,41 @@
+@using System.Diagnostics.Eventing.Reader
+@model List<SchoolResultSystem.Web.Models.CSModel>
+
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/classStudent.css" />
+
+<div class="dashboard">
+    <h2>Students of @ViewBag.ClassName</h2>
+
+    <div class="student-table">
+        <div class="table-header">
+            <span>NSN</span>
+            <span>Name</span>
+            <span>Date of Birth</span>
+            <span>Address</span>
+            <span>Actions</span>
+        </div>
+        @if(Model != null && Model.Any()){
+            @foreach (var st in Model)
+        {
+            <div class="table-row">
+                <span>@st.NSN</span>
+                <span>@st.Student.StudentName</span>
+                <span>@st.Student.D_O_B</span>
+                <span>@st.Student.Address</span>
+                <span class="actions">
+                    <button class="btn view" data-nsn="@st.NSN">View Result</button>
+                    <button class="btn edit" data-nsn="@st.NSN">Edit Info</button>
+                </span>
+            </div>
+        } 
+        }else {
+            <p>Looks like there is no student in this class.</p>
+        }
+        
+    </div>
+</div>

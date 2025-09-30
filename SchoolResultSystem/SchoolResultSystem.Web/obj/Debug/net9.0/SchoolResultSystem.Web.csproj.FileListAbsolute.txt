@@ -92,9 +92,6 @@ C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\SchoolResul
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\ref\SchoolResultSystem.Web.dll
 C:\School\SchoolResultSystem\SchoolResultSystem.web\obj\Debug\net9.0\compressed\fsb5l2lnq8-166dyk8uzm.gz
 C:\School\SchoolResultSystem\SchoolResultSystem.web\obj\Debug\net9.0\compressed\jqekv6fjfl-50k36j5ffl.gz
-C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\thl9rsjpk7-3f0n22bbtb.gz
-C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\ouliukicej-hz54d53knz.gz
-C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\dx5zykglxa-gu1164vype.gz
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\SchoolResultSystem.Web.csproj.AssemblyReference.cache
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\bin\Debug\net9.0\Humanizer.dll
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
@@ -220,3 +217,11 @@ C:\School\SchoolResultSystem\SchoolResultSystem.Web\bin\Debug\net9.0\runtimes\wi
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\bin\Debug\net9.0\runtimes\win-x86\native\e_sqlite3.dll
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\SchoolRe.BB84F953.Up2Date
 C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\y5z0l6ek1c-ykrqr63bzh.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\SchoolResultSystem.Web.sourcelink.json
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\thl9rsjpk7-3f0n22bbtb.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\u93tvzpquz-7tw7raqhrv.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\ouliukicej-k9eyos1m2f.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\w3kn85j0kn-zrp1jda7zd.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.Web\obj\Debug\net9.0\compressed\qjbelizyp9-uk1eebduxo.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.web\obj\Debug\net9.0\compressed\qpvpdo7sbn-hilxwtd5ub.gz
+C:\School\SchoolResultSystem\SchoolResultSystem.web\obj\Debug\net9.0\compressed\dx5zykglxa-6n3yobvn2l.gz

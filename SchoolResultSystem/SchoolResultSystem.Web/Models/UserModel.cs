@@ -6,12 +6,16 @@ namespace SchoolResultSystem.Web.Models
     public class UserModel
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public string? Id { get; set; }
-        public string? UserName { get; set; }
-        public string? Passwords { get; set; }
-        public string? TeacherName { get; set; }
-        public string? Role { get; set; }
-       // public string? Email { get; set; }
+        public string TeacherId { get; set; } = null!;
+        [Required]
+        public string UserName { get; set; } = null!;
+        [Required]
+        public string Password { get; set; } = null!;
+        [Required]
+        public string TeacherName { get; set; } = null!;
+        [Required]
+        public string Role { get; set; } = null!;
+        public bool IsActive { get; set; } = true;
+
     }
 }
