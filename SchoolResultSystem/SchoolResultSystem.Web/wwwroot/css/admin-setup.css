@@ -1,90 +1,102 @@
-/* Reset defaults */
-* {
+@import url("_colorVariables.css");
+
+/* Use primary background for the entire page */
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-.main-interface {
-    border-radius: 10px;
-    border: solid #a39d9d 1px;
-    /* This adds a shadow to the box */
-    box-shadow: 0 4px 8px rgb(14 14 14 / 50%);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-bgcolor); /* Set entire page background */
 }
 
-/* Main container */
 .main-interface {
-    width: 100%;
-    max-width: 480px;
+    /* Use flexbox to center content vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes full viewport height */
     padding: 20px;
 }
 
-/* Welcome text */
+/* --- Welcome/Header Section --- */
 .welcome {
     text-align: center;
     margin-bottom: 20px;
-    font-size: 1.2rem;
-    color: #2f3640;
+    color: var(--text-light); /* Light text on the dark primary background */
+    padding: 10px 20px;
 }
 
-/* Form Card */
+.welcome h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.error {
+    color: var(--danger-color); /* Highlight error message */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- Form Styling --- */
+.form-container {
+    width: 100%;
+    max-width: var(--form-max-width); /* Control max width of the form */
+}
+
 .form-card {
-    background-color: #fff;
-    padding: 30px 25px;
+    background: var(--form-card-background-alpha); /* MADE TRANSPARENT */
+    backdrop-filter: blur(5px); /* Optional: Add a subtle blur effect */
+    padding: 30px;
     border-radius: 10px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    background-color:rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px var(--shadow-dark-alpha);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: subtle border */
 }
 
-/* Form groups */
 .form-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
+    margin-bottom: 15px;
 }
 
 .form-group label {
+    display: block;
+    margin-bottom: 5px;
     font-weight: 600;
-    color: #333;
+    color: #333; /* A dark text color for contrast */
 }
 
-.form-group input {
-    padding: 10px 12px;
-    border-radius: 6px;
-    border: 1px solid #dcdde1;
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding/border in element's total width */
     font-size: 1rem;
-    transition: border 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.3s;
 }
 
 .form-group input:focus {
-    border-color: #273c75;
-    box-shadow: 0 0 5px rgba(39, 60, 117, 0.3);
+    border-color: var(--primary-bgcolor);
     outline: none;
 }
 
-/* Button */
+/* --- Button Styling --- */
 .btn-primary {
-    padding: 12px;
+    width: 100%;
+    background: var(--button-color);
+    color: var(--text-light);
     border: none;
-    border-radius: 6px;
-    background-color: #273c75;
-    color: #fff;
-    font-weight: 600;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
     cursor: pointer;
-    transition: background 0.2s ease;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
 }
 
 .btn-primary:hover {
-    background-color: #192a56;
-}
-.error{
-    color: red;
-}
-/* Responsive */
-@media (max-width: 500px) {
-    .form-card {
-        padding: 20px;
-    }
+    background: var(--button-hover-color);
 }

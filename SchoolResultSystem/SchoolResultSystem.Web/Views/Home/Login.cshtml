@@ -1,24 +1,43 @@
 @model SchoolResultSystem.Web.Models.SchoolInfoModel
 @{
     ViewData["Title"] = "Login";
-    Layout = null; <!-- Optional: no navbar -->
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/login.css" />
+<link rel="stylesheet" href="~/css/admin-setup.css" />
+<div class="main-interface">
+    <div class="welcome">
+        <h2>Sign in to @Model.Name</h2>
+        
+        @if(TempData["error"] !=null){
+            <p class="error">@TempData["error"]</p>
+        }
+    </div>
 
-<div class="login-container">
-    <h3>Singin into @Model.Name</h3>
-    @if(TempData["error"] !=null){
-        <p class="error">@TempData["error"]</p>
-    }
-    <form method="post" action="/Login/Authenticate" class="login-form">
-        <label for="username">Username</label>
-        <input type="text" id="username" name="username" required placeholder="username"/>
+    
+    <div class="form-container">
+        
+        <form method="post" action="/Login/Authenticate" class="form-card">
+            
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required placeholder="Enter username"/>
+            </div>
 
-        <label for="passwords">Password</label>
-        <input type="password" id="passwords" name="password" required placeholder="password"/>
+            <div class="form-group">
+                <label for="password">Password</label>
+                
+                <input type="password" id="password" name="password" required placeholder="Enter password"/>
+            </div>
 
-        <button type="submit">Login</button>
-    </form>
-    <p class="helpline">Contact: @Model.Phone // Email: @Model.Email</p>
+           
+            <button type="submit" class="btn-primary">Login</button>
+        
+            <p class="helpline">
+                <small>Contact: @Model.Phone</small> 
+                <small>| Email: @Model.Email</small>
+            </p>
+        </form>
+    </div>
 </div>
+

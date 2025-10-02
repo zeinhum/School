@@ -46,8 +46,8 @@
                         <div class="item">
                             <span>@cls.ClassName</span>
                             <div class="actions">
-                                <button class="btn" data-id="@cls.ClassId" data-action="ClassStudentView">Subject-Teacher</button>
-                                <button class="btn" data-id="@cls.ClassId" data-action="ClassTeacherView">Students</button>
+                                <button class="btn" data-id="@cls.ClassId" data-action="PrincipalDashboard/CSTView">Subject-Teacher</button>
+                                <button class="btn" data-id="@cls.ClassId" data-action="PrincipalDashboard/ClassTeacherView">Students</button>
                             </div>
                         </div>
                     }
@@ -60,9 +60,10 @@
         </section>
 
         <aside class="right">
-            <button class="btn primary" data-action="CreateTeacher">Create Teacher Account</button>
-            <button class="btn primary" data-action="CreateClass">Create Class</button>
-            <button class="btn primary" data-action="CreateSubject">Create Subject</button>
+            <button class="btn primary" data-action="SetupPrincipal/CreateTeacher">Create Teacher Account</button>
+            <button class="btn primary" data-action="SetupPrincipal/CreateClass">Create Class</button>
+            <button class="btn primary" data-action="SetupPrincipal/CreateSubject">Create Subject</button>
+            <button class="btn primary" data-action="SetupPrincipal/CreateExam">Create Exam</button>
         </aside>
     </main>
 </div>

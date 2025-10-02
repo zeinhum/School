@@ -1,25 +1,23 @@
+@import url("_colorVariables.css");
 .main-container {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: #f0f2f5;
+    background: var(--secondary-bgcolor);
     min-height: 100vh;
     background: url("/image/logico.png"); 
-
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-}   
+} 
+
 .hero {
     text-align: center;
     padding: 4rem 2rem;
-    color: #ffffff;
-
-    background: rgb(3 118 121 / 85%);
+    color: var(--text-light);
+    background: var(--primary-bgcolor-alpha);
 }
-
-
 
 .hero .title {
     font-size: 2.8rem;
@@ -30,12 +28,12 @@
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0 auto 2rem auto;
-    color: #f6f6f6;
+    color: var(--text-light-subtle);
 }
 
 .start-btn {
-    background: #ff9800;
-    color: #fff;
+    background: var(--button-color);
+    color: var(--text-light);
     padding: 0.8rem 1.5rem;
     border-radius: 8px;
     text-decoration: none;
@@ -45,7 +43,7 @@
 }
 
 .start-btn:hover {
-    background: #e68900;
+    background: var(--button-hover-color);
 }
 
 .features {
@@ -53,14 +51,14 @@
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1.5rem;
     padding: 3rem 2rem;
-    color:white;
+    color: var(--text-light);
 }
 
 .feature-card {
-    background: rgb(3 118 121 / 85%);
+    background: var(--primary-bgcolor-alpha);
     padding: 1.5rem;
     border-radius: 12px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 3px 6px var(--shadow-dark-alpha);
     transition: transform 0.3s;
 }
 
@@ -71,13 +69,13 @@
 .feature-card h2 {
     margin-bottom: 0.8rem;
     font-size: 1.3rem;
-    color: #f5f4f4;
+    color: var(--text-light-subtle);
 }
 
 .info {
     text-align: center;
     padding: 2rem;
-    background: rgba(1 1 1 0.5);
+    background: var(--info-background-alpha);
     
 }
 
@@ -86,8 +84,14 @@ footer {
     width:100%;
     text-align: center;
     padding: 1rem;
-    background: rgb(3 118 121 / 85%);
-    color: #fff;
+    background: var(--primary-bgcolor-alpha);
+    color: var(--text-light);
     margin-top: 2rem;
     bottom:0px;
 }
+
+
+
+
+
+

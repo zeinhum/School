@@ -1,0 +1,113 @@
+@import url("_colorVariables.css");
+
+.dashboard {
+    padding: var(--spacing-lg);
+    
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.dashboard-header {
+    background: var(--primary-bgcolor);
+    color: var(--text-light);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.card {
+    background: #fff;
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table th, .data-table td {
+    padding: var(--spacing-sm);
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.data-table th {
+    background: var(--primary-bgcolor-alpha);
+    color: var(--text-light);
+}
+
+.data-table tr:hover {
+    background: var(--secondary-bgcolor);
+}
+
+/* Buttons */
+.btn {
+    border: none;
+    padding: 0.5rem 1rem;
+    margin-right: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    color: #fff;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.btn-analyze {
+    background: var(--button-color);
+}
+.btn-analyze:hover {
+    background: var(--button-hover-color);
+}
+
+.btn-edit {
+    background: var(--primary-bgcolor);
+}
+.btn-edit:hover {
+    background: var(--primary-bgcolor-alpha);
+}
+
+.btn-delete {
+    background: var(--danger-color);
+}
+.btn-delete:hover {
+    background: #cc2e2e;
+}
+
+.btn-success {
+    background: var(--success-color);
+}
+.btn-success:hover {
+    background: #3e8e41;
+}
+
+/* Form Styling */
+.form-card {
+    background: var(--form-card-background-alpha);
+    backdrop-filter: blur(10px);
+    
+}
+
+.form-group {
+    margin-bottom: var(--spacing-sm);
+    color:black;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.3rem;
+    font-weight: bold;
+     color:black;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--form-input-text-color);
+}

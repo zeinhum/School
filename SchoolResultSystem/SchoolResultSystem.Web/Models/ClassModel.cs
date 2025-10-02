@@ -6,7 +6,7 @@ namespace SchoolResultSystem.Web.Models
     public class ClassModel
     {
         [Key]
-        public int ClassId { get; set; } = 0;
+        public int ClassId { get; set; } 
         [Required]
         public string ClassName { get; set; } = null!;
         [Required]

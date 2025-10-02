@@ -1,0 +1,29 @@
+
+
+.class-input-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+.class-input-row input {
+    flex: 1;
+    padding: 6px;
+}
+.btn-group {
+    margin-left: 8px;
+}
+.btn-group button {
+    margin-left: 4px;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.btn-add {
+    background: #2ecc71;
+    color: #fff;
+}
+.btn-remove {
+    background: #e74c3c;
+    color: #fff;
+}

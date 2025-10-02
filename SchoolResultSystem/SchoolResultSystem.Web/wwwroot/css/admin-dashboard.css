@@ -1,114 +1,128 @@
 /* Reset & Base */
+@import url("_colorVariables.css");
+/* Assuming your provided :root block is in _colorVariables.css or you'll include it here */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Segoe UI", Tahoma, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
 .body-container {
-  background: #f5f7fa;
-  color: #333;
-  line-height: 1.6;
+    /* Changed from #f5f7fa to a more appropriate variable if available, 
+       or keeping a light color. Using secondary-bgcolor for a light page background. */
+    background: var(--secondary-bgcolor); 
+    color: #333; /* Keeping dark text for contrast on a light background */
+    line-height: 1.6;
 }
 
 /* Navbar */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #34495e;
-  color: #fff;
-  padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--primary-bgcolor);
+    color: var(--text-light);
+    padding: 1rem 2rem;
 }
 
 .logo {
-  font-weight: bold;
+    font-weight: bold;
 }
 
 .title {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .logout {
-  background: #e74c3c;
-  color: #fff;
+    /* Changed from #e74c3c to a variable */
+   Background:var(--primary-bgcolor-alpha); 
+    color: var(--text-light);
 }
 
 /* Layout */
 .container {
-  display: flex;
-  justify-content: space-between;
-  padding: 2rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
 }
 
 .left {
-  flex: 2;
+    flex: 4;
 }
 
 .right {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding-left: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-left: 2rem;
 }
 
 /* Cards */
 .card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    /* Keeping white for contrast */
+    background: #fff; 
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    /* Using a shadow variable */
+    box-shadow: var(--shadow-dark-alpha) 0 2px 6px; 
 }
 
 .card h2 {
-  font-size: 1.1rem;
-  margin-bottom: 1rem;
-  color: #2c3e50;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    /* Keeping a dark text color */
+    color: #2c3e50; 
 }
 
 .item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: .8rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .8rem;
 }
 
 .actions {
-  display: flex;
-  gap: .5rem;
+    display: flex;
+    gap: .5rem;
 }
 
 /* Buttons */
 .btn {
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  transition: background 0.2s;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
 }
 
 .btn.primary {
-  background: #3498db;
-  color: #fff;
+    /* Changed from #3498db to a variable */
+    background: var(--button-color); 
+    color: var(--text-light);
 }
 
 .btn.primary:hover {
-  background: #2980b9;
+    /* Changed from #2980b9 to a variable */
+    background: var(--button-hover-color); 
 }
 
 .btn.danger {
-  background: #e74c3c;
-  color: #fff;
+    /* Changed from #e74c3c to a variable */
+    background: var(--danger-color); 
+    color: var(--text-light);
 }
 
 .btn.danger:hover {
-  background: #c0392b;
+    /* The provided variables don't include a specific danger hover,
+       so a slight change to the original variable is a good practice. 
+       Using a darker shade of danger or a predefined hover if available. */
+    background: #c0392b; /* Keeping the darker red for hover for visual feedback */
 }
 
 .btn:hover {
-  opacity: 0.9;
+    opacity: 0.9;
 }

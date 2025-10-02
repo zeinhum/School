@@ -17,7 +17,6 @@ namespace SchoolResultSystem.Web.Controllers
         [HttpPost]
         public IActionResult Authenticate(string username, string password)
         {
-            var Users = _db.Users.FirstOrDefault();
             try
             {
                 var user = _db.Users
@@ -25,17 +24,33 @@ namespace SchoolResultSystem.Web.Controllers
 
                 if (user != null)
                 {
-                    if (user.Role == "Admin") return RedirectToAction("Index", "PrincipalDashboard", new { area = "Principal" });
+                    if (user.Role == "Admin")
+                    {
+                        if (user.IsActive == false)
+                        {
+                            TempData["error"] = "Your admin account is deactivated.";
+                            return RedirectToAction("Index", "Home");
+                        }
+                        return RedirectToAction("Index", "PrincipalDashboard", new { area = "Principal" });
+                    }
 
-                    if (user.Role == "Teacher") return RedirectToAction("Index", "TeacherDashboard", new { area = "Teachers" });
+                    if (user.Role == "Teacher")
+                    {
+                        if (user.IsActive == false)
+                        {
+                            TempData["error"] = "Your teacher account is deactivated.";
+                            return RedirectToAction("Index", "Home");
+                        }
+                        return RedirectToAction("Index", "TeacherDashboard", new { area = "Principal" });
+                    }
 
                 }
                 TempData["error"] = "Username or password was not found.";
-                return RedirectToAction("Welcome", "Home");
+                return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
-                TempData["error"] = "Login system is not set up. Please contact admin.";
+                TempData["error"] = "Login system is not set up. Please contact admin." ;
                 // optionally log ex.Message
                 return RedirectToAction("Index", "Home");
             }

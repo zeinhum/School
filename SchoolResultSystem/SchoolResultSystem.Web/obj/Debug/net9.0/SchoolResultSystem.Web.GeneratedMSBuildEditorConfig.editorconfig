@@ -28,40 +28,36 @@ build_property._RazorSourceGeneratorDebug =
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
 
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/AddSubjectTeacher.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxBZGRTdWJqZWN0VGVhY2hlci5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/ClassStudentView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDbGFzc1N0dWRlbnRWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/ClassSubjectView.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDbGFzc1N1YmplY3RWaWV3LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/CreateClass.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDcmVhdGVDbGFzcy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/CreateSubject.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDcmVhdGVTdWJqZWN0LmNzaHRtbA==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/CreateTeacher.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDcmVhdGVUZWFjaGVyLmNzaHRtbA==
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/CSTView.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDU1RWaWV3LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/CreateClass.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXENyZWF0ZUNsYXNzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/CreateSubject.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXENyZWF0ZVN1YmplY3QuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/CreateTeacher.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXENyZWF0ZVRlYWNoZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/SetupPrincipalView.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXFNldHVwUHJpbmNpcGFsVmlldy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/SetupSchoolView.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXFNldHVwU2Nob29sVmlldy5jc2h0bWw=
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/SetupPrincipal/SetupSchool.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFNldHVwUHJpbmNpcGFsXFNldHVwU2Nob29sLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Views/Home/Index.cshtml]

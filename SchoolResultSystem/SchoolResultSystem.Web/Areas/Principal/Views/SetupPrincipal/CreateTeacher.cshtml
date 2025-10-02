@@ -15,10 +15,13 @@
     </div>
 
     <div class="form-container">
-        <form method="post" action="/Principal/PrincipalDashboard/SaveTeacher" class="form-card">
-
+        <form method="post" action="/Principal/SetupPrincipal/SaveTeacher" class="form-card">
             <div class="form-group">
-                <label for="TeacherName">Username*</label>
+                <label for="TeacherId">Teacher's Unique ID*</label>
+                <input type="text" id="TeacherId" name="TeacherId" placeholder="e.g. T01" required />
+            </div>
+            <div class="form-group">
+                <label for="TeacherName">Teacher's Name*</label>
                 <input type="text" id="TeacherName" name="TeacherName" placeholder="Teacher's name" required />
             </div>
             <div class="form-group">
@@ -28,12 +31,7 @@
 
             <div class="form-group">
                 <label for="Password">Password*</label>
-                <input type="password" id="Passwords" name="Passwords" placeholder="Passwords" required />
-            </div>
-
-            <div class="form-group">
-                <label for="Email">Email*</label>
-                <input type="email" id="Email" name="Email" placeholder="Teacher@example.com" required />
+                <input type="password" id="Password" name="Password" placeholder="Passwords" required />
             </div>
 
             <input type="hidden" name="Role" value="Teacher" />

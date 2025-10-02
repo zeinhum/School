@@ -5,22 +5,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/setupschool.css" />
+<link rel="stylesheet" href="~/css/admin-setup.css" />
 
-<div class="setup-container">
-    <div class="setup-card">
+<div class="main-interface">
+    
+    <div class="welcome">
         <h1>🏫 Setup Your School</h1>
-        @if(TempData["success"]!=null){
-            <p>@TempData["success"]</p>
-        }
-        <p class="subtitle">Enter your school details to get started with the exam management system.</p>
+        <p class="subtitle">Enter your school details to get started with the system.</p>
 
+        @if(TempData["success"]!=null){
+            <p class="success-message">@TempData["success"]</p>
+        }
+        
         @if(ViewBag.error != null)
         {
-            <div class="error-message">@ViewBag.ErrorMessage</div>
+            <p class="error">@ViewBag.ErrorMessage</p> 
         }
+    </div>
 
-        <form method="post" enctype="multipart/form-data" action="/Principal/SetupPrincipal/SaveSchool" class="setup-form">
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data" action="/Principal/SetupPrincipal/SaveSchool" class="form-card">
 
             <div class="form-group">
                 <label for="Name">School Name</label>
@@ -41,8 +45,7 @@
                 <label for="Email">Email</label>
                 <input type="email" id="Email" name="Email" value="@Model?.Email" placeholder="info@school.com" required />
             </div>
- 
-
+    
             <div class="form-group">
                 <label for="Logo">School Logo</label>
                 <input type="file" id="Logo" name="logoFile" accept="image/*" />

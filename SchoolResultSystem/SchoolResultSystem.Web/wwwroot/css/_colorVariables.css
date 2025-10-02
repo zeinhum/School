@@ -1,0 +1,30 @@
+:root {
+    /* Define Color Variables */
+    --primary-bgcolor: #037679; /* Used for Hero background, Feature Card, Footer */
+    --primary-bgcolor-alpha: rgb(3 118 121 / 85%); /* Primary with transparency */
+    --button-color: #ff9800; /* Used for Start Button */
+    --button-hover-color: #e68900; /* Used for Start Button hover */
+    --danger-color: #ff3b3b; /* Used for Danger Button */
+    --success-color: #4caf50; /* Used for Success Button */
+    --secondary-bgcolor: #f0f2f5;
+    --text-light: #ffffff;
+    --text-light-subtle: #f6f6f6;
+    --shadow-dark-alpha: rgba(0,0,0,0.1);
+    --info-background-alpha: rgba(1 1 1 0.5);
+    --form-max-width: 450px; 
+    /* New Variable for transparent form card background */
+    --form-card-background-alpha: rgba(255, 255, 255, 0.2); /* White with 20% opacity */
+    --form-input-text-color: #f6f6f6; /* Lighter text for inputs on transparent background */
+    --form-label-color: #fff; /* White labels */
+       /* Border color */
+    
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+}

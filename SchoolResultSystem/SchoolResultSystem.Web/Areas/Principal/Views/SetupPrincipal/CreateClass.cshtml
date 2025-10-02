@@ -1,0 +1,40 @@
+@model SchoolResultSystem.Web.Models.ClassModel
+
+@{
+    ViewData["Title"] = "Create Class";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/admin-setup.css" />
+<link rel="stylesheet" href="~/css/addRemove.css" />
+<script type="module">
+    import { DynamicClassInput } from '/js/addClasses.js';
+    new DynamicClassInput("#classForm", "ClassName");
+</script>
+
+<div class="main-interface">
+    <div class="welcome">
+        <h2>Create a Class in the School</h2>
+        <p>Use this form to add a new class level (e.g., Class 7, Grade 10, etc.)</p>
+        
+        @if(!string.IsNullOrEmpty(ViewBag.success)){<p class="success-message">@ViewBag.success</p>}
+        @if(!string.IsNullOrEmpty(ViewBag.error)){<p class="error">@ViewBag.error</p>}
+    </div>
+
+    <div class="form-container">
+        <form method="post" action="/Principal/SetupPrincipal/SaveClass" class="form-card" id="classForm">
+
+            <div class="form-group">
+                <label for="ClassName">Class Name*</label>
+                <input type="text" 
+                       id="ClassName" 
+                       name="ClassName" 
+                       placeholder="e.g. Class 9 A or Grade 7" 
+                       required 
+                       value="@Model?.ClassName" />
+            </div>
+
+            <button type="submit" class="btn-primary">Create Class</button>
+        </form>
+    </div>
+</div>

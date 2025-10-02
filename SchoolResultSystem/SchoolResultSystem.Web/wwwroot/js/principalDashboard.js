@@ -1,2 +1,2 @@
 import { RedirectButtons } from "./controllModel.js";
-let redirectButtons = new RedirectButtons("/Principal/PrincipalDashboard");
+let redirectButtons = new RedirectButtons("/Principal");
