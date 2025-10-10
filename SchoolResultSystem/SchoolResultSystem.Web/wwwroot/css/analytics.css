@@ -1,0 +1,78 @@
+@import url("_colorVariables.css");
+
+/* Container */
+.analysis-board {
+    
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    margin: var(--spacing-lg) auto;
+    font-family: Arial, sans-serif;
+    border:1px solid white;
+}
+
+/* Header */
+.analysis-board h4 {
+    margin-bottom: var(--spacing-md);
+    color:  #fff;
+    font-size: 1.2rem;
+}
+
+/* Form Row */
+.analysis-board .form-row {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    flex-wrap: wrap; /* allows wrapping on smaller screens */
+    margin-bottom: var(--spacing-md);
+}
+
+/* Inputs + Selects */
+.analysis-board input,
+.analysis-board select {
+    padding: 0.5rem;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid #ccc;
+    background: rgba(255, 255, 255, 0.9);
+    
+    font-size: 0.95rem;
+
+}
+
+/* ID field can be a bit wider */
+.analysis-board input#id {
+    flex: 2;
+}
+
+/* Dropdowns equal width */
+.analysis-board select {
+    flex: 1;
+}
+
+/* Button */
+.actions .btn.action {
+    background: var(--button-color);
+    color: #fff;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--border-radius-sm);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex: 0; /* keeps button compact */
+}
+
+.actions .btn.action:hover {
+    background: var(--button-hover-color);
+}
+
+/* Result Box */
+.result-container {
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-md);
+    background: var(--secondary-bgcolor);
+    border-radius: var(--border-radius-md);
+    min-height: 60px;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
+    color: var(--form-input-text-color);
+}

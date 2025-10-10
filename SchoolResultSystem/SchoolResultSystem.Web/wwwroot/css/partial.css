@@ -1,0 +1,147 @@
+@import url("_colorVariables.css");
+.fill-partial,p{
+    width: 100%;
+    margin:0;
+    padding:3px;
+    
+    
+}
+[name="StudentName"],[name="NSN"] {
+  color:(--var primary-bgcolor );
+}
+
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-lg);
+    
+    font-family: Arial, sans-serif;
+    min-width: 25rem;
+    width: fit-content;
+}
+
+.form-container h2 {
+    color: var(--primary-bgcolor);
+    margin-top:0;
+    padding:0;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* Table layout */
+.form-card {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: auto; /* keeps columns aligned */
+}
+
+/* Header stays same as before */
+.form-card th {
+    text-align: left;
+    padding: 0.6rem 0.8rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 2px solid var(--primary-bgcolor);
+    color: var(--primary-bgcolor);
+    
+}
+
+/* Each cell aligns with header, no gaps */
+.form-card td {
+    padding: 0;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+   
+    
+}
+
+.form-card td:last-child {
+    border-right: 1px solid #ddd;
+}
+
+/* Inputs: clean, flat, aligned perfectly under headers */
+.form-card input[type="text"],
+.form-card input[type="date"],
+.form-card input[type="number"] {
+    width: 100%;
+    height: 100%;
+    padding: 0.6rem 0.8rem;
+    border: none;
+    background: transparent;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-card input:focus {
+    outline: none;
+    border-bottom: 1.5px solid var(--primary-bgcolor);
+}
+
+/* Button */
+.btn-form {
+    margin: 1.5rem auto 0 auto;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    font-size: 1rem;
+    border-radius: var(--border-radius-sm);
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s;
+}
+
+.btn-success {
+    background: var(--success-color);
+}
+
+.btn-success:hover {
+    background: #3e8e41;
+}
+select{
+    width: 100%;
+    border: none;
+}
+.btn-group {
+    margin: 0.5rem;
+    display: flex;
+    gap: 0.2rem;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.btn-add,
+.btn-remove {
+    padding: 0.3rem 0.6rem;
+    font-weight: bold;
+    border: none;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    color: #fff;
+    background: var(--primary-bgcolor);
+    transition: background 0.3s ease;
+}
+
+.btn-add:hover {
+    background: var(--button-hover-color);
+}
+
+.btn-remove {
+    background: var(--danger-color);
+}
+
+.btn-remove:hover {
+    background: #cc2e2e;
+}
+
+.non-table{
+    display: flex;
+    gap: 5rem;
+    margin-top:2rem;
+    margin-bottom: 3rem;
+}

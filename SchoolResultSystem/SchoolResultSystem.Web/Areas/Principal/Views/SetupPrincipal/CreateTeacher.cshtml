@@ -7,7 +7,7 @@
 
 <link rel="stylesheet" href="~/css/admin-setup.css" />
 
-<div class="main-interface">
+<div class="dashboard-container">
     <div class="welcome">
         <h2>Create teacher account for the school</h2>
         @if(!string.IsNullOrEmpty(ViewBag.success)){<p>@ViewBag.success</p>}
@@ -39,4 +39,6 @@
             <button type="submit" class="btn-primary">Create Account</button>
         </form>
     </div>
+
+    <partial name="_RightNavBar" model="-1" />
 </div>

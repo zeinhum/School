@@ -1,0 +1,111 @@
+@import url("_colorVariables.css");
+
+/* Use primary background for the entire page */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--primary-bgcolor); /* Set entire page background */
+}
+
+.main-interface {
+    /* Use flexbox to center content vertically and horizontally */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Ensure it takes full viewport height */
+    padding: 20px;
+}
+
+/* --- Welcome/Header Section --- */
+.welcome {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-light); /* Light text on the dark primary background */
+    padding: 10px 20px;
+}
+
+.welcome h2 {
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+}
+
+.error {
+    color: var(--danger-color); /* Highlight error message */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- Form Styling --- */
+.form-container {
+    width: 100%;
+    max-width: var(--form-max-width); /* Control max width of the form */
+}
+
+.form-card {
+    background: var(--form-card-background-alpha); /* MADE TRANSPARENT */
+    backdrop-filter: blur(5px); /* Optional: Add a subtle blur effect */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px var(--shadow-dark-alpha);
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Optional: subtle border */
+}
+
+.form-group {
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;   /* Vertically center children */
+    gap: 10px;             /* Optional: space between inputs/labels */
+}
+.scode {
+    flex:2;
+}
+.sname {
+    flex:4;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333; /* A dark text color for contrast */
+}
+
+.form-group input[type="text"],
+.form-group input[type="password"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Include padding/border in element's total width */
+    font-size: 1rem;
+    transition: border-color 0.3s;
+}
+
+.form-group input:focus {
+    border-color: var(--primary-bgcolor);
+    outline: none;
+}
+
+/* --- Button Styling --- */
+.btn-primary {
+    width: 100%;
+    background: var(--button-color);
+    color: var(--text-light);
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.btn-primary:hover {
+    background: var(--button-hover-color);
+}

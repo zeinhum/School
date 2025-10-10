@@ -1,0 +1,66 @@
+@model SchoolResultSystem.Web.Areas.Principal.Models.CSViewModel;
+@using System.Text.Json;
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/cstview.css" />
+<script>
+    window.currentClassId = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassName));
+</script>
+
+
+<script type="module" src="/js/cstview.js"></script>
+
+
+<div class="dashboard-container">
+    <!-- Main Dashboard Section -->
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>Class: @Model.ClassName (@Model.ClassName)</h1>
+            <p>Manage Students</p>
+        </div>
+        <!-- Analytics Section -->
+        <partial name="_Analytics" />
+        <!-- Subject-Teacher Table -->
+        <div class="card">
+            <h2>Current students in the class</h2>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Student ID</th>
+                        <th>Student Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var st in Model.Students)
+                    {
+                        <tr>
+                            <td>@st.NSN</td>
+                            <td>@st.StudentName</td>
+                            <td>
+                                <button class="btn btn-analyze">Analyze Learning</button>
+                                <button class="btn btn-edit">Edit</button>
+                                <button class="btn btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <button class=" btn-primary"> Add Student</button>
+        <button class=" btn-primary"> Move Students</button>
+        <div class="formholder"></div>
+    </div>
+
+    <!-- Right Side Navigation -->
+
+
+    <partial name="_RightNavBar" model="@Model.ClassId"/>
+
+
+
+</div>

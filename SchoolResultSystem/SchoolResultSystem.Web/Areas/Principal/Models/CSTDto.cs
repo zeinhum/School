@@ -14,4 +14,11 @@ namespace SchoolResultSystem.Web.Areas.Principal.Models
         public string ClassName { get; set; } = null!;
         public List<CSTDto> SubjectTeachers { get; set; } = new List<CSTDto>();
     }
+
+    public class AddCSTDto
+    {
+        public int ClassId { get; set; }
+        public string SCode { get; set; } = null!;
+        public string TeacherId { get; set; } = null!;
+    }
 }

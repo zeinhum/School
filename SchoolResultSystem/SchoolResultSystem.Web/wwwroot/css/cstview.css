@@ -22,6 +22,7 @@
     padding: var(--spacing-md);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-lg);
+    min-width:60rem;
 }
 
 .data-table {
@@ -39,6 +40,25 @@
     background: var(--primary-bgcolor-alpha);
     color: var(--text-light);
 }
+/* Keep background */
+.data-table tr {
+    background: var(--secondary-bgcolor);
+}
+
+/* First column align left */
+.data-table td:first-child,
+.data-table th:first-child {
+    text-align: left;
+    padding-left: 0.5rem; /* touch left boundary */
+}
+
+/* Last column align right */
+.data-table td:last-child,
+.data-table th:last-child {
+    text-align: right;
+    padding-right: 0.5rem; /* touch right boundary */
+}
+
 
 .data-table tr:hover {
     background: var(--secondary-bgcolor);
@@ -90,17 +110,24 @@
     backdrop-filter: blur(10px);
     
 }
-
 .form-group {
-    margin-bottom: var(--spacing-sm);
-    color:black;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;   /* Vertically center children */
+    gap: 10px;             /* Optional: space between inputs/labels */
+}
+.scode {
+    flex:2;
+}
+.sname {
+    flex:4;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 0.3rem;
-    font-weight: bold;
-     color:black;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #333; /* A dark text color for contrast */
 }
 
 .form-group input {

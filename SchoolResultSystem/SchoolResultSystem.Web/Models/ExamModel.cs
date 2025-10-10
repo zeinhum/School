@@ -6,7 +6,6 @@ namespace SchoolResultSystem.Web.Models
     public class ExamModel
     {
         [Key]
-        public int Id { get; set; }
         public int ExamId { get; set; }
         [Required]
         public int AcademicYear { get; set; } = DateTime.Now.Year;

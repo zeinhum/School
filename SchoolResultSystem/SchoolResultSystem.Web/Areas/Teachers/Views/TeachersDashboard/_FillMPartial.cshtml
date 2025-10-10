@@ -1,0 +1,46 @@
+@using System.Security.Cryptography
+@model SchoolResultSystem.Web.Areas.Teachers.Models.FillMarks;
+
+<link rel="stylesheet" href="~/css/partial.css" />
+
+<div class="fill-partial">
+    <form class="form-container partial-form" action="/Teachers/TeachersDashboard/SaveMarks" method="post">
+        <p class = "error"></p>
+        <h2>Fill Marks</h2> 
+        <p class="ClassId" data-name="ClassId" data-value="@Model.Info.ClassId">For Class: <strong> @Model.Info.ClassName </strong></P>
+        <p class="SCode" data-name="SCode" data-value="@Model.Info.SCode">For Subject:<strong>@Model.Info.SName</strong></p>
+        <select name ="ExamId" class="exam form-select" id="examDropdown">
+            <option value="" disabled selected>Select Exam</option>
+            @foreach (var ex in Model.exams)
+            {
+                 <option value="@ex.ExamId">@ex.ExamName (@ex.AcademicYear)</option>
+            }
+        </select>
+
+        <table class="form-card">
+        
+            <thead>
+                <tr>
+                    <th>NSN</th>
+                    <th>Name</th>
+                    <th>Theory</th>
+                    <th>Practical</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+            <tbody class="form-data row-data">
+            @foreach(var cs in Model.Students){
+                <tr>
+                    <td><input type="text" name="NSN" value=@cs.NSN  required /></td>
+                    <td><input type="text"  value=@cs.StudentName required /></td>
+                    <td><input type="number" name="ThMark" required /></td>
+                    <td><input type="number" name="PrMark"   required /></td>
+                </tr>
+            }
+                
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn-form btn-success">Save</button>
+    </form>
+</div>

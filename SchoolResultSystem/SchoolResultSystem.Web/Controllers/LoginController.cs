@@ -21,7 +21,7 @@ namespace SchoolResultSystem.Web.Controllers
             {
                 var user = _db.Users
                               .FirstOrDefault(u => u.UserName == username && u.Password == password);
-
+                
                 if (user != null)
                 {
                     if (user.Role == "Admin")
@@ -41,7 +41,7 @@ namespace SchoolResultSystem.Web.Controllers
                             TempData["error"] = "Your teacher account is deactivated.";
                             return RedirectToAction("Index", "Home");
                         }
-                        return RedirectToAction("Index", "TeacherDashboard", new { area = "Principal" });
+                        return RedirectToAction("Index", "TeachersDashboard", new { area = "Teachers" ,id=user.TeacherId});
                     }
 
                 }

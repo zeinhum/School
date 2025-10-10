@@ -1,0 +1,34 @@
+@model int;
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<script type="module" >
+import { RedirectButtons } from "/js/controllModel.js";
+let redirectButtons = new RedirectButtons("/Principal");
+</script>
+<div class="right-nav">
+    
+
+    <div class="create-actions">
+    <h3>Navigation</h3>
+    @if(Model>-2){
+        <button class="btn primary" data-action="Teacher/Index">Dashboard</button>
+    }
+    @if(Model >= 0){
+        <button class="btn primary" data-id="@Model" data-action="">Assigned Classes</button>
+    }
+    @if(Model>-3){
+        <button class="btn primary" data-action="">Student Admission</button>
+    }
+    
+        
+        
+    </div>
+
+    <div class="create-actions">
+    <h3>Publish</h3>
+        <button class="btn primary" data-action="">Result</button>
+        
+    </div>
+</div>

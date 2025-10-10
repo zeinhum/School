@@ -1,0 +1,52 @@
+@using System.Security.Cryptography
+@model List<SchoolResultSystem.Web.Models.ClassModel>;
+@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/form.css" />
+
+<script type="module" src="/js/sdform.js"></script>
+
+<div class="dashboard-container">
+    <form class="form-container" action="/Principal/PrincipalDashboard/Admission" method="post">
+    <p class = "error"></p>
+        <h2>Student Admission Form</h2>
+
+        <table class="form-card">
+            <thead>
+                <tr>
+                    <th>NSN</th>
+                    <th>Name</th>
+                    <th>D.O.B</th>
+                    <th>Address</th>
+                    <th>Admission Date</th>
+                    <th>Class</th>
+                    <th>Add</th>
+                </tr>
+            </thead>
+
+            <tbody class="form-data">
+                <tr>
+                    <td><input type="text" name="NSN" placeholder="N-Student Number" size="10" required /></td>
+                    <td><input type="text" name="StudentName" placeholder="Student's Name" size="20" required /></td>
+                    <td><input type="date" name="D_O_B" required /></td>
+                    <td><input type="text" name="Address" placeholder="address" size="40" required /></td>
+                    <td><input type="date" name="AdmissionDate" required /></td>
+                    <td>
+                        <select class="selectClass" name="ClassId" required>
+                        <option value="" disabled selected>Select Class</option>
+                        @foreach(var cs in Model){
+                            <option value=@cs.ClassId>@cs.ClassName</option>
+                        }
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn-form btn-success">Admit</button>
+    </form>
+
+    <partial name="_RightNavBar" model="-1" />
+</div>

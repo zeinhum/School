@@ -1,69 +1,103 @@
-@using Microsoft.EntityFrameworkCore.Metadata.Internal
 @model SchoolResultSystem.Web.Areas.Principal.Models.PrincipalDashboardModel
 @{
-    ViewData["Title"] = "Admin Dashboard";
+    ViewData["Title"] = "Principal Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/admin-dashboard.css" />
-<script src="~/js/principalDashboard.js" type="module" defer></script>
+<link rel="stylesheet" href="~/css/cstview.css" />
 
-<div class="body-container">
-    <header class="navbar">
-        <div class="logo">Logo</div>
-        <h1 class="title">@Model.SchoolName</h1>
-        <button class="btn logout">Logout</button>
-    </header>
+<div class="dashboard-container">
+    <!-- Main Dashboard Section -->
+    <div class="dashboard">
+        <div class="dashboard-header">
+            <h1>@Model.SchoolName - Principal Dashboard</h1>
+            <p>Overview of your school, teachers, and classes.</p>
+        </div>
 
-    <main class="container">
-        <section class="left">
-            <div class="card">
-                <h2>Teachers Assigned</h2>
-                
-                @if (Model.Teachers != null && Model.Teachers.Any())
-                {
-                    @foreach(var Teacher in Model.Teachers)
-                    {
-                        <div class="item">
-                            <span>@Teacher.TeacherName</span>
-                            <button class="btn danger" data-action="DeleteTeacher" data-id="@Teacher.TeacherId">Deactivate</button>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p>No teachers are currently assigned.</p>
-                }
-            </div>
+        <partial name="_Analytics" />
 
-            <div class="card">
-                <h2>Classes</h2>
-                
-                @if (Model.Classes != null && Model.Classes.Any())
-                {
-                    @foreach(var cls in Model.Classes)
-                    {
-                        <div class="item">
-                            <span>@cls.ClassName</span>
-                            <div class="actions">
-                                <button class="btn" data-id="@cls.ClassId" data-action="PrincipalDashboard/CSTView">Subject-Teacher</button>
-                                <button class="btn" data-id="@cls.ClassId" data-action="PrincipalDashboard/ClassTeacherView">Students</button>
-                            </div>
-                        </div>
-                    }
-                }
-                else
-                {
-                    <p>No class has been created yet.</p>
-                }
-            </div>
-        </section>
+        <!-- Teachers Card -->
+        <div class="card">
+            <h2>Teachers Assigned</h2>
 
-        <aside class="right">
-            <button class="btn primary" data-action="SetupPrincipal/CreateTeacher">Create Teacher Account</button>
-            <button class="btn primary" data-action="SetupPrincipal/CreateClass">Create Class</button>
-            <button class="btn primary" data-action="SetupPrincipal/CreateSubject">Create Subject</button>
-            <button class="btn primary" data-action="SetupPrincipal/CreateExam">Create Exam</button>
-        </aside>
-    </main>
+            @if (Model.Teachers != null && Model.Teachers.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Teacher ID</th>
+                            <th>Teacher Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var teacher in Model.Teachers)
+                        {
+                            <tr>
+                                <td>@teacher.TeacherId</td>
+                                <td>@teacher.TeacherName</td>
+                                <td>
+                                    <button class="btn btn-delete"
+                                        data-action="DeleteTeacher"
+                                        data-id="@teacher.TeacherId">
+                                        Deactivate
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No teachers are currently assigned.</p>
+            }
+        </div>
+
+        <!-- Classes Card -->
+        <div class="card">
+            <h2>Classes</h2>
+
+            @if (Model.Classes != null && Model.Classes.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Class ID</th>
+                            <th>Class Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cls in Model.Classes)
+                        {
+                            <tr>
+                                <td>@cls.ClassId</td>
+                                <td>@cls.ClassName</td>
+                                <td>
+                                    <button class="btn btn-analyze"
+                                            data-id="@cls.ClassId"
+                                            data-action="PrincipalDashboard/CSTView">
+                                        Subject-Teacher
+                                    </button>
+                                    <button class="btn btn-edit"
+                                            data-id="@cls.ClassId"
+                                            data-action="PrincipalDashboard/CSView">
+                                        Students
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No classes have been created yet.</p>
+            }
+        </div>
+    </div>
+
+    <!-- Right Navigation -->
+    <partial name="_RightNavBar" model="-2" />
 </div>

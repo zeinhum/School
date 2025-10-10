@@ -1,40 +1,37 @@
-@model SchoolResultSystem.Web.Models.ClassModel
 
 @{
-    ViewData["Title"] = "Create Class";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = null;
 }
+<link rel="stylesheet" href="~/css/form.css" />
 
-<link rel="stylesheet" href="~/css/admin-setup.css" />
-<link rel="stylesheet" href="~/css/addRemove.css" />
-<script type="module">
-    import { DynamicClassInput } from '/js/addClasses.js';
-    new DynamicClassInput("#classForm", "ClassName");
-</script>
+<script type="module" src="/js/addClasses.js"></script>
 
-<div class="main-interface">
-    <div class="welcome">
-        <h2>Create a Class in the School</h2>
-        <p>Use this form to add a new class level (e.g., Class 7, Grade 10, etc.)</p>
-        
-        @if(!string.IsNullOrEmpty(ViewBag.success)){<p class="success-message">@ViewBag.success</p>}
-        @if(!string.IsNullOrEmpty(ViewBag.error)){<p class="error">@ViewBag.error</p>}
-    </div>
+<div class="dashboard-container">
+    <form class="form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
+        <p class="error"></p>
+        <h2>Create Class</h2>
 
-    <div class="form-container">
-        <form method="post" action="/Principal/SetupPrincipal/SaveClass" class="form-card" id="classForm">
+        <table class="form-card">
+            
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th></th>
+                </tr>
+            </thead>
 
-            <div class="form-group">
-                <label for="ClassName">Class Name*</label>
-                <input type="text" 
-                       id="ClassName" 
-                       name="ClassName" 
-                       placeholder="e.g. Class 9 A or Grade 7" 
-                       required 
-                       value="@Model?.ClassName" />
-            </div>
+            <tbody class="form-data">
+                <tr>
+                    
+                    <td><input type="text" name="ClassName" required size="2" /></td>
 
-            <button type="submit" class="btn-primary">Create Class</button>
-        </form>
-    </div>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="submit" class="btn-form btn-success">Create Class</button>
+    </form>
+
+    <partial name="_RightNavBar" model="-1" />
 </div>

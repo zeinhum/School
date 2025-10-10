@@ -1,10 +1,15 @@
 using SchoolResultSystem.Web.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews()
+    .AddRazorRuntimeCompilation();
+
+
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlite("Data Source=SchoolDatabase.db"));
 

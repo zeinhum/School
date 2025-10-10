@@ -1,0 +1,24 @@
+
+<link rel="stylesheet" href="~/css/analytics.css" />
+<script type="module">
+    import { Analytics } from '/js/Analytics.js';
+    Analytics();
+</script>
+
+<div class="analysis-board">
+  <h4>Quality Analysis Tool</h4>
+  <div class="form-row">
+      <input type="text" id="id" name="id" placeholder="Enter ID"/> 
+      <select id="slect-target">
+          <option value="" disabled selected>Select target</option>
+          <option value="student">Student</option>
+          <option value="subject">Subject</option>
+          <option value="teacher">Teacher</option>
+      </select>
+      <select id="select-action"></select>
+      <div class="actions">
+          <button class="btn action">Take Action</button>
+      </div>
+  </div>
+  <div class="result-container"></div>
+</div>

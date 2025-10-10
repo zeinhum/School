@@ -5,76 +5,63 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/cstview.css" />
+<script>
+    window.currentClassId = @Model.ClassId;  // Razor injects value
+</script>
 
-<div class="dashboard">
-    <!-- Header -->
-    <div class="dashboard-header">
-        <h1>Class: @Model.ClassName (@Model.ClassId)</h1>
-        <p>Manage subjects and teachers for this class.</p>
-    </div>
+<script type="module" src="/js/cstview.js"></script>
 
-    <!-- Subject-Teacher Table -->
-    <div class="card">
-        <h2>Assigned Subjects</h2>
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>Subject Code</th>
-                    <th>Subject Name</th>
-                    <th>Teacher ID</th>
-                    <th>Teacher Name</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var st in Model.SubjectTeachers)
-                {
+
+<div class="dashboard-container">
+    <!-- Main Dashboard Section -->
+    <div class="dashboard">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <h1>Class: @Model.ClassName (@Model.ClassId)</h1>
+            <p>Manage subjects and teachers for this class.</p>
+        </div>
+        <partial name="_Analytics" />
+        <!-- Subject-Teacher Table -->
+        <div class="card">
+            <h2>Assigned Subjects</h2>
+            <table class="data-table">
+                <thead>
                     <tr>
-                        <td>@st.SCode</td>
-                        <td>@st.SubjectName</td>
-                        <td>@st.TeacherId</td>
-                        <td>@st.TeacherName</td>
-                        <td>
-                            <button class="btn btn-analyze">Analyze</button>
-                            <button class="btn btn-edit">Edit</button>
-                            <button class="btn btn-delete">Delete</button>
-                        </td>
+                        <th>Subject Code</th>
+                        <th>Subject Name</th>
+                        <th>Teacher ID</th>
+                        <th>Teacher Name</th>
+                        <th>Actions</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var st in Model.SubjectTeachers)
+                    {
+                        <tr>
+                            <td>@st.SCode</td>
+                            <td>@st.SubjectName</td>
+                            <td>@st.TeacherId</td>
+                            <td>@st.TeacherName</td>
+                            <td>
+                                <button class="btn btn-analyze">Analyze</button>
+                                <button class="btn btn-edit">Edit</button>
+                                <button class="btn btn-delete">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="add-cst"> Add Subject Teacher</h4>
+        <div class="formholder"></div>
     </div>
 
-    <!-- Add New Subject-Teacher -->
-    <div class="card form-card">
-        <h2>Add Subject Teacher</h2>
-        <form method="post" action="/Principal/PrincipalDashboard/AddSubjectTeacher">
-            <input type="hidden" name="ClassId" value="@Model.ClassId" />
+    <!-- Right Side Navigation -->
 
-            <div class="form-group">
-                <label for="SCode">Subject Code</label>
-                <input type="text" id="SCode" name="SCode" required />
-            </div>
 
-            <div class="form-group">
-                <label for="SubjectName">Subject Name</label>
-                <input type="text" id="SubjectName" name="SubjectName" required />
-            </div>
+    <partial name="_RightNavBar" model="@Model.ClassId" />
 
-            <div class="form-group">
-                <label for="TeacherId">Teacher ID</label>
-                <input type="text" id="TeacherId" name="TeacherId" required />
-            </div>
 
-            <div class="form-group">
-                <label for="TeacherName">Teacher Name</label>
-                <input type="text" id="TeacherName" name="TeacherName" required />
-            </div>
 
-            <button type="submit" class="btn btn-success">Add Subject Teacher</button>
-        </form>
-    </div>
 </div>
-
-
-
