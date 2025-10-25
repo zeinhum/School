@@ -1,0 +1,114 @@
+@using SchoolResultSystem.Web.Areas.Analytics.Models
+@model SchoolResultSystem.Web.Areas.Analytics.Models.ClassExamReportDTO
+
+@{
+    ViewData["Title"] = "Class Exam Report";
+}
+
+<link rel="stylesheet" href="~/css/marksheet.css" />
+
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Class Exam Report</h2>
+
+    <!-- Filter Form -->
+    <form method="get" class="form-inline mb-4">
+        <label for="className" class="me-2">Class:</label>
+        <select name="className" id="className" class="form-select w-auto d-inline-block me-3">
+            <option value="">Select Class</option>
+            @foreach (var c in ViewBag.Classes)
+            {
+                <option value="@c" selected="@(Model?.ClassName == c)">
+                    @c
+                </option>
+            }
+        </select>
+
+        <label for="examId" class="me-2">Exam:</label>
+        <select name="examId" id="examId" class="form-select w-auto d-inline-block me-3">
+            <option value="1">Final Exam</option>
+            @foreach (var e in ViewBag.Exams)
+            {
+                <option value="@e.ExamId" selected="@(Model?.ExamId == e.ExamId)">
+                    @e.ExamName
+                </option>
+            }
+        </select>
+
+        <button type="submit" class="btn btn-primary">Generate</button>
+    </form>
+
+    @if (Model != null && Model.Students.Any())
+    {
+        <div class="report-container">
+            <h4>Class: @Model.ClassName</h4>
+            <h5>Exam: @Model.ExamName (@Model.ExamId)</h5>
+
+            <table class="table table-bordered mt-3">
+                <thead class="table-light">
+                    <tr>
+                        <th>Student Name</th>
+                        <th>NSN</th>
+                        <th>Subjects & Grades</th>
+                        <th>GPA</th>
+                        <th>Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var student in Model.Students)
+                    {
+                        <tr>
+                            <td>@student.StudentName</td>
+                            <td>@student.NSN</td>
+                            <td>
+                                <table class="table table-sm mb-0">
+                                    <thead>
+                                        <tr class="table-secondary">
+                                            <th>Subject</th>
+                                            <th>Grade</th>
+                                            <th>Grade Point</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var subj in student.Subjects)
+                                        {
+                                            <tr>
+                                                <td>@subj.SubjectName</td>
+                                                <td>@subj.Grade</td>
+                                                <td>@subj.GradePoint.ToString("0.00")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </td>
+                            <td>@student.GPA.GPA.ToString("0.00")</td>
+                            <td>@student.GPA.GradeLetter</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <p class="text-muted">Select class and exam to generate report.</p>
+    }
+</div>
+
+<style>
+    .report-container {
+        background: #fff;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th,
+    td {
+        vertical-align: middle !important;
+    }
+</style>

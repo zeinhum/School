@@ -8,59 +8,61 @@
 
 <script type="module" src="/js/exam.js"></script>
 <p>@ViewBag.error</p>
-<div class="dashboard-container">
-    <form class="form-container" action="/Principal/SetupPrincipal/SaveExam" method="post">
-        <p class="error"></p>
-        <h2>Create Exam</h2>
+<div class="dashboard">
+    <div>
+        <div class="partial-container"></div>
+        <form class="form-container" action="/Principal/SetupPrincipal/SaveExam" method="post">
+            <p class="error"></p>
+            <h2>Create Exam</h2>
 
-        <table class="form-card">
-            <div class="non-table">
-                <div class="group">
-                    <label for="AcademicYear"> Academic Year</label>
-                    <input class="year small" type="number" name="AcademicYear" placeholder="Year" required />
+            <table class="form-card">
+                <div class="non-table">
+                    <div class="group">
+                        <label for="AcademicYear"> Academic Year</label>
+                        <input class="year small" type="number" name="AcademicYear" placeholder="Year" required />
+                    </div>
+                    <div class="group">
+                        <lebel formaction="ExamName">Exam Name</lebel>
+                        <input class="examname small" type="text" name="ExamName" required placeholder="Exam Name" />
+                    </div>
                 </div>
-                <div class="group">
-                    <lebel formaction="ExamName">Exam Name</lebel>
-                    <input class="examname small" type="text" name="ExamName" required placeholder="Exam Name" />
-                </div>
-            </div>
 
 
 
 
-            <thead>
-                <tr>
-                    <th>S.Code</th>
-                    <th>ThMark</th>
-                    <th>PrMark</th>
-                    <th>ThCrh</th>
-                    <th>PrCrh</th>
-                    <th>add</th>
-                </tr>
-            </thead>
+                <thead>
+                    <tr>
+                        <th>S.Code</th>
+                        <th>ThMark</th>
+                        <th>PrMark</th>
+                        <th>ThCrh</th>
+                        <th>PrCrh</th>
+                        <th>add</th>
+                    </tr>
+                </thead>
 
-            <tbody class="form-data">
-                <tr>
-                    <td>
-                        <select class="Scode" name="SCode" required>
-                            <option value="" disabled selected>Select Subject</option>
-                            @foreach (var sc in Model)
-                            {
-                                <option value=@sc.SCode>@sc.SCode - @sc.SName</option>
-                            }
-                        </select>
-                    </td>
-                    <td><input type="number" name="ThMark" required size="2" /></td>
-                    <td><input type="number" name="PrMark" required size="2" /></td>
-                    <td><input type="number" name="ThCrh" required size="2" /></td>
-                    <td><input type="number" name="PrCrh" required size="2" /></td>
+                <tbody class="form-data">
+                    <tr>
+                        <td>
+                            <select class="Scode" name="SCode" required>
+                                <option value="" disabled selected>Select Subject</option>
+                                @foreach (var sc in Model)
+                                {
+                                    <option value=@sc.SCode>@sc.SCode - @sc.SName</option>
+                                }
+                            </select>
+                        </td>
+                        <td><input type="number" name="ThMark" required size="2" /></td>
+                        <td><input type="number" name="PrMark" required size="2" /></td>
+                        <td><input type="number" name="ThCrh" required size="2" /></td>
+                        <td><input type="number" name="PrCrh" required size="2" /></td>
 
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
 
-        <button type="submit" class="btn-form btn-success">Create Exam</button>
-    </form>
-
+            <button type="submit" class="btn-form btn-success">Create Exam</button>
+        </form>
+    </div>
     <partial name="_RightNavBar" model="-1" />
 </div>

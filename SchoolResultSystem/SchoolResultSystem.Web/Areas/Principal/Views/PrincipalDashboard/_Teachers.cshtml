@@ -1,0 +1,36 @@
+ @model List<SchoolResultSystem.Web.Models.UserModel>;
+ <!-- Teachers Card -->
+        <div class="card">
+            <h2>Teachers Assigned</h2>
+
+            @if (Model!= null && Model.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Teacher ID</th>
+                            <th>Teacher Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var teacher in Model)
+                        {
+                            <tr>
+                                <td>@teacher.TeacherId</td>
+                                <td>@teacher.TeacherName</td>
+                                <td>
+                                    <button class="btn btn-delete" data-action="DeleteTeacher" data-id="@teacher.TeacherId">
+                                        Deactivate
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No teachers are currently assigned.</p>
+            }
+        </div>

@@ -1,28 +1,31 @@
 @import url("_colorVariables.css");
 
-.dashboard {
-    padding: var(--spacing-lg);
+.user{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    gap: 10px;
+}
+.login{
+    display: inline-block;
+      height: 20px;            /* optional: define height */
+     border: none;
+    padding: 0.5rem 1rem;
+    background: var(--shadow-dark-alpha);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    color: #faf5f5;
+    font-weight: bold;
+    transition: background 0.3s;
     
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
 }
-
-.dashboard-header {
-    background: var(--primary-bgcolor);
-    color: var(--text-light);
-    padding: var(--spacing-md);
-    border-radius: var(--border-radius-md);
-    box-shadow: var(--shadow-md);
-    margin-bottom: var(--spacing-lg);
-}
-
 .card {
     background: #fff;
     border-radius: var(--border-radius-md);
     padding: var(--spacing-md);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-lg);
-    min-width:60rem;
+    max-width:60rem;
 }
 
 .data-table {
@@ -65,16 +68,7 @@
 }
 
 /* Buttons */
-.btn {
-    border: none;
-    padding: 0.5rem 1rem;
-    margin-right: 0.5rem;
-    border-radius: var(--border-radius-sm);
-    cursor: pointer;
-    color: #fff;
-    font-weight: bold;
-    transition: background 0.3s;
-}
+
 
 .btn-analyze {
     background: var(--button-color);
@@ -137,4 +131,10 @@
     border: 1px solid #ccc;
     background: rgba(255, 255, 255, 0.1);
     color: var(--form-input-text-color);
+}
+.add-cst{
+    color:#fff;
+}
+.add-cst:hover{
+    cursor: pointer;
 }

@@ -11,19 +11,18 @@
 
 <script type="module" src="/js/cstview.js"></script>
 
-
-<div class="dashboard-container">
+<partial name="_header" />
+<div class="dashboard">
     <!-- Main Dashboard Section -->
-    <div class="dashboard">
+    <div>
+        <div class="partial-container"></div>
         <!-- Header -->
-        <div class="dashboard-header">
-            <h1>Class: @Model.ClassName (@Model.ClassId)</h1>
-            <p>Manage subjects and teachers for this class.</p>
+        <div class="header">
+            <h1>@Model.ClassName</h1>
         </div>
-        <partial name="_Analytics" />
         <!-- Subject-Teacher Table -->
         <div class="card">
-            <h2>Assigned Subjects</h2>
+            <h2>Subject & It's Teacher</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -43,9 +42,7 @@
                             <td>@st.TeacherId</td>
                             <td>@st.TeacherName</td>
                             <td>
-                                <button class="btn btn-analyze">Analyze</button>
                                 <button class="btn btn-edit">Edit</button>
-                                <button class="btn btn-delete">Delete</button>
                             </td>
                         </tr>
                     }
@@ -61,7 +58,5 @@
 
 
     <partial name="_RightNavBar" model="@Model.ClassId" />
-
-
 
 </div>

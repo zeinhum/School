@@ -12,18 +12,14 @@
 
 <script type="module" src="/js/cstview.js"></script>
 
-
-<div class="dashboard-container">
-    <!-- Main Dashboard Section -->
-    <div class="dashboard">
-        <!-- Header -->
-        <div class="dashboard-header">
-            <h1>Class: @Model.ClassName (@Model.ClassName)</h1>
-            <p>Manage Students</p>
+<partial name="_header" />
+<div class="dashboard">
+    <div>
+    <div class="partial-container"></div>
+        <div>
+            <h1>@Model.ClassName</h1>
         </div>
-        <!-- Analytics Section -->
-        <partial name="_Analytics" />
-        <!-- Subject-Teacher Table -->
+
         <div class="card">
             <h2>Current students in the class</h2>
             <table class="data-table">
@@ -59,7 +55,7 @@
     <!-- Right Side Navigation -->
 
 
-    <partial name="_RightNavBar" model="@Model.ClassId"/>
+    <partial name="_RightNavBar" model="@Model.ClassId" />
 
 
 

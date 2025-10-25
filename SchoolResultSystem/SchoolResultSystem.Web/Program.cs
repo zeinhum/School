@@ -9,11 +9,25 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews()
     .AddRazorRuntimeCompilation();
 
+// ✅ Add distributed memory cache and session
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // session lifetime
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
 
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlite("Data Source=SchoolDatabase.db"));
 
 var app = builder.Build();
+
+// ✅ Use session before routing
+app.UseSession();
+app.UseRouting();
+app.UseAuthorization();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

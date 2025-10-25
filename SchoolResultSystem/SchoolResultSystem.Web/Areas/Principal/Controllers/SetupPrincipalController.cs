@@ -4,32 +4,29 @@ using SchoolResultSystem.Web.Data;
 using Microsoft.EntityFrameworkCore;
 using SchoolResultSystem.Web.Areas.Principal.Models;
 using System.Security.Cryptography.X509Certificates;
+using SchoolResultSystem.Web.Filters;
+using Microsoft.Data.Sqlite;
 
 
 [Area("Principal")]
+[AuthorizeUser("Admin")]
 public class SetupPrincipal : Controller
 {
     private readonly SchoolDbContext _db;
+    private readonly IWebHostEnvironment _hostEnvironment;
 
-    public SetupPrincipal(SchoolDbContext db)
+    public SetupPrincipal(SchoolDbContext db, IWebHostEnvironment hostEnvironment)
     {
         _db = db;
+        _hostEnvironment = hostEnvironment;
     }
 
-    // all views
 
+    // create shcool's information
     public IActionResult SetupSchool()
     {
         return View();
     }
-
-
-    [HttpGet] // principal set up view
-    public IActionResult SetupPrincipalView()
-    {
-        return View();
-    }
-
 
     // Create Class
     public IActionResult CreateClass()
@@ -78,25 +75,55 @@ public class SetupPrincipal : Controller
         }
     }
 
-    [HttpPost]
-    public IActionResult SaveSchool(SchoolInfoModel model)
+   [HttpPost]
+public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile logoFile)
+{
+    try
     {
-        try
+        // 1. Handle File Upload (Save logo)
+        if (logoFile != null)
         {
-            // optional: clear existing school info
-            _db.SchoolInfo.RemoveRange(_db.SchoolInfo);
-            _db.SchoolInfo.Add(model);
-            _db.SaveChanges();
+            // Define the path to the wwwroot/images folder
+            string wwwRootPath = _hostEnvironment.WebRootPath;
+            string imagePath = Path.Combine(wwwRootPath, "image");
 
-            TempData["success"] = "School info saved!";
-            return RedirectToAction("Index","PrincipalDashboard");
+            // Ensure the directory exists
+            if (!Directory.Exists(imagePath))
+            {
+                Directory.CreateDirectory(imagePath);
+            }
+
+            // Get the file extension (e.g., .png, .jpg)
+            string extension = Path.GetExtension(logoFile.FileName);
+            
+            // Define the new file name: "logo" + extension
+            string fileName = "logo" + extension;
+            string filePath = Path.Combine(imagePath, fileName);
+
+            // Save the file to the physical path
+            using (var fileStream = new FileStream(filePath, FileMode.Create))
+            {
+                await logoFile.CopyToAsync(fileStream);
+            }
         }
-        catch (Exception)
-        {
-            ViewBag.error = "Error occured. Try again.";
-            return View("SetupSchoolView");
-        }
+
+        // 2. Handle Database Operations
+        // optional: clear existing school info
+        _db.SchoolInfo.RemoveRange(_db.SchoolInfo);
+        _db.SchoolInfo.Add(model);
+        await _db.SaveChangesAsync(); // Use async SaveChanges
+
+        TempData["success"] = "School info saved!";
+        return RedirectToAction("Index", "PrincipalDashboard");
     }
+    catch (Exception ex)
+    {
+        ViewBag.error = "Error occurred. Try again. Details: " + ex.Message;
+        // Correct the ViewBag property name to match what is used in the view
+        ViewBag.ErrorMessage = ViewBag.error; 
+        return View("SetupSchoolView", model); // Pass model back to view for form persistence
+    }
+}
 
 
     [HttpPost]
@@ -271,98 +298,6 @@ public class SetupPrincipal : Controller
         }
     }
 
-    // view classwise students
-    public async Task<IActionResult> ClassStudentView(int classId)
-    {
-        if (classId < 0)
-        {
-            return BadRequest("Class ID is required.");
-        }
-
-        try
-        {
-            // Use async methods for database access
-            var students = await _db.CS.Include(cs => cs.Student)
-                                    .Where(cs => cs.ClassId == classId)
-                                    .ToListAsync();
-
-            var className = await _db.Classes
-                                     .Where(c => c.ClassId == classId)
-                                     .Select(c => c.ClassName)
-                                     .FirstOrDefaultAsync();
-
-            ViewBag.ClassName = className;
-
-            return View("ClassStudentView", students);
-        }
-        catch (Exception)
-        {
-            return StatusCode(500, "An error occurred while fetching student data.");
-        }
-    }
-
-
-    // class Subject view
-    public async Task<IActionResult> ClassSubjectView(int classId)
-    {
-        // 1. Get Class Name 
-        var className = await _db.Classes
-            .Where(c => c.ClassId == classId)
-            .Select(c => c.ClassName)
-            .FirstOrDefaultAsync();
-
-        if (className == null)
-            return NotFound("Class not found.");
-        // 2. Get Subjects and their assigned Teachers for the class
-        var classSubjectTeacherData = await _db.CST
-            .Include(cst => cst.Subject)
-            .Include(cst => cst.User)
-            .Where(cst => cst.ClassId == classId)
-            .ToListAsync();
-
-
-        var distinctSubjects = classSubjectTeacherData
-            .Select(cst => cst.Subject)
-            .DistinctBy(s => s.SCode) // Use DistinctBy (from System.Linq) to get unique subjects
-            .ToList();
-
-        // Prepare the dictionary for Subject Teachers (equivalent to your original ViewBag.SubjectTeachers)
-        ViewBag.SubjectTeachers = classSubjectTeacherData
-            .GroupBy(cst => cst.SCode)
-            .ToDictionary(
-                g => g.Key,
-                g => g.Select(t => t.User).ToList()
-            );
-
-        // 4. Pass data to the View
-        ViewBag.ClassId = classId;
-        ViewBag.ClassName = className;
-
-        // Pass the distinct list of subjects to the View
-        return View("ClassSubjectView", distinctSubjects);
-    }
-
-
-    // GET: ClassSubject/AddSubjectTeacher/5
-    public async Task<IActionResult> AddSubjectTeacher(int classId)
-    {
-        // Get all subjects in this class
-        var subjects = await _db.Subjects.Where(s => s.IsActive)
-                                .ToListAsync();
-
-        // Get all active teachers
-        var teachers = await _db.Users
-                                .Where(u => u.IsActive)
-                                .ToListAsync();
-
-        ViewBag.ClassId = classId;
-        ViewBag.Subjects = subjects;
-        ViewBag.Teachers = teachers;
-
-        return View("AddSubjectTeacher");
-    }
-
-
     // create exams
     public IActionResult CreateExam()
     {
@@ -373,34 +308,56 @@ public class SetupPrincipal : Controller
     [HttpPost]
     public IActionResult SaveExam([FromBody] SaveExam data)
     {
-        if (!ModelState.IsValid || data == null) {
-            return Json(new { success = false, message = "Invalid data type" });
-        } 
-        if( data.SubjectMarks.Count == 0)
+        // --- Initial Validation ---
+        if (!ModelState.IsValid || data == null)
         {
-            return Json(new { success = false, message = "datacount is zero" });
+            return Json(new { success = false, message = "Invalid data type" });
+        }
+        if (data.SubjectMarks.Count == 0)
+        {
+            return Json(new { success = false, message = "no subject provided" });
         }
 
         try
         {
-            // Get existing exams from the DB
-            var oldExams = _db.Exams.ToList();
+            // Try to find an existing ExamId for given name & year
+            var matchedExam = _db.Exams
+                .Where(e => e.ExamName == data.ExamName && e.AcademicYear == data.AcademicYear)
+                .GroupBy(e => e.ExamId)
+                .Select(g => new
+                {
+                    ExamId = g.Key,
+                    SCodes = g.Select(x => x.SCode).ToList()
+                })
+                .FirstOrDefault();
 
+            int exId;
+            HashSet<string> existingSCodes = new();
+
+            if (matchedExam != null)
+            {
+                // Found a match → use its ID and SCodes
+                exId = matchedExam.ExamId;
+                existingSCodes = matchedExam.SCodes.ToHashSet();
+            }
+            else
+            {
+                // No exact match → just get the latest ExamId
+                exId = _db.Exams
+                    .OrderByDescending(e => e.ExamId)
+                    .Select(e => e.ExamId)
+                    .FirstOrDefault();
+                exId++;
+            }
             int addedCount = 0;
             int skippedCount = 0;
-
             var newExams = new List<ExamModel>();
 
+            // 3. Process the incoming data
             foreach (var ex in data.SubjectMarks)
             {
-                // Check if this exam+subject+year already exists
-                bool exists = oldExams.Any(e =>
-                    e.ExamName == data.ExamName &&
-                    e.AcademicYear == data.AcademicYear &&
-                    e.SCode == ex.SCode
-                );
-
-                if (exists)
+                // Check for a duplicate using the fast HashSet lookup
+                if (existingSCodes.Contains(ex.SCode))
                 {
                     skippedCount++;
                     continue; // skip duplicates
@@ -409,6 +366,7 @@ public class SetupPrincipal : Controller
                 // Create new ExamModel
                 var examModel = new ExamModel
                 {
+                    ExamId=exId,
                     ExamName = data.ExamName,
                     AcademicYear = data.AcademicYear,
                     SCode = ex.SCode,
@@ -422,6 +380,7 @@ public class SetupPrincipal : Controller
                 addedCount++;
             }
 
+            // 4. Save new records
             if (newExams.Count > 0)
             {
                 _db.Exams.AddRange(newExams);
@@ -436,7 +395,88 @@ public class SetupPrincipal : Controller
         }
         catch (Exception ex)
         {
+            // Log the exception details here for production use (e.g., using ILogger)
             return Json(new { success = false, message = $"Error saving exams: {ex.Message}" });
+        }
+    }
+
+    public IActionResult Help()
+    {
+        return View();
+    }
+    public IActionResult CopyDb()
+    {
+        var dbPath = Path.Combine(Directory.GetCurrentDirectory(), "SchoolDatabase.db");
+        var backupPath = Path.Combine(Path.GetTempPath(), $"SchoolDatabase_Backup.db");
+
+        // 1️⃣ Perform SQLite-safe backup
+        using (var connection = new SqliteConnection($"Data Source={dbPath}"))
+        using (var destination = new SqliteConnection($"Data Source={backupPath}"))
+        {
+            connection.Open();
+            destination.Open();
+
+            connection.BackupDatabase(destination);
+        } // ✅ connections are fully closed and disposed here
+
+        // 2️⃣ Now safely read file after all handles are released
+        byte[] fileBytes;
+        using (var stream = new FileStream(backupPath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+        using (var ms = new MemoryStream())
+        {
+            stream.CopyTo(ms);
+            fileBytes = ms.ToArray();
+        }
+
+        // 3️⃣ Return file for download (browser Save As)
+        var fileName = Path.GetFileName(backupPath);
+        return File(fileBytes, "application/octet-stream", fileName);
+    }
+
+    [HttpPost]
+    public IActionResult ReplaceDb(IFormFile file, [FromServices] SchoolDbContext db)
+    {
+        if (file == null || file.Length == 0)
+            return BadRequest("No file selected.");
+
+        if (!file.FileName.EndsWith(".db", StringComparison.OrdinalIgnoreCase))
+            return BadRequest("Invalid file type. Only .db files are allowed.");
+
+        string dbPath = Path.Combine(Directory.GetCurrentDirectory(), "SchoolDatabase.db");
+        string tempPath = Path.Combine(Path.GetTempPath(), "Uploaded_SchoolDatabase.db");
+
+        try
+        {
+            // Step 1️⃣: Save uploaded file temporarily
+            using (var stream = new FileStream(tempPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            // Step 2️⃣: Close and dispose DB connections
+            db.Database.CloseConnection();
+            db.Dispose();
+
+            // Step 3️⃣: Clear connection pools
+            Microsoft.Data.Sqlite.SqliteConnection.ClearAllPools();
+
+            // Step 4️⃣: Replace DB
+            if (System.IO.File.Exists(dbPath))
+            {
+                System.IO.File.Delete(dbPath);
+            }
+
+            System.IO.File.Move(tempPath, dbPath);
+
+            return Ok("Database replaced successfully.");
+        }
+        catch (IOException ioEx)
+        {
+            return StatusCode(500, $"File access error: {ioEx.Message}. Make sure the database isn't open in another process.");
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Unexpected error: {ex.Message}");
         }
     }
 

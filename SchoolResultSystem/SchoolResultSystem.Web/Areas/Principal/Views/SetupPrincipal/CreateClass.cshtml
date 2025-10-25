@@ -1,4 +1,3 @@
-
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = null;
@@ -6,32 +5,34 @@
 <link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/addClasses.js"></script>
+<partial name="_header" />
+<div class="dashboard">
+    <div>
+        <div class="partial-container"></div>
+        <form class="form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
+            <p class="error"></p>
+            <h2>Create Class</h2>
 
-<div class="dashboard-container">
-    <form class="form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
-        <p class="error"></p>
-        <h2>Create Class</h2>
+            <table class="form-card">
 
-        <table class="form-card">
-            
-            <thead>
-                <tr>
-                    <th>Class Name</th>
-                    <th></th>
-                </tr>
-            </thead>
+                <thead>
+                    <tr>
+                        <th>Class Name</th>
+                        <th></th>
+                    </tr>
+                </thead>
 
-            <tbody class="form-data">
-                <tr>
-                    
-                    <td><input type="text" name="ClassName" required size="2" /></td>
+                <tbody class="form-data">
+                    <tr>
 
-                </tr>
-            </tbody>
-        </table>
+                        <td><input type="text" name="ClassName" required size="2" /></td>
 
-        <button type="submit" class="btn-form btn-success">Create Class</button>
-    </form>
+                    </tr>
+                </tbody>
+            </table>
 
+            <button type="submit" class="btn-form btn-success">Create Class</button>
+        </form>
+    </div>
     <partial name="_RightNavBar" model="-1" />
 </div>

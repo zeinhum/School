@@ -1,13 +1,15 @@
 @model SchoolResultSystem.Web.Models.SchoolInfoModel
 @{
     ViewData["Title"] = "Login";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/admin-setup.css" />
 <div class="main-interface">
     <div class="welcome">
+    @if(Model!=null){
         <h2>Sign in to @Model.Name</h2>
+    }
+        
         
         @if(TempData["error"] !=null){
             <p class="error">@TempData["error"]</p>
@@ -34,8 +36,12 @@
             <button type="submit" class="btn-primary">Login</button>
         
             <p class="helpline">
+            @if(Model!=null){
+        
+    
                 <small>Contact: @Model.Phone</small> 
                 <small>| Email: @Model.Email</small>
+                }
             </p>
         </form>
     </div>

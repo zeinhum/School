@@ -3,17 +3,31 @@
 body{
     background: var(--primary-bgcolor);
 }
-.dashboard-container {
-    display: flex;
-    justify-content: center;
-   
-    
+
+
+/* main dashboard centered and limited width */
+.dashboard {
+    display:flex;
+    align-items:center;
+    justify-content:center;          /* stays centered and not too wide */
+  margin: 0 auto;
 }
+.dashboard > :first-child {
+  margin-left: auto;
+  
+}
+
+/* right nav bar aligned to right */
+.dashboard > :last-child {
+  margin-left: auto;
+  align-self: flex-start;
+  position: sticky;
+}
+
 
 /* Right Navigation */
 .right-nav {
     display: flex;
-    
     flex-direction: column; /* make it vertical */
     justify-content:space-between;
     width: fit-content;
@@ -22,7 +36,7 @@ body{
     border-radius: var(--border-radius-md);
     box-shadow: var(--shadow-md);
     position: sticky;
-    top: 20px;
+    top: 30px;
     height: 80vh;
     margin: 2rem;
 }
@@ -75,13 +89,24 @@ body{
 }
 
 /* Buttons */
-.btn {
+.btn,.toggler{
     border: none;
     padding: 0.5rem 1rem;
     margin-right: 0.5rem;
     border-radius: var(--border-radius-sm);
     cursor: pointer;
     color: #fff;
-    font-weight: bold;
     transition: background 0.3s;
+}
+.toggler  {
+    color: #2b2727;  
+}
+.secondary{
+    color:#cdc3c3;
+    background-color:var(--shadow-dark-alpha);
+}
+.secondary:hover,
+.btn:hover,
+.toggler:hover {
+    background-color: var(--success-color);
 }

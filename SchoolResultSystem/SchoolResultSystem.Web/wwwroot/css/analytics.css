@@ -13,7 +13,7 @@
 
 /* Header */
 .analysis-board h4 {
-    margin-bottom: var(--spacing-md);
+    margin-top:0px;
     color:  #fff;
     font-size: 1.2rem;
 }
@@ -50,7 +50,7 @@
 }
 
 /* Button */
-.actions .btn.action {
+.actions .action {
     background: var(--button-color);
     color: #fff;
     border: none;
@@ -62,7 +62,7 @@
     flex: 0; /* keeps button compact */
 }
 
-.actions .btn.action:hover {
+.actions .action:hover {
     background: var(--button-hover-color);
 }
 
@@ -70,9 +70,37 @@
 .result-container {
     margin-top: var(--spacing-md);
     padding: var(--spacing-md);
-    background: var(--secondary-bgcolor);
+   /* background: var(--secondary-bgcolor);*/
     border-radius: var(--border-radius-md);
     min-height: 60px;
     box-shadow: inset 0 0 4px rgba(0,0,0,0.1);
     color: var(--form-input-text-color);
+}
+
+/* 🖨️ Only print the .A4-page section */
+@media print {
+  /* Hide everything by default */
+  body * {
+    visibility: hidden !important;
+  }
+
+  /* Show only A4 page and its content */
+  .A4-page, .A4-page * {
+    visibility: visible !important;
+  }
+
+  /* Position the printable section at top-left */
+  .A4-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 210mm; /* optional for A4 layout */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Hide print button */
+  .print {
+    display: none !important;
+  }
 }

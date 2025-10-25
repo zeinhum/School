@@ -1,0 +1,60 @@
+@model SchoolResultSystem.Web.Areas.Teachers.Models.TDashDto
+@{
+    ViewData["Title"] = "Teacher";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cstview.css" />
+<script src="/js/teachersdb.js" type="module"></script>
+
+<div class="dashboard-header"></div>
+
+<div class="dashboard">
+    <div>
+
+        <div class="partial-container"></div>
+
+        <!-- Teachers Card -->
+        <div class="card">
+            <h2>Your Classes and Subjects</h2>
+
+            @if (Model.TeacherName != null && Model.TeacherName.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Class Name</th>
+                            <th>Subject Name</th>
+                            <th>Subject Code</th>
+                            <th>Rank</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cs in Model.CSList)
+                        {
+                            <tr>
+                                <td name="ClassName">@cs.ClassName</td>
+                                <td name="SName">@cs.SName</td>
+                                <td name="SCode">@cs.SCode</td>
+                                <td></td>
+                                <td>
+                                    <button class="btn-primary" name="ClassId" value=@cs.ClassId data-action="FillMarks">Fill
+                                        Marks</button>
+                                    <button class="btn-primary" name="ClassId" value=@cs.ClassId
+                                        data-action="UpdateMarks">Update Marks</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No Classes are crrently assigned</p>
+            }
+        </div>
+    </div>
+    <!-- Right Navigation -->
+    <partial name="_TNavBar" model="-2" />
+</div>

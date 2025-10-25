@@ -6,39 +6,47 @@
 }
 
 <link rel="stylesheet" href="~/css/admin-setup.css" />
+<partial name="_header" />
+<div class="dashboard">
+    <div>
+        <div class="partial-container"></div>
+        <div class="welcome">
+            <h2>Create teacher account</h2>
+            @if (!string.IsNullOrEmpty(ViewBag.success))
+            {
+                <p>@ViewBag.success</p>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.error))
+            {
+                <p class="error">@ViewBag.error</p>
+            }
+        </div>
 
-<div class="dashboard-container">
-    <div class="welcome">
-        <h2>Create teacher account for the school</h2>
-        @if(!string.IsNullOrEmpty(ViewBag.success)){<p>@ViewBag.success</p>}
-        @if(!string.IsNullOrEmpty(ViewBag.error)){<p class="error">@ViewBag.error</p>}
+        <div class="form-container">
+            <form method="post" action="/Principal/SetupPrincipal/SaveTeacher" class="form-card">
+                <div class="form-group">
+                    <label for="TeacherId">Teacher's Unique ID*</label>
+                    <input type="text" id="TeacherId" name="TeacherId" placeholder="e.g. T01" required />
+                </div>
+                <div class="form-group">
+                    <label for="TeacherName">Teacher's Name*</label>
+                    <input type="text" id="TeacherName" name="TeacherName" placeholder="Teacher's name" required />
+                </div>
+                <div class="form-group">
+                    <label for="Username">Username*</label>
+                    <input type="text" id="Username" name="UserName" placeholder="Teacher's Username" required />
+                </div>
+
+                <div class="form-group">
+                    <label for="Password">Password*</label>
+                    <input type="password" id="Password" name="Password" placeholder="Passwords" required />
+                </div>
+
+                <input type="hidden" name="Role" value="Teacher" />
+
+                <button type="submit" class="btn-primary">Create Account</button>
+            </form>
+        </div>
     </div>
-
-    <div class="form-container">
-        <form method="post" action="/Principal/SetupPrincipal/SaveTeacher" class="form-card">
-            <div class="form-group">
-                <label for="TeacherId">Teacher's Unique ID*</label>
-                <input type="text" id="TeacherId" name="TeacherId" placeholder="e.g. T01" required />
-            </div>
-            <div class="form-group">
-                <label for="TeacherName">Teacher's Name*</label>
-                <input type="text" id="TeacherName" name="TeacherName" placeholder="Teacher's name" required />
-            </div>
-            <div class="form-group">
-                <label for="Username">Username*</label>
-                <input type="text" id="Username" name="UserName" placeholder="Teacher's Username" required />
-            </div>
-
-            <div class="form-group">
-                <label for="Password">Password*</label>
-                <input type="password" id="Password" name="Password" placeholder="Passwords" required />
-            </div>
-
-            <input type="hidden" name="Role" value="Teacher" />
-
-            <button type="submit" class="btn-primary">Create Account</button>
-        </form>
-    </div>
-
     <partial name="_RightNavBar" model="-1" />
 </div>

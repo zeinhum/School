@@ -3,9 +3,11 @@ using SchoolResultSystem.Web.Models;
 using SchoolResultSystem.Web.Areas.Teachers.Models;
 using SchoolResultSystem.Web.Data;
 using System.Linq.Expressions;
+using SchoolResultSystem.Web.Filters;
 
 namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 {
+    [AuthorizeUser("Teacher")]
     [Area("Teachers")]
     public class TeachersDashboardController : Controller
     {
@@ -41,7 +43,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                                 .ToList()
                 };
 
-                return View(dto);
+                return View("TIndex",dto);
             }
             catch (Exception e)
             {

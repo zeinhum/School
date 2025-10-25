@@ -5,30 +5,25 @@ using SchoolResultSystem.Web.Controllers;
 using SchoolResultSystem.Web.Areas.Principal.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
+using SchoolResultSystem.Web.Filters;
+
 
 
 [Area("Principal")]
+[AuthorizeUser("Admin")]
 public class PrincipalDashboardController : SchoolDbController
 {
     public PrincipalDashboardController(SchoolDbContext db) : base(db) { }
 
-
+    // main dashboard for admin view
     public IActionResult Index()
     {
         // get schoolinfo
         var school = _db.SchoolInfo.FirstOrDefault()?.Name;
-        var teachers = _db.Users.Where(u => u.Role == "Teacher").ToList();
-        var classes = _db.Classes.ToList();
-
-        var viewModel = new PrincipalDashboardModel
-        {
-            SchoolName = school,
-            Teachers = teachers,
-            Classes = classes
-        };
-        return View(viewModel);
+        
+        return View("PIndex", school);
     }
-    // CST View
+    // Class Subject teacher View
     public IActionResult CSTView(int id)
     {
         try
@@ -106,6 +101,8 @@ public class PrincipalDashboardController : SchoolDbController
         return Ok(new { status = "success", message = "Subject-Teacher assigned successfully!" });
     }
 
+
+    // Class Student 
     public IActionResult CSview(int id)
     {
         var classInfo = _db.Classes.FirstOrDefault(c => c.ClassId == id);
@@ -169,6 +166,11 @@ public class PrincipalDashboardController : SchoolDbController
             var oldNSNs = _db.Students.Select(s => s.NSN).ToList();
             var formNSNs = form.AdmissionForm.Select(s => s.NSN).ToList();
 
+            foreach (var st in oldNSNs)
+            {
+                Console.WriteLine($"admited astudents NSN : {st}");
+            }
+
             // Find new NSNs that are not already in database
             var newNSNs = formNSNs.Where(nsn => !oldNSNs.Contains(nsn)).ToList();
 
@@ -218,7 +220,20 @@ public class PrincipalDashboardController : SchoolDbController
         }
     }
 
+    // Anlytics partial
+public IActionResult Analytics()
+    {
+        return PartialView("_Analytics");
+    }
 
-   
-
+    public IActionResult Teachers()
+    {
+        var user = _db.Users.Where(u => u.Role == "Teacher").ToList();
+        return PartialView("_Teachers", user);
+    }
+    public IActionResult Classes()
+    {
+        var classes = _db.Classes.Where(c => c.IsActive).ToList();
+        return PartialView("_Classes", classes);
+    }
 }

@@ -1,0 +1,44 @@
+<link rel="stylesheet" href="~/css/help.css" />
+<partial name="_header" />
+<div class="dashboard">
+    <div class="db-maintenance">
+        <div class="db-card">
+            <h2 class="title">📦 Database Management</h2>
+            <p class="subtitle">
+                Manage your system database safely — create backups, restore previous data,
+                or upload a new version.
+            </p>
+
+            <div class="section">
+                <h4>🔹 Backup Your Database</h4>
+                <p>Save a copy of your current database to a secure location.</p>
+                <a class="btn copy" href="~/Principal/SetupPrincipal/CopyDb">💾 Copy Database</a>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="section">
+                <h4>⚠️ Replace Existing Database</h4>
+                <p class="warning">
+                    Replacing the existing database will permanently erase current data. Make
+                    sure you’ve made a backup before proceeding. The system must be restarted
+                    after replacement for changes to take effect.
+                </p>
+                <form asp-action="ReplaceDb" asp-controller="SetupPrincipal" asp-area="Principal"
+                    enctype="multipart/form-data" method="post" class="upload-form">
+                    <label for="file" class="file-label">📂 Choose a .db file</label>
+                    <input type="file" id="file" name="file" accept=".db" required />
+                    <button type="submit" class="btn danger">🔁 Replace Database</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="developer-note">
+            <p>
+                👨‍💻 <strong>Developer Support:</strong> For any assistance, please contact
+                <a href="mailto:zeinhumn@gmail.com">zeinhumn@gmail.com</a>
+            </p>
+        </div>
+    </div>
+    <partial name="_RightNavBar" model="-4" />
+</div>

@@ -1,26 +1,32 @@
+@using System.Text.Json;
 @model int;
 @{
-    Layout = null;
+     Layout = null;
+    var data = new {
+        user = TempData["user"],
+        school=TempData["schollName"]
+    };
+    var jsonData = JsonSerializer.Serialize(data);
 }
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<script type="module" >
-import { RedirectButtons } from "/js/controllModel.js";
-let redirectButtons = new RedirectButtons("/Principal");
-</script>
-<div class="right-nav">
-    
 
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+
+
+<script type="module" >
+import {TNav} from "/js/teacherNav.js"
+TNav(@Html.Raw(jsonData));
+</script>
+
+
+<div class="right-nav">
     <div class="create-actions">
     <h3>Navigation</h3>
-    @if(Model>-2){
+    
         <button class="btn primary" data-action="Teacher/Index">Dashboard</button>
-    }
-    @if(Model >= 0){
-        <button class="btn primary" data-id="@Model" data-action="">Assigned Classes</button>
-    }
-    @if(Model>-3){
-        <button class="btn primary" data-action="">Student Admission</button>
-    }
+        <button class="toggler" data-action="Analytics">Analytics</button>
+
     
         
         

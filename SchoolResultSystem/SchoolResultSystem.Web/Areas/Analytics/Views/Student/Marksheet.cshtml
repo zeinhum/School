@@ -1,0 +1,84 @@
+@model SchoolResultSystem.Web.Areas.Analytics.Models.MarkSheetDto;
+@{
+    ViewData["Title"] = "Marksheet";
+}
+<link rel="stylesheet" href="~/css/marksheet.css" />
+
+<div class="A4-page">
+    <div class="marksheet-container">
+        <!-- School Header -->
+        <div class="school-info">
+            <div class="logo">School Logo</div>
+            <div class="school-name">@Model.Schoolname</div>
+        </div>
+        <h3 class="gradesheet black">GRADE SHEET</h3>
+        <!-- Student Info -->
+        <div class="student-info">
+            <div>
+                <h4 class="black">Name: <span>@Model.Student.StudentName</span></h4>
+                <p>Date of Birth: <span>@Model.Student.D_O_B</span></p>
+            </div>
+            <div>
+                <h4 class="black">NSN: <span>@Model.Student.NSN</span></h4>
+                <p>Academic year: @Model.Exam.AcademicYear, Exam: @Model.Exam.ExamName</p>
+            </div>
+        </div>
+
+        <!-- Marks Section -->
+        <div class="marks-section">
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">SCode</th>
+                        <th rowspan="2">Subjects</th>
+                        <th colspan="3">Obtained Grades</th>
+                        <th rowspan="2">Credit Hours</th>
+                    </tr>
+                    <tr>
+                        <th>Theory</th>
+                        <th>Practical</th>
+                        <th>Final Grade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.gpas)
+                    {
+                        <tr>
+                            <td>@item.Sub.SCode</td>
+                            <td class="subject">@item.Sub.SName</td>
+                            <td>@item.ThGrade.Grade</td>
+                            <td>@item.PrGrade.Grade</td>
+                            <td>@item.FinalGrade.Grade</td> <!-- final grade --!>
+                                    <td>@item.CreditHour</td><!-- subject credit hour --!>
+                                </tr>
+                    }
+                    </tbody>
+                </table>
+
+                <div class="gpa">
+                    <p>Grade Point Average (GPA): <strong>@Model.GPA.gpa - @Model.GPA.gpaL</strong></p>
+                </div>
+
+                <div class="checked-by">
+                    <div class="prepared-by">
+                        <h4>Prepared By</h4>
+                        <p>Nanu Ai</p>
+                    </div>
+                    <div class="checked-by-person">
+                        <h4>Checked By</h4>
+                        <p>Zein Hum</p>
+                    </div>
+                </div>
+
+                <div class="legends">
+                    <h4 class="black">Legends</h4>
+                    <p>NG : Not Graded</p>
+                    <p>Ab : Absent</p>
+                    <p>NSN : National Student Number</p>
+                    <p>GPA : Grade Point Average</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<button class="print">Print</button>

@@ -1,0 +1,14 @@
+@import url("_colorVariables.css");
+.dashboard-header {
+    background: var(--primary-bgcolor);
+    color: var(--text-light);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--shadow-md);
+    margin-bottom: var(--spacing-lg);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 1rem  0 1rem ;
+    position: sticky;
+    top: 0;
+}

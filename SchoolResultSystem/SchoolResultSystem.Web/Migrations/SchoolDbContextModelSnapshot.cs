@@ -87,11 +87,14 @@ namespace SchoolResultSystem.Web.Migrations
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
                 {
-                    b.Property<int>("ExamId")
+                    b.Property<int>("Tablerow")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AcademicYear")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ExamId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ExamName")
@@ -114,7 +117,7 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<decimal>("ThMark")
                         .HasColumnType("TEXT");
 
-                    b.HasKey("ExamId");
+                    b.HasKey("Tablerow");
 
                     b.HasIndex("SCode");
 
@@ -191,10 +194,10 @@ namespace SchoolResultSystem.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("AdmissionDate")
+                    b.Property<DateOnly>("AdmissionDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("D_O_B")
+                    b.Property<DateOnly>("D_O_B")
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")

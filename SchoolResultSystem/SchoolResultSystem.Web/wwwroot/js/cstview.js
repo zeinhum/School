@@ -56,11 +56,7 @@ function LoadFormData() {
     .then((response) => response.json())
     .then((data) => {
       const teachers = data.teachers;
-      const subjects = data.subjects; // or data.subjects depending on API
-      //window.currentClassId = someClassId; // store for hidden input
-
-      console.log("Fetched teachers:", teachers);
-      console.log("Fetched subjects:", subjects);
+      const subjects = data.subjects;
       popForm(subjects, teachers);
     });
 }
@@ -89,8 +85,7 @@ function SubmitForm() {
       .then(async (response) => {
         const result = await response.json(); // parse JSON
         if (response.ok) {
-          alert(result.message); // success message from backend
-          // optionally, update table dynamically instead of reloading
+          alert(result.message); 
           form.reset(); // clear the form
         } else {
           alert(result.message || "Error assigning Subject-Teacher.");

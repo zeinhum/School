@@ -1,0 +1,128 @@
+/* General Page Setup */
+
+
+.A4-page {
+    background: white;
+    width: 210mm;
+    margin: auto;
+    box-shadow: 0 0 5mm rgba(0, 0, 0, 0.2);
+    padding: 25mm 20mm;
+}
+
+/* Marksheet Container */
+.marksheet-container {
+    border: 3px solid #048485;
+    padding: 20px 25px;
+    border-radius: 8px;
+}
+
+/* School Info */
+.school-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #000;
+    padding-bottom: 10px;
+    color:black;
+}
+
+.school-info .logo {
+    width: 100px;
+    height: 100px;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10%;
+    font-weight: bold;
+}
+
+.school-info .school-name {
+    font-size: 1.8em;
+    font-weight: 700;
+    text-align: right;
+}
+
+/* Student Info */
+.student-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    font-size: 1em;
+    border-bottom: 1px dashed #aaa;
+    padding-bottom: 10px;
+    color:black;
+}
+.student-info .black{
+    color:black;
+}
+
+/* Marks Table */
+.marks-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    text-align: center;
+    font-size: 0.95em;
+    border: 1px solid blue;
+}
+
+.marks-section th,
+.marks-section td {
+    border: 1px solid #010a88;
+    padding: 8px 10px;
+}
+
+.marks-section thead {
+    background-color: #e0e0e0;
+    font-weight: 600;
+}
+
+/* GPA Section */
+.gpa {
+    margin-top: 20px;
+    font-size: 1.1em;
+    text-align: right;
+    color:black;
+}
+
+.gpa strong {
+    font-size: 1em;
+}
+
+/* Signatures */
+.checked-by {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    color:black;
+}
+
+.checked-by h4 {
+    margin-bottom: 5px;
+    text-decoration: underline;
+    color:black;
+}
+
+/* Legends */
+.legends {
+    margin-top: 40px;
+    border-top: 1px solid #022379;
+    padding-top: 10px;
+    color:black;
+}
+
+.legends h4 {
+    margin-bottom: 5px;
+    color:#046683;
+}
+
+.legends p {
+    margin: 2px 0;
+    color:#046683;
+}
+.subject{
+    text-align: left;
+}
+
+

@@ -1,14 +1,8 @@
 import { RowDataCollector, FormSubmitter, TableRowDuplicate } from "./FormModules.js";
 const RowData = new RowDataCollector(".row-data");
 
-
-
-console.log("_fillMPartail Loaded");
-
-
-
-
-function getExamData() {
+// get form data from user
+function getExamData() { 
   const data = {};
 
   // ✅ Get year and exam name (non-table fields)
@@ -35,7 +29,7 @@ function getExamData() {
   }
 
   data["ExamId"] = parseInt(examId, 10);
-  data["Marks"]= new RowDataCollector().getData();
+  data["Marks"]= RowData.getData();
   if(!data["Marks"]){
     
     return null;
@@ -48,11 +42,9 @@ export function initializer(){
      
     document.querySelector(".btn-form").addEventListener("click", (e) => {
   e.preventDefault();
-  console.log("submit clicked");
  
-
   const data = getExamData();
-  console.log("Final data to send:", JSON.stringify(data, null, 2));
+
 if(data){
 SubmitForm.submit(data);
 }

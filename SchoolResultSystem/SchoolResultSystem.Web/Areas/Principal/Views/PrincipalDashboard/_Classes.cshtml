@@ -1,0 +1,39 @@
+@model List<SchoolResultSystem.Web.Models.ClassModel>;
+        <!-- Classes Card -->
+        <div class="card">
+            <h2>Classes</h2>
+
+            @if (Model != null && Model.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Class Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var cls in Model)
+                        {
+                            <tr>
+                                <td>@cls.ClassName</td>
+                                <td>
+                                    <button class="btn btn-analyze" data-id="@cls.ClassId"
+                                        data-action="PrincipalDashboard/CSTView">
+                                        Subject-Teacher
+                                    </button>
+                                    <button class="btn btn-edit" data-id="@cls.ClassId" data-action="PrincipalDashboard/CSView">
+                                        Students
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No class has been created yet.</p>
+            }
+        </div>
+    </div>

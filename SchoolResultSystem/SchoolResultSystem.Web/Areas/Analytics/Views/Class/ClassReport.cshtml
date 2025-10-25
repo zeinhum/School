@@ -1,0 +1,78 @@
+@using SchoolResultSystem.Web.Areas.Analytics.Models
+@model SchoolResultSystem.Web.Areas.Analytics.Models.ClassExamReportDTO
+
+@{
+    ViewData["Title"] = "Class Exam Report";
+    var students = Model.Students.ToList();
+    // Get all unique subjects across all students
+    var subjects = students.SelectMany(s => s.Subjects)
+                           .Select(sub => sub.SubjectCode)
+                           .Distinct()
+                           .ToList();
+}
+
+<div class="report">
+    <h5>
+        Class Report for Class: <strong>@Model.ClassName</strong> |
+        Exam: <strong>@Model.ExamName</strong>
+    </h5>
+
+    <table border="1" cellspacing="0" cellpadding="4">
+        <thead>
+            <tr>
+                <th rowspan="2">NSN</th>
+                <th rowspan="2">GPA</th>
+                <th colspan="@(subjects.Count)" style="text-align:center;">Subjects</th>
+            </tr>
+            <tr>
+                @foreach (var sub in subjects)
+                {
+                    <th>@sub</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var st in students)
+            {
+                <tr>
+                    <td>@st.NSN</td>
+                    <td>@st.GPA.GPA</td>
+
+                    @foreach (var sub in subjects)
+                    {
+                        var subj = st.Subjects.FirstOrDefault(s => s.SubjectCode == sub);
+                        if (subj != null)
+                        {
+                            <td>@subj.Grade</td>
+                        }
+                        else
+                        {
+                            <td>-</td>
+                            <td>-</td>
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<style>
+    .report {
+        width: 100%;
+        margin: 20px auto;
+        font-family: Arial, sans-serif;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        text-align: center;
+    }
+    th, td {
+        border: 1px solid #444;
+        padding: 6px;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+</style>

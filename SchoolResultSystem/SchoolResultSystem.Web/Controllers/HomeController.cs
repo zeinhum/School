@@ -2,6 +2,7 @@ using System.Data.Common;
 using Microsoft.AspNetCore.Mvc;
 using SchoolResultSystem.Web.Data;
 using Microsoft.Data.Sqlite;
+using SchoolResultSystem.Web.Models;
 
 
 namespace SchoolResultSystem.Web.Controllers
@@ -21,37 +22,71 @@ namespace SchoolResultSystem.Web.Controllers
             {
                 var school = _db.SchoolInfo.FirstOrDefault();
 
-                if (school == null)
-                {
-                    // Table exists, but no data
-                    ViewBag.Error = "No school information found. Please run setup.";
-                    return View("Index");
-                }
-
-                // School info exists → go to login
+                // take to login
                 return View("Login", school);
             }
             catch (SqliteException ex)
             {
                 // Table does not exist at all
                 ViewBag.Error = "Database error: " + ex.Message;
-                return View("Index");
+                return View("Start");
             }
             catch (Exception ex)
             {
                 // Any other unexpected error
                 ViewBag.Error = "Unexpected error:\n" + ex.Message;
-                return View("Index");
+                return View("Start");
             }
         }
 
+        public IActionResult SchoolAccount()
+        {
+            var firstAcc = _db.Users.Any();
+            if (!firstAcc)
+            {
+                return View();
+            }
+           return View("Login");
+        }
 
+
+        // save first admin account
+
+        [HttpPost]
+        public IActionResult SavePrincipal(UserModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("SchoolAccount");
+            }
+            try
+            {
+                // remove old admin if exists
+                var oldAdmins = _db.Users.Where(u => u.Role == "Admin").ToList();
+                _db.Users.RemoveRange(oldAdmins);
+
+                // enforce admin role
+                model.Role = "Admin";
+                _db.Users.Add(model);
+
+                _db.SaveChanges();
+
+                TempData["success"] = "Principal account set successfully!"; // redirect to schoolsetup
+                return View("Login");
+
+            }
+            catch (Exception)
+            {
+                ViewBag.error = "Some error occured. Try again.";
+                return View("SchoolAccount");
+            }
+        }
         // Check if school info exists in DB
 
-        public IActionResult Welcome()
+        public IActionResult Start()
         {
-            var Users = _db.Users.ToList();
-            return View("Welcome", Users);
+            
+            return View("Start");
         }
 
         public IActionResult Login()

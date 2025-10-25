@@ -1,0 +1,22 @@
+@model string;
+@{
+    ViewData["Title"] = "Principal Dashboard";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/cstview.css" />
+<!--<partial name="_header" /> !-->
+<div class="dashboard-header"></div>
+
+<div class="dashboard-container">
+    <!-- Main Dashboard Section -->
+    <div class="dashboard">
+
+       
+
+        <div class="partial-container"></div>
+       
+
+    <!-- Right Navigation -->
+    <partial name="_RightNavBar" model="-1" />
+</div>

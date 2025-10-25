@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function sendData(baseUrl, data) {
   const url = `/Teachers/TeachersDashboard/${baseUrl}`;
-  console.log(`data being sent: ${JSON.stringify(data)}`);
+  //console.log(`data being sent: ${JSON.stringify(data)}`);
 
   fetch(url, {
     method: "POST",

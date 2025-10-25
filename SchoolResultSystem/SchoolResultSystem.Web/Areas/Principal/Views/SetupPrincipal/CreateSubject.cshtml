@@ -5,11 +5,12 @@
 <link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/addClasses.js"></script>
-
-<div class="dashboard-container">
+<partial name="_header" />
+<div class="dashboard">
+<div><div class="partial-container"></div>
     <form class="form-container" action="/Principal/SetupPrincipal/SaveSubject" method="post">
         <p class="error"></p>
-        <h2>Add Subjects those are taught in the school</h2>
+        <h2>Add Subjects taught in the school</h2>
 
         <table class="form-card">
             
@@ -33,6 +34,6 @@
 
         <button type="submit" class="btn-form btn-success">Save Subject</button>
     </form>
-
+</div>
     <partial name="_RightNavBar" model="-1" />
 </div>

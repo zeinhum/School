@@ -11,10 +11,10 @@ namespace SchoolResultSystem.Web.Models
         public string StudentName { get; set; } = null!;
 
         [Required]
-        public DateTime D_O_B { get; set; }
+        public DateOnly D_O_B { get; set; }
 
         public string Address { get; set; } = null!;
-        public DateTime AdmissionDate { get; set; } = DateTime.Now;
+        public DateOnly AdmissionDate { get; set; } = DateOnly.FromDateTime(DateTime.Now);
         public bool IsActive { get; set; } = true;
     }
 }

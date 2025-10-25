@@ -113,14 +113,11 @@ export class FormSubmitter {
       });
 
       const resp = await res.json();
-      console.log("Server response:", resp.success);
-
+      
       if (resp.success) {
         alert(resp.message);
-        console.log(resp);
         this.form.reset();
       } else {
-        console.log(resp);
         alert("❌ Admission failed. Please try again.");
       }
     } catch (err) {
