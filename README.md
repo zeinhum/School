@@ -120,7 +120,7 @@ public IActionResult ReplaceDb(IFormFile file)
 
 1. User selects **Target** (Student / Subject / Teacher).
 2. System dynamically populates actions.
-3. Data is sent via AJAX POST to controller.
+3. Data is sent via fetch() POST to controller.
 4. GPA and grade calculations run server-side.
 5. Rendered view is returned without page reload.
 
