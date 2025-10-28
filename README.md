@@ -1,100 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>School Result System</title>
-<style>
-  body {
-    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.7;
-    color: #2d2d2d;
-    background: #fafafa;
-    margin: 2rem auto;
-    max-width: 900px;
-    padding: 2rem;
-  }
 
-  h1, h2, h3 {
-    color: #1f4e79;
-  }
-
-  h1 {
-    border-bottom: 3px solid #1f4e79;
-    padding-bottom: 0.4rem;
-  }
-
-  code {
-    background: #f4f4f4;
-    border-radius: 4px;
-    padding: 0.2rem 0.4rem;
-    font-size: 0.95em;
-  }
-
-  pre {
-    background: #272822;
-    color: #f8f8f2;
-    padding: 1rem;
-    border-radius: 8px;
-    overflow-x: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin: 1rem 0;
-    font-size: 0.95em;
-  }
-
-  th, td {
-    border: 1px solid #ddd;
-    padding: 0.7rem;
-    text-align: left;
-  }
-
-  th {
-    background: #1f4e79;
-    color: white;
-  }
-
-  tr:nth-child(even) {
-    background: #f9f9f9;
-  }
-
-  .tag {
-    background: #e1ecf4;
-    color: #0366d6;
-    border-radius: 12px;
-    padding: 0.2rem 0.6rem;
-    font-size: 0.85em;
-    margin-right: 0.3rem;
-  }
-
-  .quote {
-    background: #eef6fc;
-    border-left: 4px solid #1f4e79;
-    padding: 1rem;
-    margin: 1.5rem 0;
-    font-style: italic;
-  }
-
-  footer {
-    text-align: center;
-    margin-top: 2rem;
-    font-size: 0.9em;
-    color: #666;
-  }
-
-  a {
-    color: #0366d6;
-    text-decoration: none;
-  }
-
-  a:hover {
-    text-decoration: underline;
-  }
-</style>
-</head>
 <body>
 
 <h1>🏫 School Result System</h1>
@@ -131,7 +35,7 @@
 
 <h2>🏗️ Tech Stack</h2>
 <ul>
-  <li><strong>Backend:</strong> ASP.NET Core MVC 8, Entity Framework Core, C#, SQLite</li>
+  <li><strong>Backend:</strong> ASP.NET Core MVC 9, Entity Framework Core, C#, SQLite</li>
   <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript, Razor Partial Views</li>
   <li><strong>Tools:</strong> Visual Studio 2022, LINQ, TempData & Session, Custom Middleware</li>
 </ul>
@@ -244,4 +148,4 @@ cd school/SchoolResultSystem.Web</code></pre>
 </footer>
 
 </body>
-</html>
+
