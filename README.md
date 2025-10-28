@@ -1,4 +1,4 @@
-
+<h2>Note:This app is still in construction. Final realease will be held on 13-Dec-2025</h2>
 <body>
 
 <h1>🏫 School Result System</h1>
