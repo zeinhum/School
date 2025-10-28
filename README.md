@@ -136,7 +136,7 @@ cd school/SchoolResultSystem.Web</code></pre>
 <hr>
 
 <h2>👤 Author</h2>
-<p><strong>Zein Hum</strong><br>
+<p><strong>Jameel Khan (Zeinhum)</strong><br>
 💻 Full Stack Developer | ASP.NET | React | SQL | Data Analytics<br>
 📧 <a href="mailto:zeinhumn@gmail.com">zeinhumn@gmail.com</a><br>
 🌐 <a href="https://github.com/zeinhum">github.com/zeinhum</a></p>
