@@ -1,10 +1,11 @@
 @using System.Text.Json;
 @model int;
 @{
-     Layout = null;
+    Layout = null;
     var data = new {
         user = TempData["user"],
-        school=TempData["schollName"]
+        school=TempData["schoolName"],
+        logoPath ="/image/logo.png"
     };
     var jsonData = JsonSerializer.Serialize(data);
 }

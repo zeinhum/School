@@ -21,7 +21,7 @@ submitter.submit(data);
 function getExamData() {
   const data = {};
 
-  // ✅ Get year and exam name (non-table fields)
+  // Get year and exam name (non-table fields)
   const nonTabFields = document.querySelectorAll(".year, .examname");
   for (const field of nonTabFields) {
     const name = field.name?.trim();

@@ -12,14 +12,12 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Models
             List<Subject> studentObtainedMarks)
         {
             var gpas = new List<GPADto>();
-Console.WriteLine($"exam subject from grade calculator");
+           
             foreach (var examSub in examSubjects)
             {
                 // Check if student has marks for this subject
                 var obtained = studentObtainedMarks
                     .FirstOrDefault(m => m.Sub.SCode == examSub.SCode);
-
-                Console.WriteLine($" subject === {examSub.SCode}");
 
                 decimal thMark = obtained?.ThMark ?? 0;
                 decimal prMark = obtained?.PrMark ?? 0;

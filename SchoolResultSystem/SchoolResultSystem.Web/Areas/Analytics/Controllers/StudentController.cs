@@ -31,9 +31,11 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 return BadRequest("Student NSN is required.");
 
             string nsn = ns.NSN;
-            int examId = 1;
 
-            // ✅ Load all subjects in this exam
+            // get recent exam
+            var examId = _db.Exams.Any() ? _db.Exams.Max(e => e.ExamId): 0;
+
+            // Load all subjects in this exam
             var examSubjects = _db.Exams
                 .Include(e => e.Subject)
                 .Where(e => e.ExamId == examId)
@@ -48,13 +50,13 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 Console.WriteLine($" - {ex.SCode}: Th={ex.ThMark}, Pr={ex.PrMark}");
             }
 
-            // ✅ Load student
+            // Load student
             var student = _db.Students.FirstOrDefault(s => s.NSN == nsn);
             if (student == null)
                 return NotFound($"Student with NSN '{nsn}' not found.");
             var marks = _db.Marksheet.Select(s => s.SCode).ToList();
             
-            // ✅ Load student's marks
+            // Load student's marks
             var studentMarks = _db.Marksheet
                 .Include(m => m.Subject)
                 .Where(m => m.ExamId == examId && m.NSN == nsn)
@@ -69,7 +71,7 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 Console.WriteLine($" - {mark.SCode} ({mark.Subject?.SName}): Th={mark.ThMark}, Pr={mark.PrMark}");
             }
 
-            // ✅ Build student’s obtained marks list
+            // Build student’s obtained marks list
             var obtainedList = studentMarks.Select(m => new Subject
             {
                 Sub = new SubjectModel
@@ -81,13 +83,13 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 PrMark = m.PrMark
             }).ToList();
 
-            // ✅ Calculate all subject grades
+            // Calculate all subject grades
             var subjectGpas = FindGrade.SubjectGrades(examSubjects, obtainedList);
 
-            // ✅ Calculate overall GPA
+            //  Calculate overall GPA
             var overallGpa = FindGrade.OverAllGPA(subjectGpas, examSubjects);
 
-            // ✅ Build DTO
+            //  Build DTO
             var result = new MarkSheetDto
             {
                 Schoolname = "Nanu Ai School",

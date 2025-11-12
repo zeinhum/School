@@ -10,7 +10,9 @@ namespace SchoolResultSystem.Web.Models
         [Required]
         public string NSN { get; set; } = null!; 
         [Required]
-        public int ClassId { get; set; } 
+        public int ClassId { get; set; }
+        public bool IsActive{ get; set; } = true;
+
         [ForeignKey(nameof(NSN))]
         public virtual StudentModel Student { get; set; } = null!;
 

@@ -13,18 +13,20 @@
 <script type="module" src="/js/cstview.js"></script>
 
 <partial name="_header" />
+
 <div class="dashboard">
     <div>
-    <div class="partial-container"></div>
+        <div class="partial-container"></div>
         <div>
             <h1>@Model.ClassName</h1>
         </div>
 
         <div class="card">
-            <h2>Current students in the class</h2>
+            <h2>Students of this class</h2>
             <table class="data-table">
                 <thead>
                     <tr>
+                        <th>Select</th>
                         <th>Student ID</th>
                         <th>Student Name</th>
                         <th>Actions</th>
@@ -34,12 +36,13 @@
                     @foreach (var st in Model.Students)
                     {
                         <tr>
+                        <td><input type="checkbox" class="select" value="@st.NSN"></td>
+                            
                             <td>@st.NSN</td>
                             <td>@st.StudentName</td>
                             <td>
-                                <button class="btn btn-analyze">Analyze Learning</button>
                                 <button class="btn btn-edit">Edit</button>
-                                <button class="btn btn-delete">Delete</button>
+                                <button class="btn btn-delete">Deactivate</button>
                             </td>
                         </tr>
                     }
@@ -47,8 +50,7 @@
             </table>
         </div>
 
-        <button class=" btn-primary"> Add Student</button>
-        <button class=" btn-primary"> Move Students</button>
+
         <div class="formholder"></div>
     </div>
 

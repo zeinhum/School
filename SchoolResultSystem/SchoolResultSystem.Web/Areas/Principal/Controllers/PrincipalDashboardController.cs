@@ -111,7 +111,7 @@ public class PrincipalDashboardController : SchoolDbController
             return BadRequest("Invalid Class ID");
         }
         var students = _db.CS
-            .Where(cs => cs.ClassId == id)
+            .Where(cs => cs.ClassId == id &&cs.IsActive)
             .Include(cs => cs.Student)
             .Select(cs => new CSDto
             {

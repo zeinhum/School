@@ -26,6 +26,9 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<int>("ClassId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("NSN")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -100,6 +103,9 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<string>("ExamName")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
 
                     b.Property<decimal>("PrCrh")
                         .HasColumnType("TEXT");

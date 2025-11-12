@@ -20,7 +20,8 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
         public IActionResult Report([FromBody] Requet req)
         {
             var className = req.NSN;
-            var examId = 1;
+            var examId = _db.Exams.Any() ? _db.Exams.Max(e => e.ExamId): 0;
+
             if (string.IsNullOrEmpty(className))
             {
                 // Populate dropdown if no class selected yet
@@ -50,7 +51,7 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 .Distinct()
                 .ToList();
 
-            return PartialView("ClassReport",report);
+            return PartialView("ClassReport", report);
         }
     }
 }

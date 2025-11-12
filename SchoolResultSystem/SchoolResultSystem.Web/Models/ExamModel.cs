@@ -23,6 +23,7 @@ namespace SchoolResultSystem.Web.Models
         public decimal ThCrh { get; set; }
         [Required]
         public decimal PrCrh { get; set; }
+        public bool IsActive { get; set; } = true;
         [ForeignKey(nameof(SCode))]
         public virtual SubjectModel? Subject { get; set; }
         

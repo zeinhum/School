@@ -5,6 +5,10 @@ namespace SchoolResultSystem.Web.Data
 {
     public class SchoolDbContext : DbContext
     {
+        public SchoolDbContext()
+        {
+        }
+
         public SchoolDbContext(DbContextOptions<SchoolDbContext> options) : base(options) { }
 
         public DbSet<UserModel> Users { get; set; }

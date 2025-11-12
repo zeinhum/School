@@ -1,4 +1,5 @@
 import { AnalyticsHandler } from "./Analytics.js";
+import { MoveStudents } from "./moveStudents.js";
 
 export class RedirectButtons {
   constructor(baseDir, btnClass = ".btn") {
@@ -22,12 +23,15 @@ export class RedirectButtons {
       const action = button.dataset.action;
       const id = button.dataset.id || "";
 
-      if (!action) {
-        console.warn("No data-action found on button:", button);
+      if (action) {
+        this.#redirect(action, id);
         return;
       }
-
-      this.#redirect(action, id);
+      const move = button.dataset.move;
+      if (move) {
+        const id = button.dataset.id
+        MoveStudents(id); // students to next class
+      }
     });
   }
 
@@ -36,7 +40,7 @@ export class RedirectButtons {
     const base = "PrincipalDashboard";
 
     if (!this.toggle) {
-      console.warn("No element found for .right-nav");
+      console.warn("No element found for navigation");
       return;
     }
 
@@ -54,12 +58,12 @@ export class RedirectButtons {
             break;
           case "Teachers":
             await this.#fetchPartial(base, action);
-            this.jsContainer=null;
+            this.jsContainer = null;
             break;
 
           case "Classes":
             await this.#fetchPartial(base, action);
-            this.jsContainer=null;
+            this.jsContainer = null;
             break;
 
           default:
@@ -90,7 +94,8 @@ export class RedirectButtons {
       this.container.innerHTML = `<p class="loading">Loading...</p>`;
 
       const response = await fetch(url);
-      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
 
       const htmlText = await response.text();
       this.container.innerHTML = htmlText;

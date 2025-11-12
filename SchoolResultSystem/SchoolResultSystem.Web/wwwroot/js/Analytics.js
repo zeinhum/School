@@ -31,10 +31,10 @@ export class AnalyticsHandler {
 
     if (target === "Student") {
       this.addOption("Marksheet", "Recent Marksheet");
-      this.addOption("Analysis", "Grade Analysis");
+      //this.addOption("Analysis", "Grade Analysis");
     } else if (target == "Class") {
       this.addOption("Report", "Exam Report");
-      this.addOption("Analysis", "Rank");
+      //this.addOption("Analysis", "Rank");
     } else {
       this.addOption("Performance", "Performance");
     }

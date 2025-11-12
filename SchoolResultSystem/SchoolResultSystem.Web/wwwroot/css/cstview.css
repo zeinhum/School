@@ -138,3 +138,7 @@
 .add-cst:hover{
     cursor: pointer;
 }
+.logo{
+    display: flex;
+    justify-content: center;
+}

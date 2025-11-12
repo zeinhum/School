@@ -25,7 +25,12 @@
     padding-bottom: 10px;
     color:black;
 }
-
+.black{
+    color: #000;
+}
+.gradesheet{
+    text-align: center;
+}
 .school-info .logo {
     width: 100px;
     height: 100px;

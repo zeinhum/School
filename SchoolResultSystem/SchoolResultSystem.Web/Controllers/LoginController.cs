@@ -1,76 +1,75 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration.UserSecrets;
 using SchoolResultSystem.Web.Data;
 using SchoolResultSystem.Web.Models;
-
+using System.IO;
 
 namespace SchoolResultSystem.Web.Controllers
 {
     public class LoginController : Controller
     {
         private readonly SchoolDbContext _db;
+        private readonly IWebHostEnvironment _env;
 
-        public LoginController(SchoolDbContext db)
+        public LoginController(SchoolDbContext db, IWebHostEnvironment env)
         {
             _db = db;
+            _env = env;
         }
-
 
         [HttpPost]
         public IActionResult Authenticate(string username, string password)
         {
             try
             {
-                 UserModel user = new();
-                 var session = HttpContext.Session;
-                 var userRole = session.GetString("UserRole");
-                if (userRole==null)
+                // Check session first
+                var session = HttpContext.Session;
+                var userRole = session.GetString("UserRole");
+
+                if(userRole == null)
                 {
-                    user = _db.Users
-                              .FirstOrDefault(u => u.UserName == username && u.Password == password)!;
-                    userRole = user.Role;
+                    // Fetch user if not in session
+                    var user = _db.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
+    
+                if (user == null)
+                {
+                    TempData["error"] = "Username or password was not found.";
+                    return RedirectToAction("Start", "Home");
                 }
+
+                    if (!user.IsActive)
+                    {
+                        TempData["error"] = user.Role == "Admin"
+                            ? "Your admin account is deactivated."
+                            : "Your teacher account is deactivated.";
+                        return RedirectToAction("Start", "Home");
+                    }
+                    userRole = user.Role;
+
+                // ✅ Set session & TempData in one place
+                SetUserSession(user);
+                }
+
                 
 
-               
-                    if (user.Role == "Admin")
-                    {
-                        if (user.IsActive == false)
-                        {
-                            TempData["error"] = "Your admin account is deactivated.";
-                            return RedirectToAction("Start", "Home");
-                        }
-                        // set session
-                        HttpContext.Session.SetString("UserRole", user.Role);
-                        HttpContext.Session.SetString("UserName", user.UserName);
-                    TempData["user"] = user.UserName;
-                        var school =_db.SchoolInfo.Select(s => s.Name).FirstOrDefault();
-                    TempData["schoolName"] = school;
-                    Console.WriteLine($"school Name: {TempData["schoolName"]}");
-                        return RedirectToAction("Index", "PrincipalDashboard", new { area = "Principal" });
-                    }
+                // Redirect based on role
+                if (userRole == "Admin")
+                {
+                    return RedirectToAction("Index", "PrincipalDashboard", new { area = "Principal" });
+                }
+                else if (userRole == "Teacher")
+                {
+                    var userId = session.GetString("UserId");
+                    
+                    return RedirectToAction("Index", "TeachersDashboard", new { area = "Teachers", id = userId });
+                }
 
-                    if (user.Role == "Teacher")
-                    {
-                        if (user.IsActive == false)
-                        {
-                            TempData["error"] = "Your teacher account is deactivated.";
-                            return RedirectToAction("Start", "Home");
-                        }
-                        HttpContext.Session.SetString("UserRole", user.Role);
-                        HttpContext.Session.SetString("UserName", user.UserName);
-
-                         TempData["user"] = user.UserName;
-                         TempData["schoolName"] = _db.SchoolInfo.Select(s => s.Name).FirstOrDefault();
-                        return RedirectToAction("Index", "TeachersDashboard", new { area = "Teachers", id = user.TeacherId });
-                    }
-
-                TempData["error"] = "Username or password was not found.";
+                TempData["error"] = "Invalid role.";
                 return RedirectToAction("Start", "Home");
             }
-            catch (Exception)
+            catch
             {
                 TempData["error"] = "Login system is not set up. Please contact admin.";
-                // optionally log ex.Message
                 return RedirectToAction("Start", "Home");
             }
         }
@@ -78,8 +77,27 @@ namespace SchoolResultSystem.Web.Controllers
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
-            TempData["error"] = "you are logged out.";
+            TempData["error"] = "You are logged out.";
             return RedirectToAction("Login", "Home");
+        }
+
+        /// <summary>
+        /// Helper to set session and TempData (avoid repetition)
+        /// </summary>
+        private void SetUserSession(UserModel user)
+        {
+            var session = HttpContext.Session;
+
+            // Session
+            session.SetString("UserRole", user.Role);
+            session.SetString("UserName", user.UserName);
+            session.SetString("UserId", user.TeacherId);
+
+            // TempData
+            TempData["user"] = user.UserName;
+            var school = _db.SchoolInfo.Select(s => s.Name).FirstOrDefault();
+            TempData["schoolName"] = school;
+
         }
     }
 }

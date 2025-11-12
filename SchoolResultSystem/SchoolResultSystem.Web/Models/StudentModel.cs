@@ -5,6 +5,7 @@ namespace SchoolResultSystem.Web.Models
     public class StudentModel
     {
         [Key] // Unique student identifier
+        [Required]
         public string NSN { get; set; } = null!;
 
         [Required]
