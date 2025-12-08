@@ -7,9 +7,8 @@
 <div class="main-interface">
     <div class="welcome">
     @if(Model!=null){
-        <h2>Sign in to @Model.Name</h2>
+        <h2>@Model.Name</h2>
     }
-        
         
         @if(TempData["error"] !=null){
             <p class="error">@TempData["error"]</p>
@@ -20,7 +19,7 @@
     <div class="form-container">
         
         <form method="post" action="/Login/Authenticate" class="form-card">
-            
+        <p>Please Sign In</p>            
             <div class="form-group">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" required placeholder="Enter username"/>

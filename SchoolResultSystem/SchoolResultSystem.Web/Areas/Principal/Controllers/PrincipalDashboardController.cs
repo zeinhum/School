@@ -20,7 +20,7 @@ public class PrincipalDashboardController : SchoolDbController
     {
         // get schoolinfo
         var school = _db.SchoolInfo.FirstOrDefault()?.Name;
-        
+
         return View("PIndex", school);
     }
     // Class Subject teacher View
@@ -111,7 +111,7 @@ public class PrincipalDashboardController : SchoolDbController
             return BadRequest("Invalid Class ID");
         }
         var students = _db.CS
-            .Where(cs => cs.ClassId == id &&cs.IsActive)
+            .Where(cs => cs.ClassId == id && cs.IsActive)
             .Include(cs => cs.Student)
             .Select(cs => new CSDto
             {
@@ -221,7 +221,7 @@ public class PrincipalDashboardController : SchoolDbController
     }
 
     // Anlytics partial
-public IActionResult Analytics()
+    public IActionResult Analytics()
     {
         return PartialView("_Analytics");
     }

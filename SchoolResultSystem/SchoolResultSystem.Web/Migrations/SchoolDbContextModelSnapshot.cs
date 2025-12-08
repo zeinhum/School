@@ -191,6 +191,47 @@ namespace SchoolResultSystem.Web.Migrations
                     b.ToTable("SchoolInfo");
                 });
 
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.StudentAttendanceModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AbsentReason")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AttendanceBy")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("AttendanceDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("AttendanceEndUtc")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("NSN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Present")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AttendanceBy");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("NSN");
+
+                    b.ToTable("StudentAttendance");
+                });
+
             modelBuilder.Entity("SchoolResultSystem.Web.Models.StudentModel", b =>
                 {
                     b.Property<string>("NSN")
@@ -233,6 +274,29 @@ namespace SchoolResultSystem.Web.Migrations
                     b.HasKey("SCode");
 
                     b.ToTable("Subjects");
+                });
+
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.TeacherAttendanceModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LoginDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("LogoutDateTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TeacherId")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TeacherId");
+
+                    b.ToTable("TeacherAttendance");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.UserModel", b =>
@@ -346,6 +410,44 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Navigation("Student");
 
                     b.Navigation("Subject");
+                });
+
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.StudentAttendanceModel", b =>
+                {
+                    b.HasOne("SchoolResultSystem.Web.Models.UserModel", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("AttendanceBy")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolResultSystem.Web.Models.ClassModel", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolResultSystem.Web.Models.StudentModel", "Student")
+                        .WithMany()
+                        .HasForeignKey("NSN")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Student");
+
+                    b.Navigation("Teacher");
+                });
+
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.TeacherAttendanceModel", b =>
+                {
+                    b.HasOne("SchoolResultSystem.Web.Models.UserModel", "User")
+                        .WithMany()
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

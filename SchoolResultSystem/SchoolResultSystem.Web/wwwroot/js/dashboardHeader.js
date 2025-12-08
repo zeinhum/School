@@ -8,6 +8,7 @@ export async function writeHeader(data = null) {
   if (data?.user) {
     sessionStorage.setItem("schoolUser", data.user);
     sessionStorage.setItem("schoolName", data.school);
+    sessionStorage.setItem("userId", data.userId);
 
     if (data.logoPath) {
       await fetchAndSaveLogo(data.logoPath); // fetch logo and store in IndexedDB
@@ -15,18 +16,18 @@ export async function writeHeader(data = null) {
   }
 
   // Get user and school from sessionStorage
-  const [user, school] = checkSession();
+  const [user, school, userId] = checkSession();
 
   // Load logo from IndexedDB
   const logo = await loadLogo();
 
   hcontainer.innerHTML = `
     <div class='logo'>
-      <img src="${logo}" alt="Logo" style="height:40px;">
+      <img src="${logo}" alt="Logo" style="height:30px;">
       <h3>${school}</h3>
     </div>
     <div class="user">
-      <p>${user}</p>
+      <p data-userId="${userId}">${user}</p>
       <a class="login" href="/Login/Logout">Logout</a>
     </div>`;
 }
@@ -104,5 +105,6 @@ async function fetchAndSaveLogo(path) {
 function checkSession() {
   const user = sessionStorage.getItem("schoolUser") || "You";
   const school = sessionStorage.getItem("schoolName") || "School";
-  return [user, school];
+  const userId = sessionStorage.getItem("userId")|| "id";
+  return [user, school, userId];
 }

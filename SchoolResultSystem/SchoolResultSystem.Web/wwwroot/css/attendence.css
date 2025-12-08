@@ -1,0 +1,175 @@
+
+        :root {
+            /* Define a primary color for consistency */
+            
+            --secondary-color: #F3F4F6; /* Gray 100 */
+            --border-color: #D1D5DB; /* Gray 300 */
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Container Styling: Ensures the form is centered and looks like a card */
+        .fill-partial {
+            max-width: 90%;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 0.75rem; /* rounded-xl */
+            box-shadow: var(--shadow);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Header Styling */
+        .fill-partial h3 {
+            color:var(--primary-bgcolor);
+            font-size: 1.5rem; /* text-2xl */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 0.5rem;
+        }
+
+        .fill-partial p {
+            margin-bottom: 1.5rem;
+            color: #6B7280; /* text-gray-500 */
+        }
+
+        /* Table Structure */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem; /* text-sm */
+        }
+
+        /* Table Header */
+        thead tr {
+            background-color: var(--secondary-color);
+            border-bottom: 2px solid var(--border-color);
+            color: #1F2937; /* text-gray-800 */
+        }
+
+        th {
+            padding: 1rem 0.75rem;
+            text-align: left;
+            font-weight: 600; /* font-semibold */
+            text-transform: uppercase;
+            letter-spacing: 0.05em; /* tracking-wider */
+        }
+
+        /* Table Body Rows */
+        tbody tr {
+            border-bottom: 1px solid #E5E7EB; /* border-gray-200 */
+            transition: background-color 0.2s;
+        }
+
+        tbody tr:hover {
+            background-color: #F9FAFB; /* Subtle hover effect */
+        }
+
+        td {
+            padding: 1rem 0.75rem;
+            vertical-align: middle;
+        }
+
+        /* Text Input Styling (Reason for absence) */
+        td input[type="text"] {
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem; /* rounded-lg */
+            padding: 0.5rem 0.75rem;
+            width: 90%;
+            transition: border-color 0.15s, box-shadow 0.15s;
+        }
+
+        td input[type="text"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1); /* Custom focus ring */
+        }
+
+        /* Checkbox Styling */
+        td input[type="checkbox"] {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            accent-color: var(--primary-color); /* Uses the primary color */
+        }
+
+
+        /* Submit Button Styling */
+        .submit-attendence {
+            margin-top: 1.5rem;
+            text-align: center;
+            background-color: var(--button-color);
+            color: white;
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            display: inline-block;
+            
+        }
+
+        .submit-attendence:hover {
+            background-color: var(--button-hover-color); /* Slightly darker on hover */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        /* --- Full Responsiveness: Stack columns on small screens (Mobile View) --- */
+        @media (max-width: 768px) {
+            .fill-partial {
+                padding: 1rem;
+            }
+
+            /* Force table elements to stack */
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            /* Hide table headers (desktop view) */
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                border: 1px solid var(--border-color);
+                margin-bottom: 1rem; /* Spacing between "cards" */
+                border-radius: 0.5rem;
+            }
+
+            td {
+                /* Create a row-like appearance with a left-aligned label */
+                border: none;
+                border-bottom: 1px solid #eee;
+                position: relative;
+                padding-left: 50% !important;
+                text-align: right;
+            }
+            
+            /* Last cell needs no border */
+            tr:last-child td:last-child {
+                border-bottom: none;
+            }
+
+            /* Generate column labels using :before pseudo-element */
+            td:before {
+                position: absolute;
+                top: 0;
+                left: 0.75rem;
+                width: 45%;
+                padding: 1rem 0;
+                white-space: nowrap;
+                text-align: left;
+                font-weight: 600;
+                color: #4B5563;
+            }
+
+            /* Mapped labels based on the original column structure */
+            td:nth-of-type(1):before { content: "NSN:"; }
+            td:nth-of-type(2):before { content: "Name:"; }
+            td:nth-of-type(3):before { content: "Present:"; }
+            td:nth-of-type(4):before { content: "Reason for Absense:"; }
+
+            
+        }

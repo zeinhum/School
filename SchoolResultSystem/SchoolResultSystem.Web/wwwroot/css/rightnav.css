@@ -10,7 +10,7 @@ body{
     display:flex;
     align-items:center;
     justify-content:center;          /* stays centered and not too wide */
-  margin: 0 auto;
+    margin: 0 auto;
 }
 .dashboard > :first-child {
   margin-left: auto;
@@ -109,4 +109,13 @@ body{
 .btn:hover,
 .toggler:hover {
     background-color: var(--success-color);
+}
+
+@media(max-width:600px){
+    .dashboard{
+        flex-direction: column;
+    }
+    .right-nav{
+        flex-direction: row;
+    }
 }

@@ -10,9 +10,7 @@ namespace SchoolResultSystem.Web.Areas.Teachers.Models
     // show subject teacher of the class
     public class TDashDto
     {
-        public string SchoolName { get; set; } = null!;
-        public string TeacherId { get; set; } = null!;
-        public string TeacherName { get; set; } = null!;
+        
         public List<CSList> CSList = new List<CSList>();
     }
 }

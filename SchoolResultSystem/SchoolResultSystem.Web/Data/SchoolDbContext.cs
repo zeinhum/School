@@ -19,7 +19,10 @@ namespace SchoolResultSystem.Web.Data
         public DbSet<CSModel> CS { get; set; }
         public DbSet<SubjectModel> Subjects { get; set; }
         public DbSet<StudentModel> Students { get; set; }  
-        public DbSet<CSTModel> CST { get; set; }  
+        public DbSet<CSTModel> CST { get; set; } 
+
+        public DbSet<TeacherAttendanceModel> TeacherAttendance{get;set;}
+        public DbSet<StudentAttendanceModel>StudentAttendance{get;set;} 
 
 
 

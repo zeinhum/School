@@ -46,7 +46,8 @@ namespace SchoolResultSystem.Web.Controllers
             {
                 return View();
             }
-           return View("Login");
+            var school = _db.SchoolInfo.FirstOrDefault();
+           return View("Login", school);
         }
 
 
@@ -91,6 +92,11 @@ namespace SchoolResultSystem.Web.Controllers
 
         public IActionResult Login()
         {
+            var school =_db.SchoolInfo.FirstOrDefault();
+            if (school != null)
+            {
+                return View("Login", school);
+            }
             return View("Login");
         }
     }

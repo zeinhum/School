@@ -1,0 +1,49 @@
+@model SchoolResultSystem.Web.Areas.Attendence.Model.ClassAttendenceDTO
+
+<link rel="stylesheet" href="~/css/attendence.css" />
+
+
+
+<div class="fill-partial">
+    <h3 class="class" data-classId="@Model.ClassId">Mark student attendence for the class:
+        <strong>@Model.className</strong>
+    </h3>
+    <p> For the date:@DateTime.Now</p>
+
+    <div>
+        <table id="attendence-table">
+            <thead>
+                <tr>
+
+                    <th>NSN</th>
+                    <th>Name</th>
+                    <th>Present</th>
+                    <th>Absent?</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var st in Model.Studs)
+                {
+
+                    <tr>
+                        <td class="nsn">@st.NSN</td>
+                        <td>@st.StudentName</td>
+                        <td class="present-check"><input type="checkbox" /></td>
+                        <td class="absent-check"><select class="absent-reason-selection">
+                                <option value="none">Select reason</option>
+                                <option value="Unknown">Unknown</option>
+                                <option value="Sickness">Sickness</option>
+                                <option value="Work">Work</option>
+                                <option value="Celebration">Celebration</option>
+                                <option value="Funeral">Funeral</option>
+                            </select></td>
+                    </tr>
+                }
+
+            </tbody>
+
+        </table>
+
+        <div class="submit-attendence"> Submit Attendence</div>
+    </div>

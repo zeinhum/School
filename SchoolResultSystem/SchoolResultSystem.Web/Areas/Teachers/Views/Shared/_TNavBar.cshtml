@@ -1,10 +1,11 @@
 @using System.Text.Json;
 @model int;
-@{
+@{// data comming from session on login
     Layout = null;
     var data = new {
         user = TempData["user"],
         school=TempData["schoolName"],
+        userId = TempData["userId"],
         logoPath ="/image/logo.png"
     };
     var jsonData = JsonSerializer.Serialize(data);
@@ -19,7 +20,7 @@
 import {TNav} from "/js/teacherNav.js"
 TNav(@Html.Raw(jsonData));
 </script>
-
+<script src="/js/attendence.js" type="module"></script>
 
 <div class="right-nav">
     <div class="create-actions">

@@ -116,6 +116,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVGVhY2hlcnNcVmlld3NcVGVhY2hlcnNEYXNoYm9hcmRcVEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Teachers/Views/TeachersDashboard/_Attendence.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVGVhY2hlcnNcVmlld3NcVGVhY2hlcnNEYXNoYm9hcmRcX0F0dGVuZGVuY2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Teachers/Views/TeachersDashboard/_FillMPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVGVhY2hlcnNcVmlld3NcVGVhY2hlcnNEYXNoYm9hcmRcX0ZpbGxNUGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

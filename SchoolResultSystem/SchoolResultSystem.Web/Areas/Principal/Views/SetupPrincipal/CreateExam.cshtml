@@ -2,11 +2,14 @@
 @model List<SchoolResultSystem.Web.Models.SubjectModel>;
 @{
     ViewData["Title"] = "Admin Dashboard";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/exam.js"></script>
+
+<partial name="_header" />
+
 <p>@ViewBag.error</p>
 <div class="dashboard">
     <div>

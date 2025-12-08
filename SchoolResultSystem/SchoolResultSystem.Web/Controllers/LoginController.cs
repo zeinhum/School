@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration.UserSecrets;
+using SchoolResultSystem.Web.Areas.Attendence.Model;
 using SchoolResultSystem.Web.Data;
 using SchoolResultSystem.Web.Models;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace SchoolResultSystem.Web.Controllers
 {
@@ -18,7 +20,7 @@ namespace SchoolResultSystem.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Authenticate(string username, string password)
+        public async Task<IActionResult> Authenticate(string username, string password)
         {
             try
             {
@@ -26,16 +28,16 @@ namespace SchoolResultSystem.Web.Controllers
                 var session = HttpContext.Session;
                 var userRole = session.GetString("UserRole");
 
-                if(userRole == null)
+                if (userRole == null)
                 {
                     // Fetch user if not in session
                     var user = _db.Users.FirstOrDefault(u => u.UserName == username && u.Password == password);
-    
-                if (user == null)
-                {
-                    TempData["error"] = "Username or password was not found.";
-                    return RedirectToAction("Start", "Home");
-                }
+
+                    if (user == null)
+                    {
+                        TempData["error"] = "Username or password was not found.";
+                        return RedirectToAction("Start", "Home");
+                    }
 
                     if (!user.IsActive)
                     {
@@ -46,11 +48,24 @@ namespace SchoolResultSystem.Web.Controllers
                     }
                     userRole = user.Role;
 
-                // ✅ Set session & TempData in one place
-                SetUserSession(user);
+
+                    //attendence
+                    bool Attendence = await TakeAttendence.TeacherAttendance(_db, user.TeacherId);
+
+                    if (!Attendence)
+                    {
+                        // redirect to login
+                        TempData["error"] = "Sorry! attendence could not be marked. Please try again.";
+                        return RedirectToAction("Login", "Home");
+
+                    }
+                    // ✅ Set session & TempData in one place
+
+                    SetUserSession(user);
+
                 }
 
-                
+
 
                 // Redirect based on role
                 if (userRole == "Admin")
@@ -60,7 +75,7 @@ namespace SchoolResultSystem.Web.Controllers
                 else if (userRole == "Teacher")
                 {
                     var userId = session.GetString("UserId");
-                    
+
                     return RedirectToAction("Index", "TeachersDashboard", new { area = "Teachers", id = userId });
                 }
 
@@ -97,6 +112,7 @@ namespace SchoolResultSystem.Web.Controllers
             TempData["user"] = user.UserName;
             var school = _db.SchoolInfo.Select(s => s.Name).FirstOrDefault();
             TempData["schoolName"] = school;
+            TempData["userId"] = user.TeacherId;
 
         }
     }

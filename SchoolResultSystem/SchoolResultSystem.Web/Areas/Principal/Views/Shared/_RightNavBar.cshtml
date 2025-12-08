@@ -2,20 +2,22 @@
 @model int;
 @{
     Layout = null;
-    var data = new {
+    var data = new
+    {
         user = TempData["user"],
-        school=TempData["schoolName"],
-        logoPath ="/image/logo.png",
-        pageId =Model
+        school = TempData["schoolName"],
+        logoPath = "/image/logo.png",
+        pageId = Model
     };
     var jsonData = JsonSerializer.Serialize(data);
 }
 <link rel="stylesheet" href="~/css/rightnav.css" />
 <link rel="stylesheet" href="~/css/cstview.css" />
 <link rel="stylesheet" href="~/css/header.css" />
-<script type="module" >
-import {RightNav} from "/js/rightNav.js"
-RightNav(@Html.Raw(jsonData));
+
+<script type="module">
+    import { RightNav } from "/js/rightNav.js"
+    RightNav(@Html.Raw(jsonData));
 </script>
 
 
@@ -23,29 +25,33 @@ RightNav(@Html.Raw(jsonData));
 <div class="right-nav">
 
     <div class="create-actions">
-    <h3>Navigation</h3>
-    @if(Model>-5){
-        <button class="btn primary" data-action="PrincipalDashboard/Index">Dashboard</button>
-    }
-    @if(Model>-4){
-        <button class="btn primary" data-action="PrincipalDashboard/SDForm">Student Admission</button>
-    }
-    @if(Model>-3){
-    <button class="toggler" data-action="Analytics">Analytics</button>
-    <button class="toggler" data-action="Teachers">Teachers</button>
-    <button class="toggler" data-action="Classes" >Classes</button>
-    }
-    @if(Model >= 0){
-        <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSTView">Subject Teacher</button>
-        <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSView">Students</button>
-        <button class="btn secondary" data-id="@Model" data-move="movestudents">Move Students</button>
-    }
-        
-        
+        <h3>Navigation</h3>
+        @if (Model > -5)
+        {
+            <button class="btn primary" data-action="PrincipalDashboard/Index">Dashboard</button>
+        }
+        @if (Model > -4)
+        {
+            <button class="btn primary" data-action="PrincipalDashboard/SDForm">Student Admission</button>
+        }
+        @if (Model > -3)
+        {
+            <button class="toggler" data-action="Analytics">Analytics</button>
+            <button class="toggler" data-action="Teachers">Teachers</button>
+            <button class="toggler" data-action="Classes">Classes</button>
+        }
+        @if (Model >= 0)
+        {
+            <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSTView">Subject Teacher</button>
+            <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSView">Students</button>
+            <button class="btn secondary" data-id="@Model" data-move="movestudents">Move Students</button>
+        }
+
+
     </div>
 
     <div class="create-actions">
-    <h3>Create</h3>
+        <h3>Create</h3>
         <button class="btn primary" data-action="SetupPrincipal/CreateTeacher">Teacher Account</button>
         <button class="btn primary" data-action="SetupPrincipal/CreateClass">Class</button>
         <button class="btn primary" data-action="SetupPrincipal/CreateSubject">Subject</button>

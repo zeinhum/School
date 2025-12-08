@@ -1,12 +1,12 @@
 @model SchoolResultSystem.Web.Areas.Teachers.Models.TDashDto
 @{
     ViewData["Title"] = "Teacher";
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <link rel="stylesheet" href="~/css/cstview.css" />
-<script src="/js/teachersdb.js" type="module"></script>
 
+<script src="/js/teacherDasboard.js" type="module"></script>
 <div class="dashboard-header"></div>
 
 <div class="dashboard">
@@ -18,7 +18,7 @@
         <div class="card">
             <h2>Your Classes and Subjects</h2>
 
-            @if (Model.TeacherName != null && Model.TeacherName.Any())
+            @if (Model.CSList != null)
             {
                 <table class="data-table">
                     <thead>
@@ -26,7 +26,6 @@
                             <th>Class Name</th>
                             <th>Subject Name</th>
                             <th>Subject Code</th>
-                            <th>Rank</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -37,12 +36,17 @@
                                 <td name="ClassName">@cs.ClassName</td>
                                 <td name="SName">@cs.SName</td>
                                 <td name="SCode">@cs.SCode</td>
-                                <td></td>
                                 <td>
-                                    <button class="btn-primary" name="ClassId" value=@cs.ClassId data-action="FillMarks">Fill
-                                        Marks</button>
-                                    <button class="btn-primary" name="ClassId" value=@cs.ClassId
-                                        data-action="UpdateMarks">Update Marks</button>
+                                <select class="select-option" id ="selection">
+                                <option name="ClassId" value=@cs.ClassId data-action="no">Select Action</option>
+                                <option class="btn-primary" name="ClassId" value=@cs.ClassId data-action="AttendenceReq">Attendence</option>
+                                    <option class="btn-primary" name="ClassId" value=@cs.ClassId data-action="FillMarks">Fill
+                                        Marks</option>
+                                    <option class="btn-primary" name="ClassId" value=@cs.ClassId
+                                        data-action="UpdateMarks">Update Marks</option>
+                                
+                                </select>
+                                
                                 </td>
                             </tr>
                         }

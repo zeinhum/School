@@ -4,6 +4,10 @@ using SchoolResultSystem.Web.Areas.Teachers.Models;
 using SchoolResultSystem.Web.Data;
 using System.Linq.Expressions;
 using SchoolResultSystem.Web.Filters;
+using AspNetCoreGeneratedDocument;
+using Microsoft.EntityFrameworkCore;
+using SchoolResultSystem.Web.Areas.Attendence.Model;
+using System.Threading.Tasks;
 
 namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 {
@@ -26,11 +30,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
             {
                 var dto = new TDashDto
                 {
-                    SchoolName = _db.SchoolInfo.FirstOrDefault()?.Name ?? "Unknown School",
-                    TeacherName = _db.Users
-                                    .Where(u => u.TeacherId == id)
-                                    .Select(u => u.TeacherName)
-                                    .FirstOrDefault() ?? "Unknown Teacher",
+
                     CSList = _db.CST
                                 .Where(t => t.TeacherId == id)
                                 .Select(c => new CSList
@@ -43,7 +43,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                                 .ToList()
                 };
 
-                return View("TIndex",dto);
+                return View("TIndex", dto);
             }
             catch (Exception e)
             {
@@ -56,7 +56,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
         }
 
-        [HttpPost]
+        [HttpPost] //returns html form
         public IActionResult FillMarks([FromBody] ClsSub data)
         {
             if (!ModelState.IsValid)
@@ -108,7 +108,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
         }
 
-        // update Marks
+        // update Marks returns partial html form
         [HttpPost]
         public IActionResult UpdateMarks([FromBody] ClsSub data)
         {
@@ -147,7 +147,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
         }
 
-        // save Marks
+        // save Marks saves in db
         [HttpPost]
         public IActionResult SaveMarks([FromBody] SaveMarks data)
         {
@@ -195,7 +195,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
         }
 
-        // save update
+        // save update saves in db
         [HttpPost]
         public IActionResult SaveUpdate([FromBody] SaveMarks data)
         {
@@ -238,6 +238,57 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
             }
 
         }
+
+
+        // returns attendence form for the selected class
+        [HttpPost]
+        public IActionResult AttendenceReq([FromBody] ClsSub data)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid Data type");
+            }
+
+            var AllStudsOfClass = _db.CS
+                .Where(s => s.IsActive && s.ClassId == data.ClassId)
+                .Select(s => new StudsDTO
+                {
+                    StudentName = s.Student.StudentName,
+                    NSN = s.NSN
+                })
+                .ToList();
+
+            var AttendenceDTO = new ClassAttendenceDTO
+            {
+                Studs = AllStudsOfClass,
+                ClassId = data.ClassId,
+                ClassName = data.ClassName
+            };
+
+            return PartialView("_Attendence", AttendenceDTO);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MarkStudsAttendence([FromBody] StudentAttendanceDTO dto)
+        {
+            try
+            {
+                bool isAttendanceDone = await TakeAttendence.MarkStudentAttendance(_db, dto);
+                if (!isAttendanceDone)
+                {
+                    return Json(new { success = false });
+                }
+                return Json(new { success = true });
+            }
+            catch
+            {
+                return Json(new { success = false });
+            }
+
+        }
+
+
     }
+
 
 }
