@@ -400,7 +400,7 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
         }
     }
 
-    public IActionResult Help()
+    public IActionResult DatabaseManagement()
     {
         return View();
     }
@@ -468,7 +468,7 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
 
             System.IO.File.Move(tempPath, dbPath);
 
-            return Ok("Database replaced successfully.");
+            return View("DatabaseManagement");
         }
         catch (IOException ioEx)
         {

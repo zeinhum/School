@@ -11,7 +11,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Model
 
 
 
-        public static async Task<bool> TeacherAttendance(SchoolDbContext _db, string id)
+        public static  async Task<bool> TeacherAttendance(SchoolDbContext _db, string id)
         {
             var today = DateTime.UtcNow.Date;
             var tomorrow = today.AddDays(1);

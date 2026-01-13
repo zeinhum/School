@@ -7,15 +7,26 @@ using Microsoft.EntityFrameworkCore;
 using System.Security.Cryptography;
 using SchoolResultSystem.Web.Filters;
 using SchoolResultSystem.Web.Areas.Microservices.Models;
+using SchoolResultSystem.Web.Areas.Attendence.Models;
+using SchoolResultSystem.Web.Areas.Attendence.Services;
 
-[Area("Microservices")]
-[AuthorizeUser("Admin")]
-public class AttendenceController : SchoolDbController
+
+namespace SchoolResultSystem.Web.Areas.Attendence.Controllers
 {
-    public AttendenceController(SchoolDbContext db) : base(db) { }
 
-    public IActionResult TeacherAttendence(string id)
+
+    [Area("Attendence")]
+    [AuthorizeUser()]
+
+    public class AttendenceController(SchoolDbContext db) : SchoolDbController(db)
     {
-        return Json(new { success = true });
+        [HttpPost]
+        public IActionResult DisplpayAttendence([FromBody] AttendenceRequestDto dto)
+        {
+            var attendence = new DisplayAttendence(_db);
+            var attendenceData = attendence.ExtractAttendenceData(dto);
+
+            return PartialView("_DispAttendence", attendenceData);
+        }
     }
 }

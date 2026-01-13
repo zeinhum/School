@@ -1,3 +1,6 @@
+// this controller makes marsksheet per student of recent exam
+
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolResultSystem.Web.Areas.Analytics.Models;

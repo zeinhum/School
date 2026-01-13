@@ -4,6 +4,8 @@
 }
 
 <link rel="stylesheet" href="~/css/help.css" />
+
+<script src="/js/databaseManagement.js" type="module"></script>
 <partial name="_header" />
 
 <div class="dashboard">
@@ -18,7 +20,7 @@
             <div class="section">
                 <h4>🔹 Backup Your Database</h4>
                 <p>Save a copy of your current database to a secure location.</p>
-                <a class="btn copy" href="~/Principal/SetupPrincipal/CopyDb">💾 Copy Database</a>
+                <a class="btn copy" id="copy-db" href="~/Principal/SetupPrincipal/CopyDb">💾 Copy Database</a>
             </div>
 
             <div class="divider"></div>
@@ -31,10 +33,10 @@
                     after replacement for changes to take effect.
                 </p>
                 <form asp-action="ReplaceDb" asp-controller="SetupPrincipal" asp-area="Principal"
-                    enctype="multipart/form-data" method="post" class="upload-form">
+                    enctype="multipart/form-data" method="post" class="upload-form" id="replace-form">
                     <label for="file" class="file-label">📂 Choose a .db file</label>
                     <input type="file" id="file" name="file" accept=".db" required />
-                    <button type="submit" class="btn danger">🔁 Replace Database</button>
+                    <button type="submit" class="btn danger" id="replace-db">🔁 Replace Database</button>
                 </form>
             </div>
         </div>

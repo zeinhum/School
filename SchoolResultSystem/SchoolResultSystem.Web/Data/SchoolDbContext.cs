@@ -24,6 +24,8 @@ namespace SchoolResultSystem.Web.Data
         public DbSet<TeacherAttendanceModel> TeacherAttendance{get;set;}
         public DbSet<StudentAttendanceModel>StudentAttendance{get;set;} 
 
+        public DbSet<LeavesCalendarModel>Leaves{get;set;}
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

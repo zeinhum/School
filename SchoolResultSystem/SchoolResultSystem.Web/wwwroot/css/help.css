@@ -111,3 +111,8 @@ input[type="file"] {
 .developer-note a:hover {
   text-decoration: underline;
 }
+
+.btn, #copy-db, #replace-db {
+    position: relative;
+    z-index: 9999;
+}

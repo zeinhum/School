@@ -18,7 +18,6 @@ class TableActionHandler {
     // Listen for changes on the table
     this.table.addEventListener("change", (e) => {
       this.handleChange(e);
-
     });
   }
 
@@ -34,7 +33,7 @@ class TableActionHandler {
     const row = select.closest("tr");
     const rowData = this.getRowData(row, selectedOption);
 
-    this.sendData(action, rowData);
+    this.displayHtml(action, rowData);
   }
 
   getRowData(row, selectedOption) {
@@ -58,10 +57,9 @@ class TableActionHandler {
     return data;
   }
 
-
   // send data and populate partial html form
-  sendData(baseUrl, data) {
-    const url = `/Teachers/TeachersDashboard/${baseUrl}`;
+  displayHtml(action, data) {
+    const url = `/Teachers/TeachersDashboard/${action}`;
 
     fetch(url, {
       method: "POST",
@@ -75,8 +73,13 @@ class TableActionHandler {
       .then((html) => {
         if (this.partialContainer) {
           this.partialContainer.innerHTML = html;
-          //initializer();
-          Attendance();
+
+          if (action === "AttendenceReq") {
+            const attendence= new Attendance();
+            attendence.SubmitAddendence("/Teachers/TeachersDashboard/MarkStudsAttendence");
+          } else {
+            initializer();
+          }
         } else {
           console.warn("⚠️ No container found for partial content.");
         }

@@ -1,3 +1,5 @@
+// generate exam report of class of recent exam
+
 using Microsoft.AspNetCore.Mvc;
 using SchoolResultSystem.Web.Areas.Analytics.Models;
 using SchoolResultSystem.Web.Data;

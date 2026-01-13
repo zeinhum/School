@@ -1,0 +1,56 @@
+@{
+    ViewData["Title"] = "Leave Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/calendar/calendar.css" />
+
+<script src="/js/calendar/calendar.js" type="module"></script>
+<partial name="_header" />
+
+<div class="dashboard">
+
+    <div class="db-maintenance">
+        
+            <div class="db-card">
+                <h2 class="title">Setup academic calendar for current year.</h2>
+                <p class="subtitle">
+                    Record the days when school will be off. Rest of the days will be marked as working days.
+                </p>
+
+                <!-- Weekend section -->
+                <div class="weekend-section">
+                    <p>Weekend Days</p>
+                    <div class="weekend-row">
+                        <input type="date" />
+                        <button type="button" class="weekend-add add-btn">+</button>
+                        <button type="button" class="weekend-remove remove-btn">-</button>
+                    </div>
+                </div>
+
+                <p>Other Leaves</p>
+                <table class="leave-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Add/Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="date" /></td>
+                            <td><input type="text" placeholder="Reason" /></td>
+                            <td>
+                                <button type="button" class="leave-add add-btn">+</button>
+                                <button type="button" class="leave-remove remove-btn">-</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <button class="btn primary" id="set-calendar">Set Calendar</button>
+                 <button class="btn secondary">Reset</button>
+            </div></div>
+
+        <partial name="_RightNavBar" model="-4" />
+    </div>

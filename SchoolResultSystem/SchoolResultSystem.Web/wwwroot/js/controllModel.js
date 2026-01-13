@@ -8,8 +8,6 @@ export class RedirectButtons {
     this.toggle = document.querySelector(".right-nav");
     this.container = document.querySelector(".partial-container");
 
-
-
     this.jsContainer = null;
     this.#initListener();
     this.#toggler();
@@ -32,7 +30,7 @@ export class RedirectButtons {
       }
       const move = button.dataset.move;
       if (move) {
-        const id = button.dataset.id
+        const id = button.dataset.id;
         MoveStudents(id); // students to next class
       }
     });
@@ -41,28 +39,27 @@ export class RedirectButtons {
   //-- action on change--
 
   async actionOnChange(selectionid, controller) {
-  const selector = document.querySelector(`#${selectionid}`);
-  if (!selector) return;
+    const selector = document.querySelector(`#${selectionid}`);
+    if (!selector) return;
 
-  selector.addEventListener("change", async (e) => {
-    e.preventDefault();
+    selector.addEventListener("change", async (e) => {
+      e.preventDefault();
 
-   const selected = e.target.options[e.target.selectedIndex];
+      const selected = e.target.options[e.target.selectedIndex];
+      if (selected) {
+        const id = selected.value;
+        const action = selected.dataset.action;
 
-  const id = selected.value;
-  const action = selected.dataset.action;
+        //console.log(`action on changer url : ${controller}/${action}/${id}`);
 
-    console.log(`action on changer url : ${controller}/${action}/${id}`);
-
-    // Wait for the server partial view
-    await this.#fetchPartial(controller, action, id);
-  });
-}
-
+        // Wait for the server partial view
+        await this.#fetchPartial(controller, action, id);
+      }
+    });
+  }
 
   // --- Private: Navigation toggler (load partials dynamically) ---
   async #toggler(base = "PrincipalDashboard") {
-
     if (!this.toggle) {
       console.warn("No element found for navigation");
       return;
@@ -129,25 +126,22 @@ export class RedirectButtons {
     }
   }
 
-
   // For API calls and receive promise
   // baseUrl: ARea/Controller
-  // action: api endpoint 
+  // action: api endpoint
   // Home/Login/authenticate
-  // json data
-  async #CallApi(baseUrl,action, data){
-    const api =baseUrl/action;
-      //console.log(`data being sent: ${JSON.stringify(data)}`);
-    try{
-      const response = await fetch(api, {
+  async PostCallApi(ApiUrl, data) {
+    const api = baseUrl / action;
+    //console.log(`data being sent: ${JSON.stringify(data)}`);
+    try {
+      const response = await fetch(ApiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
-      })
+      });
       return response;
-  } catch{
-    return "no promise";
-  }
+    } catch {
+      return "no promise";
     }
-      
+  }
 }

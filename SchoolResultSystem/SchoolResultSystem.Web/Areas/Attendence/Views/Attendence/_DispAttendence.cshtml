@@ -1,0 +1,17 @@
+@model SchoolResultSystem.Web.Areas.Attendence.Models.DisplayAttendenceDto
+
+
+<div class="diplay-attendence">
+    @if(Model !=null){
+
+        <h4 data-candidateId =@Model.RequestData.Id>Attendence report for : @Model.RequestData.CandidateName (@Model.RequestData.Id)</h4>
+        <p>From date: @Model.RequestData.From to datae: @Model.RequestData.Till</p>
+
+        <h3>Number of school days : @Model.SchoolDays.Count</h3>
+        <h4>Number of days worked: @Model.Present.Count</h4>
+        <h4>Number of days absent: @Model.Absent.Count</h4>
+
+    }else{
+        <h3>No attendence record found.</h3>
+    }
+</div>
