@@ -32,12 +32,21 @@ export class AnalyticsHandler {
     this.selectAction.innerHTML = "";
     this.subSelection.innerHTML ="";
 
+    
+
     if (target === "Student") {
+      this.addOption("M", "Select Option", this.selectAction);
       this.addOption("Marksheet", "Marksheet", this.selectAction);
-      this.addOption("Attendencereport", "Attendence Report", this.selectAction);
+      this.addOption("StudentAttendence", "Attendence Report", this.selectAction);
       this.onChange();
       //this.addOption("Analysis", "Grade Analysis");
-    } else if (target == "Class") {
+    } else if(target=="Teacher"){
+      this.addOption("M", "Select Option", this.selectAction);
+      this.addOption("TeacherAttendence", "Attendence Report", this.selectAction);
+    //  this.addOption("StudentAttendence", "Attendence Report", this.selectAction);
+      this.onChange();
+    }
+    else if (target == "Class") {
       this.addOption("Report", "Exam Report", this.selectAction);
       //this.addOption("Analysis", "Rank");
     } else {
@@ -60,14 +69,15 @@ export class AnalyticsHandler {
     const selectElement = document.createElement("select");
     this.subSelection.innerHTML ="";
     this.actionLebel=target;
-    if(target=="Attendencereport"){
+console.log(`target = ${target}`)
+    if(target=="StudentAttendence" || target=="TeacherAttendence"){
 
-      this.subSelection.innerHTML=`<p>From Date:<span>
+      this.subSelection.innerHTML=`<p data-action="/Attendence/Attendence/DisplpayAttendence">From Date:<span>
   <input type="date" id="fromdate" name="date"><span> To Date: <span><input type="date" id="todate" name="date"></span></p>`
   
-      
-      
-
+    } else if(target=="Marksheet"){
+      this.subSelection.innerHTML=`<p data-action="/Analytics/Student/Marksheet">Exam Year:<span><input type="text" id="ex-year" name="ex-year"></span>  Exam Name:
+      <span><input type="text" id="ex-name"></span></p>`
     }
   }
 
@@ -91,14 +101,17 @@ createEl(targ, el, id = null, clss = null) {
 
     })
   }
-/*
-addSubOption(value, text){
-  const opt = document.createElement("option");
-    opt.value = value;
-    opt.textContent = text;
-    this.selectAction.appendChild(opt);
+
+getExamDateName(){
+  let exYear = this.subSelection.querySelector("#ex-year");
+  exYear = parseInt(exYear.value) ||0;
+
+  let exName = this.subSelection.querySelector("#ex-name");
+  exName = exName.value || "default";
+
+  return [exYear,exName]
 }
-*/
+
 
 getdates(){
   let fromdate = this.subSelection.querySelector("#fromdate");
@@ -117,11 +130,27 @@ getdates(){
     const action = this.selectAction?.value;
 
     let formBody;
+    let targetUrl;
+    targetUrl = `/Analytics/${target}/${action}`;
 
-    if (this.actionLebel=="Attendencereport"){
+    console.log(`action lebel = ${this.actionLebel}`);
+
+    if (this.actionLebel==="StudentAttendence"){
       const [fromdate , todate] =this.getdates();
-      formBody = JSON.stringify({NSN:id, fromdate:fromdate, todate:todate});
-      console.log(formBody);
+      formBody = JSON.stringify({Id:id, CandidateType:"student", CandidateName:"x", From:fromdate, Till:todate});
+      
+      targetUrl=this.subSelection.querySelector('p').dataset.action;
+    }else if (this.actionLebel==="TeacherAttendence") {
+      const [fromdate , todate] =this.getdates();
+      formBody = JSON.stringify({Id:id, CandidateType:"teacher", CandidateName:"x", From:fromdate, Till:todate});
+      
+      targetUrl=this.subSelection.querySelector('p').dataset.action;
+
+    } else if(this.actionLebel==="Marksheet"){
+      // get exam date and name
+      const [exYear, exName]=this.getExamDateName();
+      formBody = JSON.stringify({NSN:id, exYear:exYear, exName:exName});
+      targetUrl=this.subSelection.querySelector('p').dataset.action;
     }
     // subction
     const subaction =this.subSelection?.value;
@@ -131,7 +160,7 @@ getdates(){
       return;
     }
 
-    const targetUrl = `/Analytics/${target}/${action}`;
+    
     console.log("Fetching:", targetUrl);
     console.log("id:", JSON.stringify(id));
 

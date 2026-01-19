@@ -8,6 +8,8 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Models
     public class StdReq
     {
         public string NSN { get; set; } = null!;
+        public int exYear{get;set;}
+        public string exName{get;set;} =null!;
     }
 
 

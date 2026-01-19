@@ -16,13 +16,19 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Controllers
 
 
     [Area("Attendence")]
-    [AuthorizeUser()]
+    [AuthorizeUser]
 
     public class AttendenceController(SchoolDbContext db) : SchoolDbController(db)
     {
         [HttpPost]
         public IActionResult DisplpayAttendence([FromBody] AttendenceRequestDto dto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("invalid data model");
+            }
+            // find candidate name from Id
+            
             var attendence = new DisplayAttendence(_db);
             var attendenceData = attendence.ExtractAttendenceData(dto);
 

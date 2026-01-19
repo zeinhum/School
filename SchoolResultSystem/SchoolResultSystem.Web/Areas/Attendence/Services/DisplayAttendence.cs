@@ -15,6 +15,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
 
         public DisplayAttendenceDto ExtractAttendenceData(AttendenceRequestDto dto)
         {
+            
             // Attendance data (dynamic via the switch)
             var presentDates = GetAttendanceQuery(dto)
                 .Select(d => d.Date)
@@ -60,6 +61,11 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
             switch (dto.CandidateType)
             {
                 case "teacher":
+                // find name of candidate from Id
+                var candidateName =db.Users.Where(i=>i.TeacherId==dto.Id).Select(i=>i.TeacherName).FirstOrDefault();
+                candidateName ??= "No Candidate found with this Id";
+                dto.CandidateName=candidateName!;
+                
                     return db.TeacherAttendance
                         .Where(d => d.TeacherId == dto.Id &&
                                     d.LoginDateTime >= dto.From &&
@@ -67,6 +73,11 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
                         .Select(d => d.LoginDateTime);
 
                 case "student":
+                candidateName = db.Students.Where(s=>s.NSN==dto.Id).Select(s=>s.StudentName).FirstOrDefault();
+                candidateName ??= "No Candidate found with this Id";
+                Console.WriteLine("student name.............");
+                Console.WriteLine(candidateName);
+                dto.CandidateName=candidateName!;
                     return db.StudentAttendance
                         .Where(d => d.NSN == dto.Id &&
                                     d.AttendanceDate >= dto.From &&

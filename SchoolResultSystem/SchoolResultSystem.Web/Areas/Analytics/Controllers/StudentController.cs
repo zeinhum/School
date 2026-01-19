@@ -35,8 +35,22 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
 
             string nsn = ns.NSN;
 
-            // get recent exam
-            var examId = _db.Exams.Any() ? _db.Exams.Max(e => e.ExamId): 0;
+            int examId;
+
+            if (ns.exName == "default")
+            {
+                // get most recent exam
+                examId = _db.Exams.Any()
+                    ? _db.Exams.Max(e => e.ExamId)
+                    : 0;
+            }
+            else
+            {
+                examId = _db.Exams
+                .Where(e => e.AcademicYear == ns.exYear && e.ExamName == ns.exName)
+                .Select(e => e.ExamId)
+                .FirstOrDefault(); // returns 0 if not found
+            }
 
             // Load all subjects in this exam
             var examSubjects = _db.Exams
@@ -58,7 +72,7 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
             if (student == null)
                 return NotFound($"Student with NSN '{nsn}' not found.");
             var marks = _db.Marksheet.Select(s => s.SCode).ToList();
-            
+
             // Load student's marks
             var studentMarks = _db.Marksheet
                 .Include(m => m.Subject)
