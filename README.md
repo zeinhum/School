@@ -1,4 +1,4 @@
-<h2>Note:This app is still in construction. Final realease will be held on 13-Dec-2025</h2>
+<h2>Note:This app is still in construction. Final realease will be held soon</h2>
 <body>
 
 <h1>🏫 School Result System</h1>
@@ -138,7 +138,7 @@ cd school/SchoolResultSystem.Web</code></pre>
 <h2>👤 Author</h2>
 <p><strong>Jameel Khan (Zeinhum)</strong><br>
 💻 Full Stack Developer | ASP.NET | React | SQL | Data Analytics<br>
-📧 <a href="mailto:zeinhumn@gmail.com">zeinhumn@gmail.com</a><br>
+📧 <a href="mailto:jameelhumn@gmail.com">jameelhumn@gmail.com</a><br>
 🌐 <a href="https://github.com/zeinhum">github.com/zeinhum</a></p>
 
 <div class="quote">“Data-driven automation isn’t just efficiency — it’s how education scales.”</div>
