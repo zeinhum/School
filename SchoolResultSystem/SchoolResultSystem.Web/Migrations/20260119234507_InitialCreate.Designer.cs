@@ -11,8 +11,8 @@ using SchoolResultSystem.Web.Data;
 namespace SchoolResultSystem.Web.Migrations
 {
     [DbContext(typeof(SchoolDbContext))]
-    [Migration("20260115002334_leaves-table")]
-    partial class leavestable
+    [Migration("20260119234507_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
