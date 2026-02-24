@@ -20,7 +20,10 @@
                                 <td>@teacher.TeacherId</td>
                                 <td>@teacher.TeacherName</td>
                                 <td>
-                                    <button class="btn btn-delete" data-action="DeleteTeacher" data-id="@teacher.TeacherId">
+                                    <button class="btn btn-edit" data-action="changepassword" data-id="@teacher.TeacherId">
+                                        Change Password
+                                    </button>
+                                    <button class="btn btn-delete" data-action="deactivateteacher" data-id="@teacher.TeacherId">
                                         Deactivate
                                     </button>
                                 </td>

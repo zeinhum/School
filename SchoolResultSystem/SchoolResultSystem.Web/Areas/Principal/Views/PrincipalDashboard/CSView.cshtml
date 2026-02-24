@@ -4,7 +4,12 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
 <link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
+
 <script>
     window.currentClassId = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassName));
 </script>
@@ -41,8 +46,8 @@
                             <td>@st.NSN</td>
                             <td>@st.StudentName</td>
                             <td>
-                                <button class="btn btn-edit">Edit</button>
-                                <button class="btn btn-delete">Deactivate</button>
+                                <button class="btn btn-edit" data-change="editStudent" data-id=@st.NSN>Edit</button>
+                                <button class="btn btn-delete" data-change="deactivateStudent" data-id=@st.NSN>Deactivate</button>
                             </td>
                         </tr>
                     }

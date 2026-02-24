@@ -135,11 +135,12 @@ public class PrincipalDashboardController : SchoolDbController
     public IActionResult GetTeachersAndClasses()
     {
         var teachers = _db.Users
-            .Where(u => u.Role == "Teacher")
+            .Where(u => u.Role == "Teacher" && u.IsActive)
             .Select(t => new { t.TeacherId, t.TeacherName })
             .ToList();
 
         var subjects = _db.Subjects
+            .Where(s => s.IsActive)
             .Select(s => new { s.SCode, s.SName })
             .ToList();
 
@@ -228,12 +229,26 @@ public class PrincipalDashboardController : SchoolDbController
 
     public IActionResult Teachers()
     {
-        var user = _db.Users.Where(u => u.Role == "Teacher").ToList();
+        var user = _db.Users.Where(u => u.Role == "Teacher" && u.IsActive).ToList();
         return PartialView("_Teachers", user);
     }
     public IActionResult Classes()
     {
         var classes = _db.Classes.Where(c => c.IsActive).ToList();
         return PartialView("_Classes", classes);
+    }
+
+    // subjects
+    public IActionResult Subjects()
+    {
+        var subjects = _db.Subjects.Where(s=>s.IsActive).ToList();
+        return PartialView("Subjects", subjects);
+    }
+
+    //exams
+    public IActionResult Exams()
+    {
+        var exams = _db.ExamList.Where(e=>e.IsActive).ToList();
+        return PartialView("Exams", exams);
     }
 }

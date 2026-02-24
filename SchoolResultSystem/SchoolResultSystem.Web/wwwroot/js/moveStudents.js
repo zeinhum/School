@@ -66,3 +66,22 @@ export async function MoveStudents(id) {
     layout.innerHTML = "<p>Could not fetch class data</p>";
   }
 }
+
+
+// decativate student
+
+export async function deactivateStudent(id) {
+  const stId ={Id:id}
+
+  const result = await SendData(
+        `/Microservices/Microservicess/DeactivateStudents`,
+        stId
+      );
+
+      if (result){
+        alert(result.message);
+        
+      }
+  
+}
+

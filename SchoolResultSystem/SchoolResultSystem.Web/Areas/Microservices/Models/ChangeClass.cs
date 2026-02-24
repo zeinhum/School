@@ -6,4 +6,9 @@ namespace SchoolResultSystem.Web.Areas.Microservices.Models
         public int Toclass { get; set; }
         public List<string> MovingStudents { get; set; } = null!;
     }
+
+    public class Std
+    {
+        public string Id{get;set;}=null!;
+    }
 }

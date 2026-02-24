@@ -233,9 +233,9 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
                 message = $"{newSubjects.Count} subject(s) added. Skipped {skipped.Count} duplicate(s)."
             });
         }
-        catch (Exception ex)
+        catch (Exception)
         {
-            return Json(new { success = false, message = "Error saving subjects: " + ex.Message });
+            return Json(new { success = false, message = "Error saving subjects: "});
         }
     }
 
@@ -304,102 +304,7 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
         var allSubjects = _db.Subjects.Where(a => a.IsActive).ToList();
         return View(allSubjects);
     }
-    //save Exam
-    [HttpPost]
-    public IActionResult SaveExam([FromBody] SaveExam data)
-    {
-        // --- Initial Validation ---
-        if (!ModelState.IsValid || data == null)
-        {
-            return Json(new { success = false, message = "Invalid data type" });
-        }
-        if (data.SubjectMarks.Count == 0)
-        {
-            return Json(new { success = false, message = "no subject provided" });
-        }
-
-        try
-        {
-            // Try to find an existing ExamId for given name & year
-            var matchedExam = _db.Exams
-                .Where(e => e.ExamName == data.ExamName && e.AcademicYear == data.AcademicYear)
-                .GroupBy(e => e.ExamId)
-                .Select(g => new
-                {
-                    ExamId = g.Key,
-                    SCodes = g.Select(x => x.SCode).ToList()
-                })
-                .FirstOrDefault();
-
-            int exId;
-            HashSet<string> existingSCodes = new();
-
-            if (matchedExam != null)
-            {
-                // Found a match → use its ID and SCodes
-                exId = matchedExam.ExamId;
-                existingSCodes = matchedExam.SCodes.ToHashSet();
-            }
-            else
-            {
-                // No exact match → just get the latest ExamId
-                exId = _db.Exams
-                    .OrderByDescending(e => e.ExamId)
-                    .Select(e => e.ExamId)
-                    .FirstOrDefault();
-                exId++;
-            }
-            int addedCount = 0;
-            int skippedCount = 0;
-            var newExams = new List<ExamModel>();
-
-            // 3. Process the incoming data
-            foreach (var ex in data.SubjectMarks)
-            {
-                // Check for a duplicate using the fast HashSet lookup
-                if (existingSCodes.Contains(ex.SCode))
-                {
-                    skippedCount++;
-                    continue; // skip duplicates
-                }
-
-                // Create new ExamModel
-                var examModel = new ExamModel
-                {
-                    ExamId=exId,
-                    ExamName = data.ExamName,
-                    AcademicYear = data.AcademicYear,
-                    SCode = ex.SCode,
-                    ThMark = ex.ThMark,
-                    PrMark = ex.PrMark,
-                    ThCrh = ex.ThCrh,
-                    PrCrh = ex.PrCrh
-                };
-
-                newExams.Add(examModel);
-                addedCount++;
-            }
-
-            // 4. Save new records
-            if (newExams.Count > 0)
-            {
-                _db.Exams.AddRange(newExams);
-                _db.SaveChanges();
-            }
-
-            return Json(new
-            {
-                success = true,
-                message = $"Exams created for {addedCount} subjects, skipped {skippedCount} duplicates."
-            });
-        }
-        catch (Exception ex)
-        {
-            // Log the exception details here for production use (e.g., using ILogger)
-            return Json(new { success = false, message = $"Error saving exams: {ex.Message}" });
-        }
-    }
-
+    
     public IActionResult DatabaseManagement()
     {
         return View();

@@ -4,7 +4,12 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
 <link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
+
 <script>
     window.currentClassId = @Model.ClassId;  // Razor injects value
 </script>
@@ -17,12 +22,12 @@
     <div>
         <div class="partial-container"></div>
         <!-- Header -->
-        <div class="header">
+        <div class="header" data-classId =@Model.ClassId>
             <h1>@Model.ClassName</h1>
         </div>
         <!-- Subject-Teacher Table -->
         <div class="card">
-            <h2>Subject & It's Teacher</h2>
+            <h2>Subjects and respective teachers for this class.</h2>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -42,7 +47,7 @@
                             <td>@st.TeacherId</td>
                             <td>@st.TeacherName</td>
                             <td>
-                                <button class="btn btn-edit">Edit</button>
+                                <button class="btn btn-delete" data-change="RCST">Remove</button>
                             </td>
                         </tr>
                     }

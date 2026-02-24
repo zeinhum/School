@@ -10,10 +10,8 @@ namespace SchoolResultSystem.Web.Areas.Principal.Models
     public class SubjectMarks
     {
         public string SCode { get; set; } = null!;
-        public decimal ThMark { get; set; }
-        public decimal PrMark { get; set; }
-        public decimal ThCrh { get; set; }
-        public decimal PrCrh { get; set; }
+        public decimal Mark { get; set; }
+        public decimal Crh { get; set; }
 
     }
 }

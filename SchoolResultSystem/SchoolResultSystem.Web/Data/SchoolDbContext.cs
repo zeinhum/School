@@ -13,18 +13,21 @@ namespace SchoolResultSystem.Web.Data
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<SchoolInfoModel> SchoolInfo { get; set; }
-        public DbSet<ExamModel> Exams { get; set; }
         public DbSet<ClassModel> Classes { get; set; }
         public DbSet<MarksheetModel> Marksheet { get; set; }
         public DbSet<CSModel> CS { get; set; }
         public DbSet<SubjectModel> Subjects { get; set; }
-        public DbSet<StudentModel> Students { get; set; }  
-        public DbSet<CSTModel> CST { get; set; } 
+        public DbSet<StudentModel> Students { get; set; }
+        public DbSet<CSTModel> CST { get; set; }
 
-        public DbSet<TeacherAttendanceModel> TeacherAttendance{get;set;}
-        public DbSet<StudentAttendanceModel>StudentAttendance{get;set;} 
+        public DbSet<TeacherAttendanceModel> TeacherAttendance { get; set; }
+        public DbSet<StudentAttendanceModel> StudentAttendance { get; set; }
 
-        public DbSet<LeavesCalendarModel>Leaves{get;set;}
+        public DbSet<LeavesCalendarModel> Leaves { get; set; }
+
+        public DbSet<ClassSubjectModel> ClassSubject { get; set; }
+        public DbSet<ExamModel> ExamList { get; set; }
+         public DbSet<ExamRubrickModel> ExamRubrick { get; set; }
 
 
 
@@ -32,11 +35,10 @@ namespace SchoolResultSystem.Web.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<ExamModel>()
-                .HasOne(e => e.Subject)
-                .WithMany()
-                .HasForeignKey(e => e.SCode)
-                .OnDelete(DeleteBehavior.Restrict); // Restrict delete exams when subject is deleted
+            // uniq constraint to avoid duplicate entries
+            modelBuilder.Entity<MarksheetModel>()
+                .HasIndex(m => new { m.ExamId, m.SCode })
+                .IsUnique();
 
             // Relationship with Class
             modelBuilder.Entity<CSTModel>()
@@ -45,7 +47,7 @@ namespace SchoolResultSystem.Web.Data
                 .HasForeignKey(cs => cs.ClassId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-        
+
             modelBuilder.Entity<CSTModel>()
                 .HasOne(cs => cs.Subject)
                 .WithMany()

@@ -6,7 +6,6 @@ namespace SchoolResultSystem.Web.Models
     public class ExamModel
     {
         [Key]
-        public int Tablerow{ get; set; }
         [Required]
         public int ExamId { get; set; }
         [Required]
@@ -14,18 +13,7 @@ namespace SchoolResultSystem.Web.Models
         [Required]
         public string ExamName { get; set; } = null!;
         [Required]
-        public string SCode { get; set; } = null!;
-        [Required]
-        public decimal ThMark { get; set; }
-        [Required]
-        public decimal PrMark { get; set; }
-        [Required]
-        public decimal ThCrh { get; set; }
-        [Required]
-        public decimal PrCrh { get; set; }
-        public bool IsActive { get; set; } = true;
-        [ForeignKey(nameof(SCode))]
-        public virtual SubjectModel? Subject { get; set; }
+        public bool IsActive {get; set;} = true;
         
     }
 }

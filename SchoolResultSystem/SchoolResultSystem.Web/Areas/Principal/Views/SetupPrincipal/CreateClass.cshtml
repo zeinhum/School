@@ -2,6 +2,11 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
 <link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/addClasses.js"></script>
@@ -9,29 +14,27 @@
 <div class="dashboard">
     <div>
         <div class="partial-container"></div>
-        <form class="form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
+        <form class="card form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
             <p class="error"></p>
-            <h2>Create Class</h2>
+            <h2 class="card-head">Create Class</h2>
 
             <table class="form-card">
 
                 <thead>
                     <tr>
                         <th>Class Name</th>
-                        <th></th>
+                        <th>Add/Remove</th>
                     </tr>
                 </thead>
 
                 <tbody class="form-data">
                     <tr>
-
                         <td><input type="text" name="ClassName" required size="2" /></td>
-
                     </tr>
                 </tbody>
             </table>
 
-            <button type="submit" class="btn-form btn-success">Create Class</button>
+            <button type="submit" class="btn-form actions btn-success">Create Class</button>
         </form>
     </div>
     <partial name="_RightNavBar" model="-1" />

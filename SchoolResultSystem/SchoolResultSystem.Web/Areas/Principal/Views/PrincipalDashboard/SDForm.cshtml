@@ -4,6 +4,11 @@
     ViewData["Title"] = "Admin Dashboard";
      Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
 <link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/sdform.js"></script>
@@ -16,7 +21,7 @@
 
         <form class="form-container" action="/Principal/PrincipalDashboard/Admission" method="post">
             
-            <h2>Student Admission Form</h2>
+            <h2 class="card-head">Student Admission Form</h2>
 <p class="error"></p>
             <table class="form-card">
                 <thead>
@@ -52,7 +57,7 @@
                 </tbody>
             </table>
 
-            <button type="submit" class="btn-form btn-success">Admit</button>
+            <button type="submit" class="btn-form actions btn-success">Admit</button>
         </form>
     </div>
     <partial name="_RightNavBar" model="-3" />

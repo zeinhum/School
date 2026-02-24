@@ -4,9 +4,14 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
 <link rel="stylesheet" href="~/css/form.css" />
 
-<script type="module" src="/js/exam.js"></script>
+<script type="module" src="/js/createExam.js"></script>
 
 <partial name="_header" />
 
@@ -14,40 +19,62 @@
 <div class="dashboard">
     <div>
         <div class="partial-container"></div>
-        <form class="form-container" action="/Principal/SetupPrincipal/SaveExam" method="post">
-            <p class="error"></p>
-            <h2>Create Exam</h2>
 
-            <table class="form-card">
+        <div class="card">
+            <p class="error"></p>
+            <h2 class="card-head">Create Exam</h2>
+            
+            <hr />
+            <div class="exam-section">
+                <button class="select-existing actions btn-success">Select an Exam</button>
+                <button class="newexam actions btn-success">Create New Exam</button>
+                <div id="select-wraper"></div>
+                
+                
+            </div>
+            <hr />
+            <!-- Rubric section !-->
+            <div class="reubric-section">
+                <h3 class="card-head">Set Subject Marking Rubric</h3>
                 <div class="non-table">
                     <div class="group">
-                        <label for="AcademicYear"> Academic Year</label>
-                        <input class="year small" type="number" name="AcademicYear" placeholder="Year" required />
+                        <lebel>Theory Mark</lebel>
+                        <input class="" type="text" id="Thmark" required placeholder="Exam Name" />
                     </div>
                     <div class="group">
-                        <lebel formaction="ExamName">Exam Name</lebel>
-                        <input class="examname small" type="text" name="ExamName" required placeholder="Exam Name" />
+                        <lebel>Practicl Mark</lebel>
+                        <input class="" type="text" id="Prmark" required placeholder="Exam Name" />
+                    </div>
+                    <div class="group">
+                        <lebel>Theory Credit Hour</lebel>
+                        <input class="" type="text" id="ThCrh" required placeholder="Exam Name" />
+                    </div>
+                    <div class="group">
+                        <lebel >Practical Credit Hour</lebel>
+                        <input class="" type="text" id="PrCrh" required placeholder="Exam Name" />
                     </div>
                 </div>
+                <button id ="set-all" class="actions btn-success">Select For All Subjects</button>
+            </div>
+            <hr />
 
-
-
+            <table class="form-card">
 
                 <thead>
                     <tr>
-                        <th>S.Code</th>
-                        <th>ThMark</th>
-                        <th>PrMark</th>
-                        <th>ThCrh</th>
-                        <th>PrCrh</th>
-                        <th>add</th>
+                        <th>Subjects</th>
+                        <th>Theory Mark</th>
+                        <th>Practical Mark</th>
+                        <th>Theory Crh</th>
+                        <th>Practical Crh</th>
+                        <th>Add</th>
                     </tr>
                 </thead>
 
                 <tbody class="form-data">
                     <tr>
                         <td>
-                            <select class="Scode" name="SCode" required>
+                            <select id = "Scode" class="Scode" name="SCode" required>
                                 <option value="" disabled selected>Select Subject</option>
                                 @foreach (var sc in Model)
                                 {
@@ -63,9 +90,9 @@
                     </tr>
                 </tbody>
             </table>
-
-            <button type="submit" class="btn-form btn-success">Create Exam</button>
-        </form>
+            <hr />
+            <button id="create-rubrik" class="actions btn-success">Set Rubrick</button>
+        </div>
     </div>
     <partial name="_RightNavBar" model="-1" />
 </div>

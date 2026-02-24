@@ -29,95 +29,139 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
         }
 
 
-// save leaves
+        // save leaves
         [HttpPost]
-        public IActionResult SetCalandar([FromBody] CalendarDto dto)
+        public async Task<IActionResult> SetCalendar([FromBody] CalendarDto dto)
         {
-            if (dto == null)
+            
+            try{
+            var payload = new List<LeavesCalendarModel>();
+
+            // Current year
+            int currentYear = DateTime.Now.Year;
+            DateTime start = new DateTime(currentYear, 1, 1);
+            DateTime end = new DateTime(currentYear, 12, 31);
+
+            // ---------------------------
+            // Handle Weekdays (recurring)
+            // ---------------------------
+            
+            if (dto.Weekdays != null && dto.Weekdays.Count > 0)
             {
-                return Json(new { success = false, message = "No data provided." });
-            }
-
-            List<LeavesCalendarModel> payload = new();
-
-
-            // Handle Weekdays
-
-            if (dto.Weekdays != null && dto.Weekdays.Count != 0)
-            {
-                // Unique weekday types (Mon, Tue, etc.)
                 var selectedWeekdays = dto.Weekdays
                     .Select(d => d.Date.DayOfWeek)
                     .Distinct()
                     .ToList();
+                    
 
-                int year = dto.Weekdays.First().Date.Year;
-                DateTime start = new(year, 1, 1);
-                DateTime end = new(year, 12, 31);
 
-                foreach (var day in selectedWeekdays)
+                foreach (var dayOfWeek in selectedWeekdays)
                 {
-                    // Find first match in the year
+                    // Find first occurrence of that weekday in the year
                     DateTime first = start;
-                    while (first.DayOfWeek != day)
+                    while (first.DayOfWeek != dayOfWeek)
                         first = first.AddDays(1);
 
-                    // Jump by 7 days (repeat weekday)
-                    for (var date = first; date <= end; date = date.AddDays(7))
+                    // Add all recurring weekdays (every 7 days) until end of year
+                    for (DateTime date = first; date <= end; date = date.AddDays(7))
                     {
                         payload.Add(new LeavesCalendarModel
                         {
-                            Date = date,
+                            Date = date.Date,
                             Weekday = true,
                             Holiday = false,
-                            Description = null!
+                            Description = string.Empty
                         });
                     }
                 }
             }
 
-
-            // Handle Holidays
-
-            if (dto.Leaves != null)
+            // ---------------------------
+            // Handle Holidays (specific dates)
+            // ---------------------------
+            if (dto.Leaves != null && dto.Leaves.Count > 0)
             {
                 foreach (var leave in dto.Leaves)
                 {
                     payload.Add(new LeavesCalendarModel
                     {
-                        Date = leave.Leave,
-                        Description = leave.Description,
+                        Date = leave.Leave.Date,
+                        Description = leave.Description ?? string.Empty,
                         Weekday = false,
                         Holiday = true
                     });
                 }
             }
 
-
-            // Remove Duplicate Entries
-
+            // ---------------------------
+            // Remove duplicates by date
+            // If both weekday and holiday exist, keep holiday
+            // ---------------------------
             payload = payload
-             .GroupBy(x => x.Date.Date)
-                .Select(g => g.First())
+                .GroupBy(x => x.Date)
+                .Select(g =>
+                {
+                    // If any holiday exists for the date, prefer it
+                    var holidayEntry = g.FirstOrDefault(x => x.Holiday);
+                    return holidayEntry ?? g.First();
+                })
                 .ToList();
 
-            // ineficient, why to load all data?
-            var existingDates = _db.Leaves
+            // ---------------------------
+            // Get existing dates from DB for current year
+            // ---------------------------
+            var existingDates = await _db.Leaves
+                .Where(x => x.Date.Year == currentYear)
                 .Select(x => x.Date.Date)
-                .ToHashSet(); 
+                .ToHashSetAsync();
 
+            // ---------------------------
+            // Filter out already existing dates
+            // ---------------------------
             var finalToInsert = payload
-                .Where(x => !existingDates.Contains(x.Date.Date))
+                .Where(x => !existingDates.Contains(x.Date))
                 .ToList();
 
+            // ---------------------------
+            // Insert new leaves
+            // ---------------------------
             if (finalToInsert.Count > 0)
             {
-                _db.Leaves.AddRange(finalToInsert);
-                _db.SaveChanges();
+                await _db.Leaves.AddRangeAsync(finalToInsert);
+                await _db.SaveChangesAsync();
+                }
+                else
+                {
+                    return Ok(new{message="No new entries were made."});
+                }
+
+            // ---------------------------
+            // Return JSON response
+            // ---------------------------
+            return Json(new
+            {
+                success = true,
+                totalProcessed = payload.Count,
+                count = finalToInsert.Count,
+                message = "Leaves set successfully."
+            });
+            }catch (Exception)
+            {
+                return Ok(new{message="some error occured"});
             }
-
-            return Json(new { success = true, count = payload.Count });
         }
-
+    
+    public async Task<IActionResult> CleanCalendar()
+        {try{
+            var currentYear = DateTime.Now.Year;
+            await _db.Leaves.Where(y=>y.Date.Year==currentYear).ExecuteDeleteAsync();
+            return Ok(new{message="All entries of weekends and leaves for current year have been deleted."});
+            }
+            catch (Exception)
+            {
+                return Ok(new{message="some error occured."});
+            }
+        }
     }
+
 }

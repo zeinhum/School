@@ -12,8 +12,8 @@ namespace SchoolResultSystem.Web.Areas.Teachers.Models
     public class Marks
     {
         public string NSN { get; set; } = null!;
-        public decimal ThMark { get; set; }
-        public decimal PrMark { get; set; }
+        public decimal Mark { get; set; }
+    
     }
     
 }

@@ -22,6 +22,8 @@ builder.Services.AddSession(options =>
 builder.Services.AddDbContext<SchoolDbContext>(options =>
     options.UseSqlite("Data Source=SchoolDatabase.db"));
 
+builder.WebHost.UseUrls("http://0.0.0.0:5000");
+
 var app = builder.Build();
 
 // ✅ Use session before routing
@@ -39,8 +41,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles(); // UseStaticFiles should be called before UseRouting
-app.UseRouting();
-app.UseAuthorization();
+
+
 
 using (var scope = app.Services.CreateScope())
 {

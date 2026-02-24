@@ -14,9 +14,9 @@ namespace SchoolResultSystem.Web.Models
         [Required]
         public string SCode { get; set; } = null!;
         [Required]
-        public decimal ThMark { get; set; }
+        public decimal Mark { get; set; }
         [Required]
-        public decimal PrMark { get; set; }
+        
 
         // Navigation properties
         [ForeignKey(nameof(ExamId))]

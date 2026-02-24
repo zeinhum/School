@@ -1,12 +1,14 @@
 @using System.Text.Json;
 @model int;
-@{// data comming from session on login
+@{
+    // data comming from session on login
     Layout = null;
-    var data = new {
+    var data = new
+    {
         user = TempData["user"],
-        school=TempData["schoolName"],
+        school = TempData["schoolName"],
         userId = TempData["userId"],
-        logoPath ="/image/logo.png"
+        logoPath = "/image/logo.png"
     };
     var jsonData = JsonSerializer.Serialize(data);
 }
@@ -16,27 +18,27 @@
 <link rel="stylesheet" href="~/css/header.css" />
 
 
-<script type="module" >
-import {TNav} from "/js/teacherNav.js"
-TNav(@Html.Raw(jsonData));
+<script type="module">
+    import { TNav } from "/js/teacherNav.js"
+    await TNav(@Html.Raw(jsonData));
 </script>
 <script src="/js/attendence.js" type="module"></script>
 
 <div class="right-nav">
     <div class="create-actions">
-    <h3>Navigation</h3>
-    
+        <h3>Navigation</h3>
+
         <button class="btn primary" data-action="Teacher/Index">Dashboard</button>
         <button class="toggler" data-action="Analytics">Analytics</button>
 
-    
-        
-        
+
+
+
     </div>
 
     <div class="create-actions">
-    <h3>Publish</h3>
+        <h3>Publish</h3>
         <button class="btn primary" data-action="">Result</button>
-        
+
     </div>
 </div>

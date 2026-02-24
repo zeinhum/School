@@ -4,6 +4,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SchoolResultSystem.Web.Areas.Analytics.Models;
+using SchoolResultSystem.Web.Areas.Analytics.Services;
 using SchoolResultSystem.Web.Data;
 using SchoolResultSystem.Web.Filters;
 using SchoolResultSystem.Web.Models;
@@ -25,98 +26,114 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
         }
 
         [HttpPost]
-        public IActionResult Marksheet([FromBody] StdReq ns)
+        public async Task<IActionResult> Marksheet([FromBody] StdReq ns)
         {
             if (!ModelState.IsValid)
                 return BadRequest("Invalid model data.");
 
-            if (ns == null || string.IsNullOrWhiteSpace(ns.NSN))
-                return BadRequest("Student NSN is required.");
 
             string nsn = ns.NSN;
 
-            int examId;
+            int examId = _db.ExamList
+             .Where(e => e.AcademicYear == ns.exYear && e.ExamName == ns.exName)
+             .Select(e => e.ExamId)
+             .FirstOrDefault(); // returns 0 if not found
 
-            if (ns.exName == "default")
+            if (examId == 0)
             {
-                // get most recent exam
-                examId = _db.Exams.Any()
-                    ? _db.Exams.Max(e => e.ExamId)
-                    : 0;
-            }
-            else
-            {
-                examId = _db.Exams
-                .Where(e => e.AcademicYear == ns.exYear && e.ExamName == ns.exName)
-                .Select(e => e.ExamId)
-                .FirstOrDefault(); // returns 0 if not found
+                return Json(new { message = "No Exam found" });
             }
 
-            // Load all subjects in this exam
-            var examSubjects = _db.Exams
-                .Include(e => e.Subject)
-                .Where(e => e.ExamId == examId)
-                .ToList();
+            var Student = _db.CS.Where(s=>s.NSN==nsn && s.IsActive)
+                                .Include(s=>s.Student)
+                                .Select(s=> new
+                                {
+                                    ClassId =s.ClassId,
+                                    Name =s.Student.StudentName,
+                                    DOB = s.Student.D_O_B,
+                                    Registration = s.Student.RegistrationN
+                                }
+                                )
+                                .FirstOrDefault(); // iquery
 
-            if (!examSubjects.Any())
-                return NotFound("No subjects found for this exam.");
+            var StudentSCodes = _db.CST.Where(s=>s.ClassId==Student!.ClassId).Select(s=>s.SCode);
+            var StudentSubjectMarks = _db.Marksheet
+                                        .Where(s=>s.ExamId==examId && StudentSCodes.Contains(s.SCode))
+                                        .Include(s=>s.Subject)
+                                        .Select(m => new
+                                        {
+                                            
+                                            SType =m.Subject.SType,
+                                            LinkedPr =m.Subject.LinkedPr,
+                                            SCode = m.SCode,
+                                            Mark = m.Mark
+                                        }).ToList();
 
-            Console.WriteLine("Exam subjects (from ExamModel):");
-            foreach (var ex in examSubjects)
+            var ExamRubrick = _db.ExamRubrick
+                                .Where(s=>s.ExamId==examId && StudentSCodes.Contains(s.SCode)).Select(s=> new
             {
-                Console.WriteLine($" - {ex.SCode}: Th={ex.ThMark}, Pr={ex.PrMark}");
-            }
-
-            // Load student
-            var student = _db.Students.FirstOrDefault(s => s.NSN == nsn);
-            if (student == null)
-                return NotFound($"Student with NSN '{nsn}' not found.");
-            var marks = _db.Marksheet.Select(s => s.SCode).ToList();
-
-            // Load student's marks
-            var studentMarks = _db.Marksheet
-                .Include(m => m.Subject)
-                .Where(m => m.ExamId == examId && m.NSN == nsn)
-                .ToList();
-
-            if (!studentMarks.Any())
-                return NotFound($"No marks found for student {student.StudentName} in exam {examId}.");
-
-            foreach (var mark in studentMarks)
-            {
-                Console.WriteLine(studentMarks);
-                Console.WriteLine($" - {mark.SCode} ({mark.Subject?.SName}): Th={mark.ThMark}, Pr={mark.PrMark}");
-            }
-
-            // Build student’s obtained marks list
-            var obtainedList = studentMarks.Select(m => new Subject
-            {
-                Sub = new SubjectModel
-                {
-                    SCode = m.SCode,
-                    SName = m.Subject?.SName ?? "Unknown"
-                },
-                ThMark = m.ThMark,
-                PrMark = m.PrMark
+                SName = s.Subs.SName,
+                SCode = s.SCode,
+                SType =s.Subs.SType,
+                LinkedPr =s.Subs.LinkedPr,
+                FullMark = s.FullMark,
+                CreditHour = s.CreditHour
             }).ToList();
+            
+            
 
-            // Calculate all subject grades
-            var subjectGpas = FindGrade.SubjectGrades(examSubjects, obtainedList);
+           
 
-            //  Calculate overall GPA
-            var overallGpa = FindGrade.OverAllGPA(subjectGpas, examSubjects);
+            // prepare Obtained marks model
+            var MarkedSubjects = new List<ExamSubjects>();
+            var ExamSubjects = new List<ExamSubjects>();
 
-            //  Build DTO
-            var result = new MarkSheetDto
+            
+
+            foreach (var item in StudentSubjectMarks)
             {
-                Schoolname = "Nanu Ai School",
-                Exam = examSubjects.First(),
-                Student = student,
-                gpas = subjectGpas,
-                GPA = overallGpa
-            };
+                var subj = new ExamSubjects();
+                if (item.SType == "theory")
+                {
+                    subj.theoryCode = item.SCode;
+                    subj.theoryMark = item.Mark;
+                    if (item.LinkedPr != null)
+                    {
+                        var practical = StudentSubjectMarks.Where(s => s.SCode == item.LinkedPr).FirstOrDefault();
+                        subj.practicalCode = practical!.SCode;
+                        subj.practicalMark = practical!.Mark;
+                    }
+
+                    MarkedSubjects.Add(subj);
+                }
+
+            }
+
+            foreach (var item in ExamRubrick)
+            {
+                var subj = new ExamSubjects();
+                if (item.SType == "theory")
+                {
+                    subj.theorySName=item.SName;
+                    subj.theoryCode = item.SCode;
+                    subj.theoryMark = item.FullMark;
+                    if (item.LinkedPr != null)
+                    {
+                        var practical = ExamRubrick.Where(s => s.SCode == item.LinkedPr).FirstOrDefault();
+                        subj.practicalSName = practical!.SName;
+                        subj.practicalCode = practical!.SCode;
+                        subj.practicalMark = practical!.FullMark;
+                    }
+
+                    MarkedSubjects.Add(subj);
+                }
+
+            }
+
+             var result  = FindGrade.SubjectGrades(ExamSubjects, MarkedSubjects);
 
             return PartialView("Marksheet", result);
         }
+
     }
 }

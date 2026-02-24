@@ -1,8 +1,7 @@
-@using SchoolResultSystem.Web.Areas.Analytics.Models
 @model SchoolResultSystem.Web.Areas.Analytics.Models.ClassExamReportDTO
 
 @{
-    ViewData["Title"] = "Class Exam Report";
+    //ViewData["Title"] = "Class Exam Report";
     var students = Model.Students.ToList();
     // Get all unique subjects across all students
     var subjects = students.SelectMany(s => s.Subjects)
@@ -11,11 +10,11 @@
                            .ToList();
 }
 
-<div class="report">
-    <h5>
+<div class="A4-page report">
+    <h4>
         Class Report for Class: <strong>@Model.ClassName</strong> |
         Exam: <strong>@Model.ExamName</strong>
-    </h5>
+    </h4>
 
     <table border="1" cellspacing="0" cellpadding="4">
         <thead>
@@ -56,6 +55,7 @@
         </tbody>
     </table>
 </div>
+<button class="print">Print</button>
 
 <style>
     .report {

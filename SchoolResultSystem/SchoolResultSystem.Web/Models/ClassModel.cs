@@ -8,7 +8,10 @@ namespace SchoolResultSystem.Web.Models
         [Key]
         public int ClassId { get; set; } 
         [Required]
+        public string ClassGrade { get; set; } = null!;
+        [Required]
         public string ClassName { get; set; } = null!;
+        
         [Required]
         public bool IsActive { get; set; } = true;
         

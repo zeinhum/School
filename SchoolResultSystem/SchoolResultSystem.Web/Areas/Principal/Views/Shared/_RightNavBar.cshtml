@@ -1,5 +1,7 @@
 @using System.Text.Json;
 @model int;
+
+
 @{
     Layout = null;
     var data = new
@@ -11,9 +13,7 @@
     };
     var jsonData = JsonSerializer.Serialize(data);
 }
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
+
 
 <script type="module">
     import { RightNav } from "/js/rightNav.js"
@@ -28,23 +28,25 @@
         <h3>Navigation</h3>
         @if (Model > -5)
         {
-            <button class="btn primary" data-action="PrincipalDashboard/Index">Dashboard</button>
+            <button class="btn primary redirect" data-to="PrincipalDashboard/Index">Dashboard</button>
         }
         @if (Model > -4)
         {
-            <button class="btn primary" data-action="PrincipalDashboard/SDForm">Student Admission</button>
+            <button class="btn primary redirect" data-to="PrincipalDashboard/SDForm">Student Admission</button>
         }
         @if (Model > -3)
         {
-            <button class="toggler" data-action="Analytics">Analytics</button>
-            <button class="toggler" data-action="Teachers">Teachers</button>
-            <button class="toggler" data-action="Classes">Classes</button>
+            <button class="partial toggler" data-to="PrincipalDashboard/Analytics"  data-js="/js/Analytics">Analytics</button>
+            <button class="partial toggler" data-to="PrincipalDashboard/Teachers" data-js="/js/moveTeacher">Teachers</button>
+            <button class="partial toggler" data-to="PrincipalDashboard/Classes">Classes</button>
+            <button class="partial toggler" data-to="PrincipalDashboard/Subjects">Subjects</button>
+            <button class="partial toggler" data-to="PrincipalDashboard/Exams">Exams</button>
         }
         @if (Model >= 0)
         {
-            <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSTView">Subject Teacher</button>
-            <button class="btn secondary" data-id="@Model" data-action="PrincipalDashboard/CSView">Students</button>
-            <button class="btn secondary" data-id="@Model" data-move="movestudents">Move Students</button>
+            <button class="btn secondary partial" data-id="@Model" data-to="PrincipalDashboard/CSTView">Subject Teacher</button>
+            <button class="btn secondary partial" data-id="@Model" data-to="PrincipalDashboard/CSView">Students</button>
+            <button class="btn secondary partial" data-id="@Model" data-to="PrincipalDashboard/movestudents">Move Students</button>
         }
 
 
@@ -52,12 +54,12 @@
 
     <div class="create-actions">
         <h3>Create</h3>
-        <button class="btn primary" data-action="SetupPrincipal/CreateTeacher">Teacher Account</button>
-        <button class="btn primary" data-action="SetupPrincipal/CreateClass">Class</button>
-        <button class="btn primary" data-action="SetupPrincipal/CreateSubject">Subject</button>
-        <button class="btn primary" data-action="SetupPrincipal/CreateExam">Exam</button>
-        <button class="btn primary" data-action="SetupPrincipal/SetupSchool">School Info</button>
-        <a class="btn primary" data-action="LeaveCallender/DisplayLeaveCallenderForm" href="~/Index">Leave Callendar</a>
+        <button class="redirect btn primary" data-to="SetupPrincipal/CreateTeacher">Teacher Account</button>
+        <button class="redirect btn primary" data-to="SetupPrincipal/CreateClass">Class</button>
+        <button class="redirect btn primary" data-to="SetupPrincipal/CreateSubject">Subject</button>
+        <button class="redirect btn primary" data-to="SetupPrincipal/CreateExam">Exam</button>
+        <button class="redirect btn primary" data-to="SetupPrincipal/SetupSchool">School Info</button>
+        <a class="redirect btn primary" data-to="LeaveCallender/DisplayLeaveCallenderForm" href="~/Index">Leave Callendar</a>
     </div>
     <a class="btn primary" data-action="SetupPrincipal/DatabaseManagement" href="~/Index">Database</a>
 </div>

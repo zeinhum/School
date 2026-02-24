@@ -49,14 +49,12 @@ export class TableRowDuplicate {
 export class RowDataCollector {
   constructor(tbodySelector = ".form-data", errorSelector = ".error") {
     this.tbodySelector = tbodySelector;
-    this.errorBox = document.querySelector(errorSelector);
   }
 
   getData() {
     const rows = document.querySelectorAll(`${this.tbodySelector} tr`);
     let formData = [];
     let hasError = false;
-    this.errorBox.innerHTML = "";
 
     for (const [index, row] of rows.entries()) {
       const fields = row.querySelectorAll("input, select, textarea");
@@ -70,9 +68,7 @@ export class RowDataCollector {
         const value = field.value?.trim();
 
         if (!value) {
-          this.errorBox.innerHTML = `Some fields are empty in row ${
-            index + 1
-          }. Fill the form correctly.`;
+          alert(`some fields are empty \n ${index+1}`);
           hasError = true;
           return false;
         }

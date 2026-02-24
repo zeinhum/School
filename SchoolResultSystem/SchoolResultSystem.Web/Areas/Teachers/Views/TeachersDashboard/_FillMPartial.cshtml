@@ -4,8 +4,9 @@
 <link rel="stylesheet" href="~/css/partial.css" />
 
 <div class="fill-partial">
+    <p class ="error"></p>
     <form class="form-container partial-form" action="/Teachers/TeachersDashboard/SaveMarks" method="post">
-        <p class = "error"></p>
+        
         <h2>Fill Marks</h2> 
         <p class="ClassId" data-name="ClassId" data-value="@Model.Info.ClassId">For Class: <strong> @Model.Info.ClassName </strong></P>
         <p class="SCode" data-name="SCode" data-value="@Model.Info.SCode">For Subject:<strong>@Model.Info.SName</strong></p>

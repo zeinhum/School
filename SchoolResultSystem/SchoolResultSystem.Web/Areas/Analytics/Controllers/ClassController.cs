@@ -1,59 +1,45 @@
 // generate exam report of class of recent exam
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SchoolResultSystem.Web.Areas.Analytics.Models;
+using SchoolResultSystem.Web.Areas.Analytics.Services;
 using SchoolResultSystem.Web.Data;
+using SchoolResultSystem.Web.Filters;
 using SchoolResultSystem.Web.Models;
 using System.Linq;
 
 namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
 {
     [Area("Analytics")]
-    public class ClassController : Controller
+    [AuthorizeUser]
+    public class ClassController(SchoolDbContext db) : Controller
     {
-        private readonly SchoolDbContext _db;
-
-        public ClassController(SchoolDbContext db)
-        {
-            _db = db;
-        }
+        private readonly SchoolDbContext _db = db;
 
         [HttpPost]
-        public IActionResult Report([FromBody] Requet req)
+        public async Task<IActionResult> ExamReport([FromBody] StdReq req)
         {
+            try{
             var className = req.NSN;
-            var examId = _db.Exams.Any() ? _db.Exams.Max(e => e.ExamId): 0;
+            var examId = await _db.ExamList
+            .Where(e=>e.ExamName==req.exName && e.AcademicYear==req.exYear)
+            .Select(e=>e.ExamId)
+            .FirstOrDefaultAsync();
 
-            if (string.IsNullOrEmpty(className))
+            if (examId == 0)
             {
-                // Populate dropdown if no class selected yet
-                ViewBag.Classes = _db.Classes
-                    .Where(c => c.IsActive)
-                    .Select(c => c.ClassName)
-                    .ToList();
-
-                ViewBag.Exams = _db.Exams
-                    .Select(e => new { e.ExamId, e.ExamName })
-                    .Distinct()
-                    .ToList();
-
-                return View();
+                return NotFound("No such exam found.");
             }
 
             var generator = new ClassExamReportGenerator(_db);
             var report = generator.GenerateReport(className, examId);
 
-            ViewBag.Classes = _db.Classes
-                .Where(c => c.IsActive)
-                .Select(c => c.ClassName)
-                .ToList();
-
-            ViewBag.Exams = _db.Exams
-                .Select(e => new { e.ExamId, e.ExamName })
-                .Distinct()
-                .ToList();
-
             return PartialView("ClassReport", report);
+            }catch (Exception)
+            {
+                return NotFound("Make sure to match class name, exam year and exam name.");
+            }
         }
     }
 }

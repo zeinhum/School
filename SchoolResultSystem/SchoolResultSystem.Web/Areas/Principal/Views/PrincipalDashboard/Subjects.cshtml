@@ -1,0 +1,39 @@
+ @model List<SchoolResultSystem.Web.Models.SubjectModel>;
+ <!-- Teachers Card -->
+        <div class="card">
+            <h2>Active subjects of the school</h2>
+
+            @if (Model!= null && Model.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Subject code</th>
+                            <th>Subject Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var subj in Model)
+                        {
+                            <tr>
+                                <td>@subj.SCode</td>
+                                <td>@subj.SName</td>
+                                <td>
+                                    <button class="btn btn-edit" data-change="removeSubject" data-id="@subj.SCode">
+                                        Remove
+                                    </button>
+                                    <button class="btn btn-delete" data-change="editSubject" data-id="@subj.SCode">
+                                        Edit
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No Subjects in school's teaching curriculum</p>
+            }
+        </div>

@@ -1,5 +1,6 @@
-import { AnalyticsHandler } from "./Analytics.js";
-import { MoveStudents } from "./moveStudents.js";
+//import { AnalyticsHandler } from "./Analytics.js";
+import { MoveStudents, deactivateStudent } from "./moveStudents.js";
+import { changePassword, deactivateTeacher, removeCST } from "./moveTeacher.js";
 
 export class RedirectButtons {
   constructor(baseDir, btnClass = ".btn") {
@@ -21,17 +22,55 @@ export class RedirectButtons {
 
       e.preventDefault();
 
-      const action = button.dataset.action;
       const id = button.dataset.id || "";
+      const action = button.dataset.action;
+      const move = button.dataset.move;
+      const change = button.dataset.change;
 
+      // 1️⃣ Handle general redirect actions
       if (action) {
         this.#redirect(action, id);
         return;
       }
-      const move = button.dataset.move;
+
+      // 2️⃣ Move students to other class
       if (move) {
-        const id = button.dataset.id;
-        MoveStudents(id); // students to next class
+        MoveStudents(id); // implement API / logic inside MoveStudents
+        return;
+      }
+
+      // 3️⃣ Handle destructive / sensitive changes
+      if (change) {
+        switch (change) {
+          case "deactivateTeacher":
+            this.#confirmAndExecute(
+              `Are you sure you want to deactivate teacher ${id}?`,
+              () => deactivateTeacher(id),
+            );
+            break;
+
+          case "deactivateStudent":
+            this.#confirmAndExecute(
+              `Are you sure you want to deactivate student ${id}?`,
+              () => deactivateStudent(id),
+            );
+            break;
+
+          case "changePassword":
+            changePassword(id);
+            break;
+
+
+          case "RCST":
+            this.#confirmAndExecute("Are you sure to remove this teacher from class-subject?",
+              ()=>removeCST(button)
+            );
+            
+            break;
+
+          default:
+            console.warn("Unknown change action:", change, "ID:", id);
+        }
       }
     });
   }
@@ -59,7 +98,7 @@ export class RedirectButtons {
   }
 
   // --- Private: Navigation toggler (load partials dynamically) ---
-  async #toggler(base = "PrincipalDashboard") {
+  async #toggler(base = this.baseDir + "Dashboard") {
     if (!this.toggle) {
       console.warn("No element found for navigation");
       return;
@@ -75,7 +114,8 @@ export class RedirectButtons {
         switch (action) {
           case "Analytics":
             await this.#fetchPartial(base, action);
-            this.jsContainer = new AnalyticsHandler();
+            this.jsContainer = await import("./Analytics.js");
+            new this.jsContainer.AnalyticsHandler().init();
             break;
           case "Teachers":
             await this.#fetchPartial(base, action);
@@ -84,6 +124,16 @@ export class RedirectButtons {
 
           case "Classes":
             await this.#fetchPartial(base, action);
+            this.jsContainer = null;
+            break;
+          
+          case "Subjects":
+            await this.#fetchPartial(base, action);
+            this.jsContainer=null;
+            break;
+
+          case "Exams":
+            await this.#fetchPartial(base, action)
             this.jsContainer = null;
             break;
 
@@ -104,7 +154,8 @@ export class RedirectButtons {
 
   // --- Private: Partial fetch loader ---
   async #fetchPartial(base, action, id = "") {
-    const url = `${this.baseDir}/${base}/${action}${id ? `?id=${id}` : ""}`;
+    const url = `${this.baseDir}${base}/${action}${id ? `?id=${id}` : ""}`;
+    console.log(`url in old model ${url}`)
 
     if (!this.container) {
       console.error("Partial container not found.");
@@ -126,6 +177,19 @@ export class RedirectButtons {
     }
   }
 
+  // ---------------------------
+  // Helper: confirm then execute
+  // ---------------------------
+  #confirmAndExecute(message, callback) {
+    try {
+      const confirmed = window.confirm(message);
+      if (confirmed && typeof callback === "function") {
+        callback();
+      }
+    } catch (e) {
+      console.error("Confirmation error:", e);
+    }
+  }
   // For API calls and receive promise
   // baseUrl: ARea/Controller
   // action: api endpoint

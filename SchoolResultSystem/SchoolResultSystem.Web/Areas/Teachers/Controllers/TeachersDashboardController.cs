@@ -68,7 +68,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
                 if (data == null)
                     return BadRequest("Invalid data");
-                var exam = _db.Exams
+                var exam = _db.ExamList
                             .Select(e => new Exams { ExamId = e.ExamId, ExamName = e.ExamName, AcademicYear = e.AcademicYear })
                             .Distinct()
                             .ToList();
@@ -121,7 +121,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
                 if (data == null)
                     return BadRequest("Invalid data");
-                var exam = _db.Exams
+                var exam = _db.ExamList
                             .Select(e => new Exams { ExamId = e.ExamId, ExamName = e.ExamName, AcademicYear = e.AcademicYear })
                             .Distinct()
                             .ToList();
@@ -177,8 +177,8 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                         ExamId = data.ExamId,
                         SCode = data.SCode,
                         NSN = item.NSN,
-                        ThMark = item.ThMark,
-                        PrMark = item.PrMark
+                        Mark = item.Mark,
+                        
                     };
                     payload.Add(payloadItem);
                 }
@@ -221,8 +221,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                     var existing = existingMarks.FirstOrDefault(m => m.NSN == item.NSN);
                     if (existing != null)
                     {
-                        existing.ThMark = item.ThMark;
-                        existing.PrMark = item.PrMark;
+                        existing.Mark = item.Mark;
                         _db.Marksheet.Update(existing); // optional, EF tracks changes automatically
                     }
                 }
@@ -285,6 +284,11 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                 return Json(new { success = false });
             }
 
+        }
+
+        public IActionResult Analytics()
+        {
+            return PartialView("_Analytics");
         }
 
 

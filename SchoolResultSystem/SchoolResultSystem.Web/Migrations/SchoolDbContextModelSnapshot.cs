@@ -88,6 +88,49 @@ namespace SchoolResultSystem.Web.Migrations
                     b.ToTable("Classes");
                 });
 
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ClassSubjectModel", b =>
+                {
+                    b.Property<int>("tabId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ClassId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("SCode")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("tabId");
+
+                    b.HasIndex("ClassId");
+
+                    b.HasIndex("SCode");
+
+                    b.ToTable("ClassSubject");
+                });
+
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamList", b =>
+                {
+                    b.Property<int>("ExamId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AcademicYear")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ExamName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("ExamId");
+
+                    b.ToTable("ExamList");
+                });
+
             modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
                 {
                     b.Property<int>("Tablerow")
@@ -124,6 +167,8 @@ namespace SchoolResultSystem.Web.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Tablerow");
+
+                    b.HasIndex("ExamId");
 
                     b.HasIndex("SCode");
 
@@ -398,13 +443,40 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ClassSubjectModel", b =>
+                {
+                    b.HasOne("SchoolResultSystem.Web.Models.ClassModel", "Class")
+                        .WithMany()
+                        .HasForeignKey("ClassId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SchoolResultSystem.Web.Models.SubjectModel", "Subject")
+                        .WithMany()
+                        .HasForeignKey("SCode")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Class");
+
+                    b.Navigation("Subject");
+                });
+
             modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
                 {
+                    b.HasOne("SchoolResultSystem.Web.Models.ExamList", "ExamList")
+                        .WithMany()
+                        .HasForeignKey("ExamId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("SchoolResultSystem.Web.Models.SubjectModel", "Subject")
                         .WithMany()
                         .HasForeignKey("SCode")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("ExamList");
 
                     b.Navigation("Subject");
                 });

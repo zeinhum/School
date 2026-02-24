@@ -1,0 +1,38 @@
+ @model List<SchoolResultSystem.Web.Models.ExamModel>;
+ <!-- Teachers Card -->
+        <div class="card">
+            <h2>All the active exams</h2>
+
+            @if (Model!= null && Model.Any())
+            {
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Exam Id</th>
+                            <th>Exam Year</th>
+                            <th>Exam Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var subj in Model)
+                        {
+                            <tr>
+                                <td>@subj.ExamId</td>
+                                <td>@subj.AcademicYear</td>
+                                <td>@subj.ExamName</td>
+                                <td>
+                                    <button class="btn btn-success" data-change="examCompleted" data-id="@subj.ExamId">
+                                        Mark completed
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <p>No Active Exams Found.</p>
+            }
+        </div>

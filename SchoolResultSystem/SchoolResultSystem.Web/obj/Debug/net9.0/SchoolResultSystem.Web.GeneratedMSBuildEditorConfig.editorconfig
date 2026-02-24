@@ -68,6 +68,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxDU1ZpZXcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/Exams.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxFeGFtcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/header.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxoZWFkZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
@@ -78,6 +82,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/SDForm.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxTREZvcm0uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/Subjects.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcUHJpbmNpcGFsXFZpZXdzXFByaW5jaXBhbERhc2hib2FyZFxTdWJqZWN0cy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/School/SchoolResultSystem/SchoolResultSystem.Web/Areas/Principal/Views/PrincipalDashboard/_Classes.cshtml]

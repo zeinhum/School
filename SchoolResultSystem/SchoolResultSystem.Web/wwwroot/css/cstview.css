@@ -23,12 +23,13 @@ body{
     
 }
 .card {
-    background: #fff;
+    background:var(--text-light);
     border-radius: var(--border-radius-md);
     padding: var(--spacing-md);
     box-shadow: var(--shadow-md);
     margin-bottom: var(--spacing-lg);
-    max-width:60rem;
+    width: fit-content;
+    border: 1px solid var(--form-card-background-alpha);
 }
 
 .data-table {
@@ -145,3 +146,4 @@ body{
     display: flex;
     justify-content: center;
 }
+

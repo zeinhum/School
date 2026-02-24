@@ -2,10 +2,10 @@ import { RedirectButtons } from "./controllModel.js";
 import { writeHeader } from "./dashboardHeader.js";
 
 
-export function TNav(data){
+export async function TNav(data){
     // wwrite header from session
-        writeHeader(data);
+        await writeHeader(data);
     
     // initialize controll button
-let redirectButtons = new RedirectButtons("/Teacher");
+let redirectButtons = new RedirectButtons("/Teachers");
 }

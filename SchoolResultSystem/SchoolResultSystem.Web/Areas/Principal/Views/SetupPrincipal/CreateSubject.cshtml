@@ -2,15 +2,22 @@
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Styles {
+<link rel="stylesheet" href="~/css/rightnav.css" />
+<link rel="stylesheet" href="~/css/cstview.css" />
+<link rel="stylesheet" href="~/css/header.css" />
+}
 <link rel="stylesheet" href="~/css/form.css" />
 
-<script type="module" src="/js/addClasses.js"></script>
+<script type="module" src="/js/classSubject.js"></script>
+
 <partial name="_header" />
+
 <div class="dashboard">
 <div><div class="partial-container"></div>
-    <form class="form-container" action="/Principal/SetupPrincipal/SaveSubject" method="post">
+    <form class="card form-container" action="/Principal/SetupPrincipal/SaveSubjec" method="post">
         <p class="error"></p>
-        <h2>Add Subjects taught in the school</h2>
+        <h2 class="card-head">Add all subjects that the school teaches.</h2>
 
         <table class="form-card">
             
@@ -18,7 +25,7 @@
                 <tr>
                     <th>Subject Code</th>
                     <th>Subject Name</th>
-                    <th>add</th>
+                    <th>Remove/Add</th>
                 </tr>
             </thead>
 
@@ -32,7 +39,7 @@
             </tbody>
         </table>
 
-        <button type="submit" class="btn-form btn-success">Save Subject</button>
+        <button type="submit" class="btn-form actions btn-success">Save Subject</button>
     </form>
 </div>
     <partial name="_RightNavBar" model="-1" />

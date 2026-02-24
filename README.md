@@ -1,7 +1,7 @@
 <h2>Note:This app is still in construction. Final realease will be held soon</h2>
 <body>
 
-<h1>🏫 School Result System</h1>
+<h1>🏫 Aistrone Public School</h1>
 <p>A full-stack <strong>School Result & Analytics Management System</strong> built with <strong>ASP.NET Core MVC</strong>, <strong>Entity Framework Core</strong>, and <strong>SQLite</strong>, designed to automate student performance analysis and report generation with real-time data insights.</p>
 
 <hr>
