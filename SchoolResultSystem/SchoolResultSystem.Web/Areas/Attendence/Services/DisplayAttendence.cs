@@ -22,7 +22,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
                 .ToHashSet();
 
             // Leaves
-            var leaveDates = db.Leaves
+            var leaveDates = db.LeaveDates
                 .Where(l => l.Date >= dto.From && l.Date <= dto.Till)
                 .Select(l => l.Date.Date)
                 .ToHashSet();
@@ -36,7 +36,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
                 var day = dto.From.Date.AddDays(i);
 
                 if (leaveDates.Contains(day)){
-                    result.Leaves.Add(day);
+                    result.LeaveDates.Add(day);
                 }
                 else
                 {
@@ -62,12 +62,12 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Services
             {
                 case "teacher":
                 // find name of candidate from Id
-                var candidateName =db.Users.Where(i=>i.TeacherId==dto.Id).Select(i=>i.TeacherName).FirstOrDefault();
+                var candidateName =db.Users.Where(i=>i.UserId==dto.Id).Select(i=>i.UserName).FirstOrDefault();
                 candidateName ??= "No Candidate found with this Id";
                 dto.CandidateName=candidateName!;
                 
                     return db.TeacherAttendance
-                        .Where(d => d.TeacherId == dto.Id &&
+                        .Where(d => d.UserId == dto.Id &&
                                     d.LoginDateTime >= dto.From &&
                                     d.LoginDateTime <= dto.Till)
                         .Select(d => d.LoginDateTime);

@@ -10,7 +10,7 @@ namespace SchoolResultSystem.Web.Models
     public int Id { get; set; }
 
     [Required]
-    public string TeacherId { get; set; } = null!;
+    public string UserId { get; set; } = null!;
 
     [Required]
     public DateTime LoginDateTime { get; set; } = DateTime.UtcNow;
@@ -18,7 +18,7 @@ namespace SchoolResultSystem.Web.Models
     public DateTime? LogoutDateTime { get; set; }
 
 
-    [ForeignKey(nameof(TeacherId))]
+    [ForeignKey(nameof(UserId))]
     public virtual UserModel User { get; set; } = null!;
 }
 

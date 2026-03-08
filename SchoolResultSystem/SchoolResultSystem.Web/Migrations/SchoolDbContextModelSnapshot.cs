@@ -15,7 +15,7 @@ namespace SchoolResultSystem.Web.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "9.0.9");
+            modelBuilder.HasAnnotation("ProductVersion", "10.0.0");
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.CSModel", b =>
                 {
@@ -39,7 +39,7 @@ namespace SchoolResultSystem.Web.Migrations
 
                     b.HasIndex("NSN");
 
-                    b.ToTable("CS");
+                    b.ToTable("ClassStudent");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.CSTModel", b =>
@@ -55,7 +55,7 @@ namespace SchoolResultSystem.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TeacherId")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -65,7 +65,7 @@ namespace SchoolResultSystem.Web.Migrations
 
                     b.HasIndex("SCode");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("CST");
                 });
@@ -75,6 +75,10 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<int>("ClassId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("ClassGrade")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("ClassName")
                         .IsRequired()
@@ -90,7 +94,7 @@ namespace SchoolResultSystem.Web.Migrations
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.ClassSubjectModel", b =>
                 {
-                    b.Property<int>("tabId")
+                    b.Property<int>("rowId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -101,7 +105,7 @@ namespace SchoolResultSystem.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("tabId");
+                    b.HasKey("rowId");
 
                     b.HasIndex("ClassId");
 
@@ -110,7 +114,7 @@ namespace SchoolResultSystem.Web.Migrations
                     b.ToTable("ClassSubject");
                 });
 
-            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamList", b =>
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
                 {
                     b.Property<int>("ExamId")
                         .ValueGeneratedOnAdd()
@@ -131,48 +135,33 @@ namespace SchoolResultSystem.Web.Migrations
                     b.ToTable("ExamList");
                 });
 
-            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamRubrickModel", b =>
                 {
-                    b.Property<int>("Tablerow")
+                    b.Property<int>("rubrick")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AcademicYear")
-                        .HasColumnType("INTEGER");
+                    b.Property<decimal>("CreditHour")
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("ExamId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("ExamName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<decimal>("PrCrh")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("PrMark")
+                    b.Property<decimal>("FullMark")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("SCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("ThCrh")
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("ThMark")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Tablerow");
-
-                    b.HasIndex("ExamId");
+                    b.HasKey("rubrick");
 
                     b.HasIndex("SCode");
 
-                    b.ToTable("Exams");
+                    b.HasIndex("ExamId", "SCode")
+                        .IsUnique();
+
+                    b.ToTable("ExamRubrick");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.LeavesCalendarModel", b =>
@@ -196,7 +185,7 @@ namespace SchoolResultSystem.Web.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Leaves");
+                    b.ToTable("LeaveDates");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.MarksheetModel", b =>
@@ -208,18 +197,15 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<int>("ExamId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("Mark")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("NSN")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("PrMark")
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("SCode")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<decimal>("ThMark")
                         .HasColumnType("TEXT");
 
                     b.HasKey("MarksheetId");
@@ -319,6 +305,10 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("RegistrationN")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("StudentName")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -336,7 +326,15 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<bool>("IsActive")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("LinkedPr")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("SName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("SType")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -357,20 +355,24 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Property<DateTime?>("LogoutDateTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TeacherId")
+                    b.Property<string>("UserId")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("TeacherAttendance");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.UserModel", b =>
                 {
-                    b.Property<string>("TeacherId")
+                    b.Property<string>("UserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsActive")
@@ -384,15 +386,11 @@ namespace SchoolResultSystem.Web.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("TeacherName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("TeacherId");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
@@ -402,13 +400,13 @@ namespace SchoolResultSystem.Web.Migrations
                     b.HasOne("SchoolResultSystem.Web.Models.ClassModel", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SchoolResultSystem.Web.Models.StudentModel", "Student")
                         .WithMany()
                         .HasForeignKey("NSN")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Class");
@@ -421,18 +419,18 @@ namespace SchoolResultSystem.Web.Migrations
                     b.HasOne("SchoolResultSystem.Web.Models.ClassModel", "Class")
                         .WithMany()
                         .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SchoolResultSystem.Web.Models.SubjectModel", "Subject")
                         .WithMany()
                         .HasForeignKey("SCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("SchoolResultSystem.Web.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("TeacherId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -462,23 +460,23 @@ namespace SchoolResultSystem.Web.Migrations
                     b.Navigation("Subject");
                 });
 
-            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamModel", b =>
+            modelBuilder.Entity("SchoolResultSystem.Web.Models.ExamRubrickModel", b =>
                 {
-                    b.HasOne("SchoolResultSystem.Web.Models.ExamList", "ExamList")
+                    b.HasOne("SchoolResultSystem.Web.Models.ExamModel", "Exam")
                         .WithMany()
                         .HasForeignKey("ExamId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SchoolResultSystem.Web.Models.SubjectModel", "Subject")
+                    b.HasOne("SchoolResultSystem.Web.Models.SubjectModel", "Subs")
                         .WithMany()
                         .HasForeignKey("SCode")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("ExamList");
+                    b.Navigation("Exam");
 
-                    b.Navigation("Subject");
+                    b.Navigation("Subs");
                 });
 
             modelBuilder.Entity("SchoolResultSystem.Web.Models.MarksheetModel", b =>
@@ -539,7 +537,7 @@ namespace SchoolResultSystem.Web.Migrations
                 {
                     b.HasOne("SchoolResultSystem.Web.Models.UserModel", "User")
                         .WithMany()
-                        .HasForeignKey("TeacherId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

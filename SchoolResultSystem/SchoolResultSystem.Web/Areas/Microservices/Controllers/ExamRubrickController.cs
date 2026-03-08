@@ -65,51 +65,72 @@ public class ExamRubrickController : SchoolDbController
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateRubrick([FromBody] ExamSubjectsDTO data)
+public async Task<IActionResult> CreateRubrick([FromBody] ExamSubjectsDTO data)
+{
+    // 1. Basic Guard Clauses
+    if (data == null || data.Subs == null || data.Subs.Count == 0)
     {
-        if (!ModelState.IsValid || data == null)
-            return Json(new { message = "Invalid data type" });
-
-        if (data.Subs == null || data.Subs.Count == 0)
-            return Json(new { message = "No subject provided" });
-        try
-        {
-
-
-            var sql = new StringBuilder();
-            var parameters = new List<object>();
-
-            sql.Append("INSERT INTO Marksheet (ExamId, SCode, CreditHour, FullMark) VALUES ");
-
-            for (int i = 0; i < data.Subs.Count; i++)
-            {
-                sql.Append($"(@p{i}0, @p{i}1, @p{i}2, @p{i}3)");
-
-                if (i < data.Subs.Count - 1)
-                    sql.Append(",");
-
-                parameters.Add(data.ExamId);
-                parameters.Add(data.Subs[i].SCode);
-                parameters.Add(data.Subs[i].CreditHour);
-                parameters.Add(data.Subs[i].FullMark);
-            }
-
-            sql.Append(@"
-                ON CONFLICT(ExamId, SCode)
-                DO UPDATE SET
-                CreditHour = excluded.CreditHour,
-                FullMark = excluded.FullMark;
-            ");
-
-            await _db.Database.ExecuteSqlRawAsync(sql.ToString(), parameters.ToArray());
-
-            return Json(new { message = "Rubrick saved successfully" });
-        }
-        catch
-        {
-            return Json(new { message = "Some error occured!" });
-        }
+        return BadRequest(new { message = "No valid subject data provided." });
     }
+
+    // 2. Safety Limit (SQLite Parameter Limit is usually 999 or 32766)
+    // 4 parameters per subject. 200 subjects = 800 parameters. Safe.
+    if (data.Subs.Count > 200) 
+    {
+        return BadRequest(new { message = "Too many subjects in a single request. Please batch your data." });
+    }
+
+    // 3. Start a Transaction for Atomic operations
+    using var transaction = await _db.Database.BeginTransactionAsync();
+
+    try
+    {
+        var sql = new StringBuilder();
+        var parameters = new List<object>();
+
+        sql.Append("INSERT INTO ExamRubrick (ExamId, SCode, CreditHour, FullMark) VALUES ");
+
+        for (int i = 0; i < data.Subs.Count; i++)
+        {
+            var sub = data.Subs[i];
+            
+            // Validate row data before adding to SQL
+            if (string.IsNullOrWhiteSpace(sub.SCode) || sub.FullMark <= 0) continue;
+
+            int start = i * 4;
+            sql.Append($"(@p{start}, @p{start + 1}, @p{start + 2}, @p{start + 3})");
+
+            if (i < data.Subs.Count - 1) sql.Append(",");
+
+            parameters.Add(data.ExamId);
+            parameters.Add(sub.SCode);
+            parameters.Add(sub.CreditHour);
+            parameters.Add(sub.FullMark);
+        }
+
+        sql.Append(@"
+            ON CONFLICT(ExamId, SCode)
+            DO UPDATE SET
+            CreditHour = excluded.CreditHour,
+            FullMark = excluded.FullMark;");
+
+        // 4. Execute the command
+        await _db.Database.ExecuteSqlRawAsync(sql.ToString(), parameters.ToArray());
+
+        // 5. Commit if everything succeeded
+        await transaction.CommitAsync();
+        
+        return Ok(new { message = "Rubrick saved successfully" });
+    }
+    catch (Exception)
+    {
+        // 6. Rollback on failure to prevent partial data save
+        await transaction.RollbackAsync();
+
+
+        return Ok( new { message = "An internal error occurred while saving the rubrick." });
+    }
+}
 
 
     // all subjects
@@ -119,4 +140,25 @@ public class ExamRubrickController : SchoolDbController
         var allSubjects = await _db.Subjects.Where(a => a.IsActive).ToListAsync();
         return Ok(allSubjects);
     }
+
+    [HttpPost]
+    public async Task<IActionResult> ClassSubs([FromBody] SubId Id)
+    {
+        try
+        {
+            var subs = await _db.CST.Where(c=>c.ClassId==Id.Id)
+            .Include(s=>s.Subject)
+            .Select(s => new
+            {
+                sCode = s.SCode,
+                sName = s.Subject.SName
+            }).ToListAsync();
+            return Ok(subs);
+        }
+        catch
+        {
+            return Json(new{message="subs not found"});
+        }
+    }
+
 }

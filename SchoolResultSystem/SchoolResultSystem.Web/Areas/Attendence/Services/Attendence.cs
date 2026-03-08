@@ -17,7 +17,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Model
             var tomorrow = today.AddDays(1);
 
             bool isAttendanceDone = _db.TeacherAttendance
-                .Any(a => a.TeacherId == id &&
+                .Any(a => a.UserId == id &&
                           a.LoginDateTime >= today &&
                           a.LoginDateTime < tomorrow);
 
@@ -28,7 +28,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Model
                 {
                     var payload = new TeacherAttendanceModel
                     {
-                        TeacherId = id,
+                        UserId = id,
                         LoginDateTime = DateTime.UtcNow
                     };
 
@@ -65,7 +65,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Model
                     var payload = new StudentAttendanceModel
                     {
                         NSN = student.NSN,
-                        AttendanceBy = dto.TeacherId,
+                        AttendanceBy = dto.UserId,
                         AttendanceDate = DateTime.UtcNow,
                         Present = student.Present,
                         AbsentReason = student.AbsentReason

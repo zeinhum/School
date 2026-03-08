@@ -27,8 +27,8 @@ public class MicroservicessController : SchoolDbController
     [HttpPost]
     public IActionResult MoveStudents([FromBody] Changeclass data)
     {
-        if (!ModelState.IsValid) return BadRequest("inccorect request");
-        if (data.FromClass == data.Toclass) return Json(new { success = false, message = "Can't move students within the class, choose a diffirent class." });
+        if (!ModelState.IsValid) return Json(new{message="Incalid data"});
+        if (data.FromClass == data.Toclass) return Json(new { message = "Can't move students within the class, choose a diffirent class." });
 
         var assignClass = new List<CSModel>();
 
@@ -43,11 +43,11 @@ public class MicroservicessController : SchoolDbController
             });
         }
 
-        _db.CS.AddRange(assignClass);
+        _db.ClassStudent.AddRange(assignClass);
 
         // Deactivate existing assignments
 
-        _db.CS
+        _db.ClassStudent
             .Where(c => data.MovingStudents.Contains(c.NSN)
                         && c.ClassId == data.FromClass
                         && c.IsActive)
@@ -64,7 +64,7 @@ public class MicroservicessController : SchoolDbController
     public IActionResult DeactivateTeacher([FromBody] Teacher id)
     {
         if (id == null) return BadRequest("Bad Request to deactivate teacher");
-        _db.Users.Where(t => t.TeacherId == id.Id).ExecuteUpdate(s => s.SetProperty(t => t.IsActive, false));
+        _db.Users.Where(t => t.UserId == id.Id).ExecuteUpdate(s => s.SetProperty(t => t.IsActive, false));
         _db.SaveChanges();
 
         return Json(new { success = true, message = "Teacher deactivated" });
@@ -83,10 +83,10 @@ public class MicroservicessController : SchoolDbController
 
 
     [HttpPost]
-    public IActionResult TeacherId([FromBody] Teacher id)
+    public IActionResult UserId([FromBody] Teacher id)
     {
         if (id == null) return BadRequest("Bad request");
-        var TeacherInfo = _db.Users.Where(u => u.TeacherId == id.Id).FirstOrDefault();
+        var TeacherInfo = _db.Users.Where(u => u.UserId == id.Id).FirstOrDefault();
         return Ok(TeacherInfo);
     }
 
@@ -97,7 +97,7 @@ public class MicroservicessController : SchoolDbController
             return Ok(new { message = "Bad request" });
 
         var updatedRows = await _db.Users
-            .Where(u => u.TeacherId == id.Id)
+            .Where(u => u.UserId == id.Id)
             .ExecuteUpdateAsync(setters =>
                 setters.SetProperty(u => u.Password, id.NewPw)
             );
@@ -115,10 +115,37 @@ public class MicroservicessController : SchoolDbController
 
         await _db.CST
                 .Where(u => u.ClassId == info.ClassId
-                && u.TeacherId == info.TeacherId
+                && u.UserId == info.UserId
                 && u.SCode == info.Scode)
                 .ExecuteDeleteAsync();
                 return Ok(new{message="Class-Subject-Teacher assignment removed."});
 
+    }
+
+    public  async Task<IActionResult> AllClasses()
+    {
+        var classes = await _db.Classes.Where(c=>c.IsActive).ToListAsync();
+        if(classes != null)
+        {
+            return Json(new{Classes=classes});
+        }
+        return Json(new{messag="No class found"});
+        
+    }
+
+    public async Task<IActionResult> AllTeachers()
+    {
+        var teacher = await _db.Users.Where(u=>u.IsActive && u.Role =="Teacher").Select(u => new
+        {
+            userId = u.UserId,
+            teacher = u.FullName
+        }).ToListAsync();
+        return Json(teacher);
+    }
+
+    public async Task<IActionResult> AllSubjects()
+    {
+        var sub = await _db.Subjects.Where(s=>s.IsActive).ToListAsync();
+        return Json(sub);
     }
 }

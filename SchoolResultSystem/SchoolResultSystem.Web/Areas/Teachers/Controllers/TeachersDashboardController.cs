@@ -32,7 +32,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                 {
 
                     CSList = _db.CST
-                                .Where(t => t.TeacherId == id)
+                                .Where(t => t.UserId == id)
                                 .Select(c => new CSList
                                 {
                                     ClassId = c.ClassId,
@@ -75,7 +75,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
 
 
                 // Get all students for the given class
-                var students = _db.CS
+                var students = _db.ClassStudent
                     .Where(st => st.ClassId == data.ClassId)
                     .Select(st => new CS
                     {
@@ -248,7 +248,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
                 return BadRequest("invalid Data type");
             }
 
-            var AllStudsOfClass = _db.CS
+            var AllStudsOfClass = _db.ClassStudent
                 .Where(s => s.IsActive && s.ClassId == data.ClassId)
                 .Select(s => new StudsDTO
                 {

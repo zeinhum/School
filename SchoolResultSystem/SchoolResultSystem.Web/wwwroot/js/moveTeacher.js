@@ -1,29 +1,27 @@
 import { FetchJsonPost } from "./fetchJson.js";
-import {PartialNaV } from "./UI/partialNav.js"
-
+import { PartialNaV } from "./UI/partialNav.js";
 
 export default class MoveTeachers {
-  constructor(){
+  constructor() {
     this.maper = {
-      changepassword:this.changePassword,
+      changepassword: this.changePassword,
       cancelchange: this.cancelChange,
-      confirmchange:this.confirmChange,
-      deactivateteacher: this.deactivateTeacher
-    }
-    this.nav = new PartialNaV (".partial-container",this.maper);
-
+      confirmchange: this.confirmChange,
+      deactivateteacher: this.deactivateTeacher,
+    };
+    this.nav = new PartialNaV(".partial-container", this.maper);
   }
-  destroy(){
+  destroy() {
     this.nav.destroy();
   }
-  // Business Logic 
+  // Business Logic
 
   async changePassword(id) {
     const payload = { Id: id };
 
     const teacher = await FetchJsonPost(
-      "/Microservices/Microservicess/TeacherId",
-      payload
+      "/Microservices/Microservicess/UserId",
+      payload,
     );
 
     this.root.innerHTML = `
@@ -41,41 +39,42 @@ export default class MoveTeachers {
         </div>
       </div>
     `;
-
   }
 
-  async confirmChange(){
+  async confirmChange() {
     const input = this.root.querySelector("#newPw");
-        const NewPw = input?.value?.trim();
+    const NewPw = input?.value?.trim();
 
-        if (!NewPw) {
-          alert("Password cannot be empty.");
-          return;
-        }
+    if (!NewPw) {
+      alert("Password cannot be empty.");
+      return;
+    }
 
-        payload.NewPw = NewPw;
+    payload.NewPw = NewPw;
 
-        const res = await FetchJsonPost(
-          "/Microservices/Microservicess/ChangePassword",
-          payload
-        );
+    const res = await FetchJsonPost(
+      "/Microservices/Microservicess/ChangePassword",
+      payload,
+    );
 
-        this.root.innerHTML = res.message;
+    this.root.innerHTML = res.message;
   }
-  async cancelChange(){
+  async cancelChange() {
     this.root.innerHTML = "Password unchanged.";
   }
-  
 
   async deactivateTeacher(id) {
     const payload = { Id: id };
 
-    const res = await FetchJsonPost(
-      "/Microservices/Microservicess/DeactivateTeacher",
-      payload
-    );
+    let confirmed = confirm(`Are sure to deactivate ${id}`);
+    if (confirmed) {
+      const res = await FetchJsonPost(
+        "/Microservices/Microservicess/DeactivateTeacher",
+        payload,
+      );
 
-    this.root.innerHTML = res.message;
+      this.root.innerHTML = res.message;
+    }
   }
 
   async removeCST(button) {
@@ -93,16 +92,16 @@ export default class MoveTeachers {
 
     const rowData = {
       SCode: cells[0].textContent.trim(),
-      TeacherId: cells[2].textContent.trim(),
+      UserId: cells[2].textContent.trim(),
       ClassId: classId,
     };
-
+    let confirmed = confirm(`Are you sure to deactivate?`);
+    if (!confirmed) return;
     const res = await FetchJsonPost(
       "/Microservices/Microservicess/RemoveSubjectTeacher",
-      rowData
+      rowData,
     );
 
     alert(res.message);
   }
 }
-

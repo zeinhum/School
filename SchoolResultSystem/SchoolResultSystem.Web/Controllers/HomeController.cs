@@ -56,8 +56,9 @@ namespace SchoolResultSystem.Web.Controllers
         [HttpPost]
         public IActionResult SavePrincipal(UserModel model)
         {
-            if (!ModelState.IsValid)
+            if (!ModelState.IsValid || model == null)
             {
+                ViewBag.error = "Wrong information supplied";
                 return View("SchoolAccount");
             }
             try
@@ -98,6 +99,11 @@ namespace SchoolResultSystem.Web.Controllers
                 return View("Login", school);
             }
             return View("Login");
+        }
+
+        public IActionResult Admin()
+        {
+            return View("SchoolAccount");
         }
     }
 }

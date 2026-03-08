@@ -79,9 +79,9 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
             // ---------------------------
             // Handle Holidays (specific dates)
             // ---------------------------
-            if (dto.Leaves != null && dto.Leaves.Count > 0)
+            if (dto.LeaveDates != null && dto.LeaveDates.Count > 0)
             {
-                foreach (var leave in dto.Leaves)
+                foreach (var leave in dto.LeaveDates)
                 {
                     payload.Add(new LeavesCalendarModel
                     {
@@ -110,7 +110,7 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
             // ---------------------------
             // Get existing dates from DB for current year
             // ---------------------------
-            var existingDates = await _db.Leaves
+            var existingDates = await _db.LeaveDates
                 .Where(x => x.Date.Year == currentYear)
                 .Select(x => x.Date.Date)
                 .ToHashSetAsync();
@@ -127,7 +127,7 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
             // ---------------------------
             if (finalToInsert.Count > 0)
             {
-                await _db.Leaves.AddRangeAsync(finalToInsert);
+                await _db.LeaveDates.AddRangeAsync(finalToInsert);
                 await _db.SaveChangesAsync();
                 }
                 else
@@ -140,10 +140,7 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
             // ---------------------------
             return Json(new
             {
-                success = true,
-                totalProcessed = payload.Count,
-                count = finalToInsert.Count,
-                message = "Leaves set successfully."
+                message = $"Leaves set successfully.({finalToInsert.Count})"
             });
             }catch (Exception)
             {
@@ -151,10 +148,10 @@ namespace SchoolResultSystem.Web.Areas.Principal.Controllers
             }
         }
     
-    public async Task<IActionResult> CleanCalendar()
+    public async Task<IActionResult> ResetCalendar()
         {try{
             var currentYear = DateTime.Now.Year;
-            await _db.Leaves.Where(y=>y.Date.Year==currentYear).ExecuteDeleteAsync();
+            await _db.LeaveDates.Where(y=>y.Date.Year==currentYear).ExecuteDeleteAsync();
             return Ok(new{message="All entries of weekends and leaves for current year have been deleted."});
             }
             catch (Exception)

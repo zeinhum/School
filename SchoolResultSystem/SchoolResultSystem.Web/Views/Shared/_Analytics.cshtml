@@ -1,29 +1,22 @@
+<h3>Analytics</h3>
+<div class="card">
+    <div class="form-card">
+        <div class="form-row">
+            <input type="text" id="id" name="id" placeholder="Enter ID" />
 
-<link rel="stylesheet" href="~/css/analytics.css" />
+            <select id="slect-target">
+                <option value="" disabled selected>Select target</option>
+                <option value="Student">Student</option>
+                <option value="Teacher">Teacher</option>
+                <option value="SchoolClass">Class</option>
+                <option value="Subject" disabled>Subject</option>
 
-<div class="analysis-board">
-  <h4>Analytics</h4>
+            </select>
 
-  <div class="form-row">
-      <input type="text" id="id" name="id" placeholder="Enter ID"/> 
-
-      <select id="slect-target">
-          <option value="" disabled selected>Select target</option>
-          <option value="Student">Student</option>
-          <option value="Teacher">Teacher</option>
-          <option value="SchoolClass">Class</option>
-          <option value="Subject" disabled>Subject</option>
-          
-      </select>
-
-      <select id="select-action"></select>
-      <div id="sub-action"></div>
-
-      <div class="actions">
-          <button class="action">Take Action</button>
-      </div>
-  </div>
-
-  <div class="result-container"></div>
+            <select id="select-action"></select>
+            <div id="sub-action"></div>
+        </div>
+            <button class="action btn-primary">View Result</button>
+    </div>
 </div>
-
+<div class="result-container"></div>

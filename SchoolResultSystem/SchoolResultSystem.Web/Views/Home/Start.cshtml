@@ -1,69 +1,359 @@
 @{
-    ViewData["Title"] = "Nanu School";
+    ViewData["Title"] = "AISTRONE";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/css/index.css" />
-<link rel="stylesheet" href="~/css/admin-setup.css" />
+<link rel="stylesheet" href="~/css/landingpage.css" />
 
-<div class="main-container">
-<div class="hero">
-    <h1 class="title">&#127891; AISTRONE PUBLIC SCHOOL</h1>
-    <p style="color:rgb(124, 7, 7);">@TempData["error"]</p>
-
-    <p class="subtitle">
-        A powerful, low bandwidth and sustainable tool to <b>analyze, monitor, and improve</b> the quality of education.  
-        From <b>student progress tracking</b> to <b>teacher performance analytics</b>, 
-        we give schools the tools to grow smarter every exam cycle.
-    </p>
-
-    <div class="cta">
-        <a href="@Url.Action("SchoolAccount", "Home")" class="start-btn">🚀 Get Started</a>
+<!-- ═══════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════ -->
+<nav class="lp-nav">
+    <div class="lp-nav__inner">
+        <div class="lp-nav__brand">
+            <span class="lp-nav__logo-mark">A</span>
+            <span class="lp-nav__name">AISTRONE</span>
+        </div>
+        <a href="/Home/SchoolAccount" class="lp-nav__cta">Get Started</a>
     </div>
-</div>
+</nav>
 
-<div class="features">
-    <div class="feature-card">
-        <h2>📈 Student Progress</h2>
-        <p>
-            Visualize each student’s academic journey.  
-            See growth trends, compare performance across subjects, and ensure no one is left behind.
-        </p>
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<header class="lp-hero">
+    <div class="lp-hero__bg-grid"></div>
+    <div class="lp-hero__glow"></div>
+
+    <div class="lp-hero__inner">
+        <div class="lp-hero__text">
+            <p class="lp-hero__eyebrow">School Management System</p>
+            <h1 class="lp-hero__title">
+                Academic<br>
+                <em>Intelligence</em><br>
+                Redefined.
+            </h1>
+            <p class="lp-hero__sub">
+                Bringing data-driven academic excellence to every school —
+                even without internet connectivity.
+            </p>
+            <div class="lp-hero__actions">
+                <a href="/Home/SchoolAccount" class="lp-btn-primary">Get Started</a>
+                <a href="#metrics" class="lp-btn-ghost">Explore Features</a>
+            </div>
+        </div>
+
+        <div class="lp-hero__stats">
+            <div class="lp-stat">
+                <span class="lp-stat__num">4.0</span>
+                <span class="lp-stat__label">Scale GPA Tracking</span>
+            </div>
+            <div class="lp-stat">
+                <span class="lp-stat__num">LAN</span>
+                <span class="lp-stat__label">No Internet Required</span>
+            </div>
+            <div class="lp-stat">
+                <span class="lp-stat__num">∞</span>
+                <span class="lp-stat__label">No Subscription Fees</span>
+            </div>
+        </div>
     </div>
 
-    <div class="feature-card">
-        <h2>👩‍🏫 Teacher Performance</h2>
-        <p>
-            Measure teacher impact through detailed performance analytics.  
-            Track how teaching quality reflects in student outcomes over time.
-        </p>
+    <div class="lp-hero__scroll-hint">
+        <span></span>Scroll to explore
     </div>
+</header>
 
-    <div class="feature-card">
-        <h2>📚 Subject Insights</h2>
-        <p>
-            Identify strong and weak areas across subjects.  
-            Use data-driven insights to make curriculum improvements and raise overall learning quality.
-        </p>
+<!-- ═══════════════════════════════════════════
+     METRICS SECTION
+═══════════════════════════════════════════ -->
+<section class="lp-section" id="metrics">
+    <div class="lp-container">
+        <div class="lp-section__header">
+            <span class="lp-label">Core Metrics</span>
+            <h2>Academic Intelligence Through<br>Structured Metrics</h2>
+            <p class="lp-section__lead">
+                GPA, TPI, and SQR are not independent numbers — they are
+                interconnected indicators that reflect the true health of a school.
+            </p>
+        </div>
+
+        <div class="lp-metrics-grid">
+
+            <div class="lp-metric-card lp-metric-card--featured">
+                <div class="lp-metric-card__img-wrap">
+                    <img src="/image/gpa.jpg" alt="GPA Presentation">
+                </div>
+                <div class="lp-metric-card__body">
+                    <span class="lp-metric-card__tag">GPA</span>
+                    <h3>Grade Point Average</h3>
+                    <p>
+                        Measures student academic achievement on a globally recognised 4.0 scale.
+                        Identifies subject strengths, performance gaps, and consistency trends.
+                        Administrators detect declining areas and apply corrective strategy instantly.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lp-metric-card">
+                <div class="lp-metric-card__img-wrap">
+                    <img src="/image/tpi.jpg" alt="Teacher Performance Index">
+                </div>
+                <div class="lp-metric-card__body">
+                    <span class="lp-metric-card__tag">TPI</span>
+                    <h3>Teacher Performance Index</h3>
+                    <p>
+                        Evaluates teaching effectiveness using measurable classroom outcomes.
+                        Reflects student improvement, engagement, and academic consistency —
+                        enabling fair, data-based evaluation over subjective judgment.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lp-metric-card">
+                <div class="lp-metric-card__img-wrap">
+                    <img src="/image/sqr.jpg" alt="School Quality Rating">
+                </div>
+                <div class="lp-metric-card__body">
+                    <span class="lp-metric-card__tag">SQR</span>
+                    <h3>School Quality Rating</h3>
+                    <p>
+                        A comprehensive institutional rating derived from GPA trends,
+                        TPI effectiveness, attendance discipline, and academic stability —
+                        providing a clear picture of school quality and reputation growth.
+                    </p>
+                </div>
+            </div>
+
+            <div class="lp-metric-card">
+                <div class="lp-metric-card__img-wrap">
+                    <img src="/image/attendence.jpg" alt="Automated Attendance">
+                </div>
+                <div class="lp-metric-card__body">
+                    <span class="lp-metric-card__tag">Attendance</span>
+                    <h3>Automated Attendance</h3>
+                    <p>
+                        Easing staff workload in maintaining records. Teacher attendance is marked
+                        automatically at arrival; student attendance is recorded by teachers in class.
+                        No manual registers. No lost records.
+                    </p>
+                </div>
+            </div>
+
+        </div>
     </div>
+</section>
 
-    <div class="feature-card">
-        <h2>📝 Smart Result Management</h2>
-        <p>
-            Publishing results is just the start.  
-            Automate grading, generate detailed reports, and integrate them into the bigger quality framework.
-        </p>
+<!-- ═══════════════════════════════════════════
+     CYCLE SECTION (dark)
+═══════════════════════════════════════════ -->
+<section class="lp-dark-section">
+    <div class="lp-container">
+        <div class="lp-cycle">
+            <div class="lp-cycle__text">
+                <span class="lp-label lp-label--light">The Academic Cycle</span>
+                <h2>How GPA, TPI &amp; SQR Are Connected</h2>
+                <p>
+                    Student GPA reflects learning outcomes. Teacher TPI reflects instructional
+                    effectiveness. When strong teaching produces consistent student improvement,
+                    SQR naturally rises.
+                </p>
+                <p>
+                    Instead of guessing what is wrong, administrators identify exactly
+                    which subjects, classes, or teachers need attention — transforming
+                    leadership from reactive management into strategic planning.
+                </p>
+            </div>
+
+            <div class="lp-cycle__diagram">
+                <div class="lp-cycle__node lp-cycle__node--top">
+                    <span class="lp-cycle__node-label">Effective Teaching</span>
+                    <div class="lp-cycle__node-dot"></div>
+                </div>
+                <div class="lp-cycle__node lp-cycle__node--right">
+                    <div class="lp-cycle__node-dot"></div>
+                    <span class="lp-cycle__node-label">Improved GPA</span>
+                </div>
+                <div class="lp-cycle__node lp-cycle__node--bottom">
+                    <div class="lp-cycle__node-dot"></div>
+                    <span class="lp-cycle__node-label">Higher SQR</span>
+                </div>
+                <div class="lp-cycle__node lp-cycle__node--left">
+                    <span class="lp-cycle__node-label">Quality Education</span>
+                    <div class="lp-cycle__node-dot"></div>
+                </div>
+                <div class="lp-cycle__ring"></div>
+                <div class="lp-cycle__center">
+                    <span>AISTRONE</span>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
-<div class="info">
-    <h3>Why Choose Aistrone Public School?</h3>
-    <p>🔒 <b>Privacy First:</b> Runs on <b>localhost</b> – your school data stays secure on your machine.</p>
-    <p>⚡ <b>Efficiency:</b> Automates result tracking, teacher evaluations, and student monitoring.</p>
-    <p>🤝 <b>Collaboration:</b> Teachers, principals, and staff can securely collaborate with shared insights.</p>
-</div>
+<!-- ═══════════════════════════════════════════
+     ROLES SECTION
+═══════════════════════════════════════════ -->
+<section class="lp-section lp-section--alt">
+    <div class="lp-container">
+        <div class="lp-section__header">
+            <span class="lp-label">Who It Serves</span>
+            <h2>Empowering Every Role<br>Through Data</h2>
+        </div>
 
-<footer>
-    <p>Powered by <b>Nanu Ai</b> | Open Source Software</p>
+        <div class="lp-roles">
+            <div class="lp-role">
+                <div class="lp-role__number">01</div>
+                <div class="lp-role__body">
+                    <h3>School Administrators</h3>
+                    <p>
+                        Gain structured insight into academic performance patterns.
+                        Decisions backed by measurable data — smarter resource allocation,
+                        training programmes, and academic reforms.
+                    </p>
+                </div>
+            </div>
+            <div class="lp-role">
+                <div class="lp-role__number">02</div>
+                <div class="lp-role__body">
+                    <h3>Teachers</h3>
+                    <p>
+                        Understand exactly how teaching impacts student GPA.
+                        Clear feedback metrics enable confident innovation in classroom
+                        methods — data clarity encourages creative instructional strategies.
+                    </p>
+                </div>
+            </div>
+            <div class="lp-role">
+                <div class="lp-role__number">03</div>
+                <div class="lp-role__body">
+                    <h3>Students</h3>
+                    <p>
+                        Benefit from teachers who teach with purpose and administrators
+                        who lead with precision. A better-run school produces
+                        measurably better outcomes at every level.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="lp-inspire">
+            <img src="/image/teaching.jpg" alt="Teachers empowered by data">
+            <div class="lp-inspire__overlay"></div>
+            <div class="lp-inspire__content">
+                <span class="lp-label lp-label--light">For Every Teacher</span>
+                <h2>When Data Handles<br>the Records,<br><em>You Teach.</em></h2>
+                <p>
+                    No more time lost to registers, manual reports, or chasing paperwork.
+                    AISTRONE automates the administrative weight — so teachers walk into
+                    classrooms ready to inspire, not exhausted before they begin.
+                </p>
+                <ul class="lp-inspire__list">
+                    <li>Attendance marked automatically — no registers, no chasing</li>
+                    <li>Performance metrics generated for you, not by you</li>
+                    <li>More time in the classroom. More impact per lesson.</li>
+                    <li>Creative freedom backed by clear, actionable data</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     INFRASTRUCTURE SECTION
+═══════════════════════════════════════════ -->
+<section class="lp-section">
+    <div class="lp-container">
+        <div class="lp-section__header">
+            <span class="lp-label">Infrastructure</span>
+            <h2>Designed for Real-World<br>School Conditions</h2>
+        </div>
+
+        <div class="lp-infra-grid">
+            <div class="lp-infra-card">
+                <div class="lp-infra-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="2" y="6" width="20" height="12" rx="2"/>
+                        <path d="M8 6V4M16 6V4M2 10h20"/>
+                    </svg>
+                </div>
+                <h3>LAN-Based Architecture</h3>
+                <p>
+                    Operates fully on internal LAN infrastructure. No internet connection
+                    required for daily operations — ensuring stability in rural and
+                    low-connectivity regions.
+                </p>
+            </div>
+
+            <div class="lp-infra-card">
+                <div class="lp-infra-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h3>No Monthly Subscription</h3>
+                <p>
+                    Schools invest once and operate without recurring financial pressure.
+                    No hidden fees or ongoing subscription burdens — advanced analytics
+                    accessible even for budget-conscious institutions.
+                </p>
+            </div>
+
+            <div class="lp-infra-card">
+                <div class="lp-infra-card__icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <path d="M9 9h6M9 12h6M9 15h4"/>
+                    </svg>
+                </div>
+                <h3>Optimised for Low-End Devices</h3>
+                <p>
+                    Engineered to perform smoothly on basic computers. No expensive
+                    hardware upgrades necessary — schools with limited infrastructure
+                    can still access world-class software.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════ -->
+<section class="lp-cta">
+    <div class="lp-cta__bg-line"></div>
+    <div class="lp-container">
+        <div class="lp-cta__inner">
+            <span class="lp-label lp-label--light">Begin Today</span>
+            <h2>From Data to<br><em>Academic Excellence.</em></h2>
+            <p>
+                Transform raw academic data into intelligent strategy.
+                Improve teaching. Elevate student performance.
+                Strengthen institutional reputation with measurable evidence.
+            </p>
+            <a href="/Home/SchoolAccount" class="lp-btn-primary lp-btn-primary--lg">Get Started</a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer class="lp-footer" id="contact">
+    <div class="lp-container">
+        <div class="lp-footer__inner">
+            <div class="lp-footer__brand">
+                <span class="lp-nav__logo-mark">A</span>
+                <div>
+                    <p class="lp-footer__name">AISTRONE</p>
+                    <p class="lp-footer__tagline">School Management System</p>
+                </div>
+            </div>
+            <div class="lp-footer__contact">
+                <p>info@aistrone.com</p>
+                <p>+123-456-7890</p>
+            </div>
+            <p class="lp-footer__copy">© 2026 AISTRONE. All Rights Reserved.</p>
+        </div>
+    </div>
 </footer>
-</div>

@@ -3,31 +3,23 @@
 @{
     ViewData["Title"] = "Admin Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
+    var classId = Model.ClassId;
 }
 
-<script>
-    window.currentClassId = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(Model.ClassName));
-</script>
 
 
-<script type="module" src="/js/cstview.js"></script>
 
-<partial name="_header" />
+<!--<partial name="_header" /> -->
 
-<div class="dashboard">
-    <div>
-        <div class="partial-container"></div>
-        <div>
-            <h1>@Model.ClassName</h1>
-        </div>
+
+    
 
         <div class="card">
-            <h2>Students of this class</h2>
+            <h3 class="header" data-classId=@Model.ClassId>@Model.ClassName - Students</h3>
+            <div class="card-controller">
+            <button class="btn-edit partial" data-id="@classId" data-to="PrincipalDashboard/CSTView">Subject Teacher</button>
+            <button class="btn danger partial" data-id="@classId" data-to="Microservices/Microservicess/MoveStudents">Move Students</button>
+            </div>
             <table class="data-table">
                 <thead>
                     <tr>
@@ -59,11 +51,4 @@
         <div class="formholder"></div>
     </div>
 
-    <!-- Right Side Navigation -->
-
-
-    <partial name="_RightNavBar" model="@Model.ClassId" />
-
-
-
-</div>
+    

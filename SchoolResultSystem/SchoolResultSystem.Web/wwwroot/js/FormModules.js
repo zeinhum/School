@@ -1,48 +1,61 @@
 export class TableRowDuplicate {
   constructor(tbodySelector = ".form-data") {
     this.tbody = document.querySelector(tbodySelector);
-    this.tbodySelector = tbodySelector;
+    if (!this.tbody) return;
 
+    // 1. Initial setup for the first row
     const firstRow = this.tbody.querySelector("tr");
-    if (firstRow) this.addControlBtns(firstRow);
+    if (firstRow) this.ensureControlButtons(firstRow);
+
+    // 2. Single listener for ALL current and future buttons
+    this.handleTableClick = this.handleTableClick.bind(this);
+    this.tbody.addEventListener("click", this.handleTableClick);
   }
 
-  replicateRow() {
-    const row = this.tbody.querySelector("tr"); // template row
-    const newRow = row.cloneNode(true);
+  handleTableClick(e) {
+    const target = e.target;
+    const row = target.closest("tr");
 
+    if (target.classList.contains("btn-add")) {
+      this.replicateRow(row);
+    } else if (target.classList.contains("btn-remove")) {
+      this.removeRow(row);
+    }
+  }
+
+  replicateRow(templateRow) {
+    const newRow = templateRow.cloneNode(true);
+
+    // Reset inputs
     newRow.querySelectorAll("input").forEach((i) => (i.value = ""));
     newRow.querySelectorAll("select").forEach((s) => (s.selectedIndex = 0));
 
-    this.addControlBtns(newRow);
     this.tbody.appendChild(newRow);
   }
 
   removeRow(row) {
-    if (this.tbody.rows.length > 1) row.remove();
+    if (this.tbody.querySelectorAll("tr").length > 1) {
+      row.remove();
+    }
   }
 
-  addControlBtns(row) {
-    const existing = row.querySelector(".btn-group");
-    if (existing) existing.remove();
+  ensureControlButtons(row) {
+    if (row.querySelector(".btn-group")) return;
 
     const td = document.createElement("td");
     td.className = "btn-group";
-
-    const removeBtn = document.createElement("button");
-    removeBtn.type = "button";
-    removeBtn.textContent = "-";
-    removeBtn.className = "btn-remove";
-    removeBtn.onclick = () => this.removeRow(row);
-
-    const addBtn = document.createElement("button");
-    addBtn.type = "button";
-    addBtn.textContent = "+";
-    addBtn.className = "btn-add";
-    addBtn.onclick = () => this.replicateRow();
-
-    td.append(removeBtn, addBtn);
+    // We use classes now instead of direct .onclick
+    td.innerHTML = `
+      <button type="button" class="btn-remove">-</button>
+      <button type="button" class="btn-add">+</button>
+    `;
     row.appendChild(td);
+  }
+
+  // CRITICAL for Garbage Collection
+  destroy() {
+    this.tbody.removeEventListener("click", this.handleTableClick);
+    this.tbody = null;
   }
 }
 

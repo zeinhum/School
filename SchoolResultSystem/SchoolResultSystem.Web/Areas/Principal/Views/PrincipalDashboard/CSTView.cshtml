@@ -1,67 +1,49 @@
 @model SchoolResultSystem.Web.Areas.Principal.Models.CSTView;
-@using System.Text.Json;
 @{
-    ViewData["Title"] = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
+    int classId = Model.ClassId;
 }
 
-<script>
-    window.currentClassId = @Model.ClassId;  // Razor injects value
-</script>
+<div>
 
-<script type="module" src="/js/cstview.js"></script>
 
-<partial name="_header" />
-<div class="dashboard">
-    <!-- Main Dashboard Section -->
-    <div>
-        <div class="partial-container"></div>
+    <!-- Subject-Teacher Table -->
+    <div class="card">
         <!-- Header -->
-        <div class="header" data-classId =@Model.ClassId>
-            <h1>@Model.ClassName</h1>
+        <div class="header" data-classId=@Model.ClassId>
+            <h3>@Model.ClassName - Subjects/Teachers</h3>
         </div>
-        <!-- Subject-Teacher Table -->
-        <div class="card">
-            <h2>Subjects and respective teachers for this class.</h2>
-            <table class="data-table">
-                <thead>
+
+        <div class="card-controller">
+            <button class="btn-edit pertial" data-id="@classId" data-to="PrincipalDashboard/CSView">Students</button>
+            <button class="btn-edit partial" data-id="@classId"
+                    data-to="Microservices/Microservicess/MoveStudents">Move Students</button>
+            <button class="btn-success" data-id=@classId data-action="assignsubject">Assign Subject-Teacher</button>
+        </div>
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Subject Code</th>
+                    <th>Subject Name</th>
+                    <th>Teacher ID</th>
+                    <th>Teacher Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var st in Model.SubjectTeachers)
+                {
                     <tr>
-                        <th>Subject Code</th>
-                        <th>Subject Name</th>
-                        <th>Teacher ID</th>
-                        <th>Teacher Name</th>
-                        <th>Actions</th>
+                        <td>@st.SCode</td>
+                        <td>@st.SubjectName</td>
+                        <td>@st.UserId</td>
+                        <td>@st.FullName</td>
+                        <td>
+                            <button class="btn-delete" data-change="RCST">Remove</button>
+                        </td>
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach (var st in Model.SubjectTeachers)
-                    {
-                        <tr>
-                            <td>@st.SCode</td>
-                            <td>@st.SubjectName</td>
-                            <td>@st.TeacherId</td>
-                            <td>@st.TeacherName</td>
-                            <td>
-                                <button class="btn btn-delete" data-change="RCST">Remove</button>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-
-        <h4 class="add-cst"> Add Subject Teacher</h4>
-        <div class="formholder"></div>
+                }
+            </tbody>
+        </table>
     </div>
-
-    <!-- Right Side Navigation -->
-
-
-    <partial name="_RightNavBar" model="@Model.ClassId" />
-
+    <div class="formholder"></div>
 </div>

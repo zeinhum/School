@@ -15,6 +15,6 @@ namespace SchoolResultSystem.Web.Areas.Microservices.Models
     {
         public string Scode{get;set;} = null!;
         public int ClassId {get; set;} 
-        public string TeacherId {get; set;} = null!;
+        public string UserId {get; set;} = null!;
     }
 }

@@ -44,7 +44,7 @@ namespace SchoolResultSystem.Web.Areas.Analytics.Controllers
                 return Json(new { message = "No Exam found" });
             }
 
-            var Student = _db.CS.Where(s=>s.NSN==nsn && s.IsActive)
+            var Student = _db.ClassStudent.Where(s=>s.NSN==nsn && s.IsActive)
                                 .Include(s=>s.Student)
                                 .Select(s=> new
                                 {

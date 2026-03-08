@@ -1,12 +1,12 @@
 //import { RedirectButtons } from "./controllModel.js";
-import { writeHeader } from "./dashboardHeader.js";
+//import { writeHeader } from "./dashboardHeader.js";
 import {Navigation} from "./UI/nevigation.js"
 
 
 
 export function RightNav(data){
     // wwrite header from session
-        writeHeader(data);
+      //  writeHeader(data);
     
     // initialize controll button
 //let redirectButtons = new RedirectButtons("/Principal");

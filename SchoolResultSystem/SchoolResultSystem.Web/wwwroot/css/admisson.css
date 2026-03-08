@@ -1,0 +1,164 @@
+/* ============================================================
+   AISTRONE — Form Pages (Admission, Setup, etc.)
+   Requires: dash.css loaded first (CSS variables, fonts,
+   fadeSlideIn, btn-success, card styles)
+   ============================================================ */
+
+/* ══════════════════════════════════════════════════════════════
+   FORM CONTENT LAYOUT
+   Used by full-page form views (Admission, Setup, etc.)
+══════════════════════════════════════════════════════════════ */
+
+
+.form-content {
+  flex: 1;
+  padding: 40px 44px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ── Form card header ───────────────────────────────────────── */
+.card-head {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  color: var(--text-primary);
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+}
+
+.form-header {
+  padding-bottom: 20px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+.form-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px; left: 0;
+  width: 48px; height: 2px;
+  background: var(--gold);
+  border-radius: 2px;
+}
+
+/* ── Error paragraph ────────────────────────────────────────── */
+.form-container p.error {
+  display: none;
+  font-size: 13px;
+  color: #e88080;
+  background: var(--danger-dim);
+  border: 1px solid rgba(192,57,43,0.30);
+  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  margin-bottom: 16px;
+}
+
+.form-container p.error:not(:empty) {
+  display: block;
+}
+
+/* ── Table responsive wrapper ───────────────────────────────── */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 24px;
+}
+
+/* ── Modern table (form inputs inside table cells) ──────────── */
+.modern-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13.5px;
+  min-width: 720px;
+}
+
+.modern-table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.modern-table thead th {
+  text-align: left;
+  padding: 10px 12px;
+  font-size: 9.5px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.modern-table tbody tr {
+  border-bottom: 1px solid var(--border);
+}
+
+.modern-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.modern-table tbody tr:hover {
+  background: var(--surface-2);
+}
+
+.modern-table tbody td {
+  padding: 10px 8px;
+  vertical-align: middle;
+}
+
+
+/* ── Form footer ────────────────────────────────────────────── */
+.form-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  gap: 12px;
+}
+
+/* ── btn-primary (gold, solid) ──────────────────────────────── */
+button.btn-primary,
+a.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 24px;
+  border-radius: var(--radius-sm);
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #12171f;
+  background: var(--gold);
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 0.18s var(--ease), box-shadow 0.18s var(--ease), transform 0.1s;
+}
+
+button.btn-primary:hover,
+a.btn-primary:hover {
+  background: var(--gold-light);
+  box-shadow: 0 0 20px var(--gold-glow);
+}
+
+button.btn-primary:active,
+a.btn-primary:active {
+  transform: scale(0.97);
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .form-content {
+    padding: 24px 16px;
+  }
+}

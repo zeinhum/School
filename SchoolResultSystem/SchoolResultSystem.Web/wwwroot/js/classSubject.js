@@ -1,39 +1,52 @@
-import {
-  TableRowDuplicate,
-  FormSubmitter,
-  RowDataCollector,
-} from "./FormModules.js";
-import { FetchJson, FetchJsonPost } from "./fetchJson.js";
-import { SelectOption } from "./buttons/selectOption.js";
+import { TableRowDuplicate, RowDataCollector } from "./FormModules.js";
+import { PartialNaV } from "./UI/partialNav.js";
+import { FetchJsonPost } from "./fetchJson.js";
 
-const duplicate = new TableRowDuplicate();
-const submitter = new FormSubmitter();
-/*
-//const selOpt = new SelectOption();
 
-let clicked = false;
-const selector = document.getElementById("select-class");
-selector.addEventListener("click", async (e) => {
-  if (!clicked) {
-    const clsObj = await FetchJson("/Microservices/Microservicess/ClassObject");
-    clsObj.classes.forEach((cl) => {
-      selOpt.addOption(cl.classId, cl.className, selector);
-    });
-    clicked = true;
+
+
+export default class ClassSubject {
+  constructor() {
+    this.rowDuplicate = new TableRowDuplicate();
+    this.dataCollect = null;
+    this.fetchJson = null;
+    this.map = {
+      submit: this.#submit,
+      subselected: this.subSelect
+    };
+    this.nav = new PartialNaV(".partial-container",this.map);
   }
-});
-*/
-// submit form
-document.querySelector(".btn-form").addEventListener("click", async (e) => {
-  e.preventDefault();
-
-  const data = new RowDataCollector().getData();
-  //const subdata={ClassId:parseInt(selector.value, 10)};
-  //subdata.Subs = data
-  console.log(JSON.stringify(subdata));
-
-  if (data) {
-    const res = await FetchJsonPost("/Principal/SetupPrincipal/SaveSubject");
-    alert(res);
+  async #submit() {
+    if (!this.dataCollect) {
+      this.dataCollect = new RowDataCollector(".form-data");
+    }
+    const data = this.dataCollect.getData();
+    if (data) {
+      const res = await FetchJsonPost("/Principal/SetupPrincipal/SaveSubject",data);
+      alert(res.message);
+    }
   }
-});
+
+  subSelect(e) {
+    console.log("sebSelect called")
+    const type = e.target.value;
+    console.log(type);
+    let parentrow = e.target.closest("tr");
+    let td = parentrow.querySelector(".pr");
+
+    if (type === "theory") {
+      td.innerHTML = `<input type="text" name="LinkedPr" required size="2" placeholder="CODE"/>`;
+    } else if (type === "practical") {
+      td.innerHTML = "None";
+    }
+  }
+
+  destroy() {
+    this.rowDuplicate = null;
+    this.nav.destroy();
+    this.nav = null;
+    this.dataCollect = null;
+    this.fetchJson = null;
+  }
+}
+

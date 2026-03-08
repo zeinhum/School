@@ -15,19 +15,18 @@ namespace SchoolResultSystem.Web.Data
         public DbSet<SchoolInfoModel> SchoolInfo { get; set; }
         public DbSet<ClassModel> Classes { get; set; }
         public DbSet<MarksheetModel> Marksheet { get; set; }
-        public DbSet<CSModel> CS { get; set; }
+        public DbSet<CSModel> ClassStudent { get; set; }
         public DbSet<SubjectModel> Subjects { get; set; }
         public DbSet<StudentModel> Students { get; set; }
         public DbSet<CSTModel> CST { get; set; }
-
         public DbSet<TeacherAttendanceModel> TeacherAttendance { get; set; }
         public DbSet<StudentAttendanceModel> StudentAttendance { get; set; }
 
-        public DbSet<LeavesCalendarModel> Leaves { get; set; }
+        public DbSet<LeavesCalendarModel> LeaveDates { get; set; }
 
         public DbSet<ClassSubjectModel> ClassSubject { get; set; }
         public DbSet<ExamModel> ExamList { get; set; }
-         public DbSet<ExamRubrickModel> ExamRubrick { get; set; }
+        public DbSet<ExamRubrickModel> ExamRubrick { get; set; }
 
 
 
@@ -36,36 +35,18 @@ namespace SchoolResultSystem.Web.Data
             base.OnModelCreating(modelBuilder);
 
             // uniq constraint to avoid duplicate entries
-            modelBuilder.Entity<MarksheetModel>()
-                .HasIndex(m => new { m.ExamId, m.SCode })
-                .IsUnique();
 
-            // Relationship with Class
-            modelBuilder.Entity<CSTModel>()
-                .HasOne(cs => cs.Class)
-                .WithMany()
-                .HasForeignKey(cs => cs.ClassId)
-                .OnDelete(DeleteBehavior.Restrict);
-
+            modelBuilder.Entity<ExamRubrickModel>()
+            .HasIndex(m => new
+            {
+                m.ExamId,
+                m.SCode
+            }).IsUnique();
 
             modelBuilder.Entity<CSTModel>()
-                .HasOne(cs => cs.Subject)
-                .WithMany()
-                .HasForeignKey(cs => cs.SCode)
-                .OnDelete(DeleteBehavior.Restrict);
+            .HasKey(c => new { c.ClassId, c.SCode, c.UserId });
+            base.OnModelCreating(modelBuilder);
 
-
-            modelBuilder.Entity<CSModel>()
-                .HasOne(cs => cs.Student)
-                .WithMany()
-                .HasForeignKey(cs => cs.NSN)
-                .OnDelete(DeleteBehavior.Restrict); // keep enrollment history
-
-            modelBuilder.Entity<CSModel>()
-                .HasOne(cs => cs.Class)
-                .WithMany()
-                .HasForeignKey(cs => cs.ClassId)
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 

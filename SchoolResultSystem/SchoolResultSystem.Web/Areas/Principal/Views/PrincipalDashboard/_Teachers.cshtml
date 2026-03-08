@@ -17,13 +17,13 @@
                         @foreach (var teacher in Model)
                         {
                             <tr>
-                                <td>@teacher.TeacherId</td>
-                                <td>@teacher.TeacherName</td>
+                                <td>@teacher.UserId</td>
+                                <td>@teacher.FullName</td>
                                 <td>
-                                    <button class="btn btn-edit" data-action="changepassword" data-id="@teacher.TeacherId">
+                                    <button class="btn btn-edit" data-action="changepassword" data-id="@teacher.UserId">
                                         Change Password
                                     </button>
-                                    <button class="btn btn-delete" data-action="deactivateteacher" data-id="@teacher.TeacherId">
+                                    <button class="btn btn-delete" data-action="deactivateteacher" data-id="@teacher.UserId">
                                         Deactivate
                                     </button>
                                 </td>

@@ -4,8 +4,8 @@ using SchoolResultSystem.Web.Data;
 using SchoolResultSystem.Web.Controllers;
 using SchoolResultSystem.Web.Areas.Principal.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
 using SchoolResultSystem.Web.Filters;
+using Microsoft.Data.Sqlite;
 
 
 
@@ -40,8 +40,8 @@ public class PrincipalDashboardController : SchoolDbController
                 {
                     SCode = cst.SCode,
                     SubjectName = cst.Subject.SName,
-                    TeacherId = cst.TeacherId,
-                    TeacherName = cst.User.TeacherName
+                    UserId = cst.UserId,
+                    FullName = cst.User.FullName
                 })
                 .ToList();
 
@@ -52,7 +52,7 @@ public class PrincipalDashboardController : SchoolDbController
                 SubjectTeachers = subjectTeachers
             };
 
-            return View(data);
+            return PartialView(data);
         }
         catch (Exception)
         {
@@ -62,43 +62,58 @@ public class PrincipalDashboardController : SchoolDbController
     }
 
     [HttpPost]
-    public IActionResult AddSubjectTeacher([FromBody] AddCSTDto model)
+    public async Task<IActionResult> AddSubjectTeacher([FromBody] List<CSTModel> model)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(new { status = "error", message = "Invalid data." });
+        if (model == null || !model.Any()) return Ok(new { message = "invalid data" });
 
-        // Validate subject exists
-        var subjectExists = _db.Subjects.Any(s => s.SCode == model.SCode);
-        var teacherExists = _db.Users.Any(u => u.TeacherId == model.TeacherId && u.Role == "Teacher");
+        // 1. Build a list of parameters to avoid SQL Injection
+        var parameters = new List<object>();
+        var valueClauses = new List<string>();
 
-        if (!subjectExists || !teacherExists)
+        for (int i = 0; i < model.Count; i++)
         {
-            return BadRequest(new { status = "error", message = "Invalid Subject Code or Teacher ID." });
+            // Parameter names
+            var pClass = $"@c{i}";
+            var pSCode = $"@s{i}";
+            var pUser = $"@u{i}";
+
+            // SQLite syntax for selecting a row of constants
+            valueClauses.Add($"SELECT {pClass} AS ClassId, {pSCode} AS SCode, {pUser} AS UserId");
+
+            parameters.Add(new SqliteParameter(pClass, model[i].ClassId));
+            parameters.Add(new SqliteParameter(pSCode, model[i].SCode));
+            parameters.Add(new SqliteParameter(pUser, model[i].UserId));
         }
 
-        // Check if assignment already exists
-        bool alreadyAssigned = _db.CST.Any(cst =>
-            cst.ClassId == model.ClassId &&
-            cst.SCode == model.SCode &&
-            cst.TeacherId == model.TeacherId);
+        // 2. The Atomic "Upsert" Query
+        // This inserts data only if the triple-key doesn't already exist
+        string virtualTable = string.Join(" UNION ALL ", valueClauses);
+        string sql = $@"
+        INSERT INTO CST (ClassId, SCode, UserId)
+        SELECT tmp.ClassId, tmp.SCode, tmp.UserId
+        FROM ({virtualTable}) AS tmp
+        WHERE NOT EXISTS (
+            SELECT 1 FROM CST 
+            WHERE CST.ClassId = tmp.ClassId 
+              AND CST.SCode = tmp.SCode 
+              AND CST.UserId = tmp.UserId
+        );";
 
-        if (alreadyAssigned)
+        try
         {
-            return Conflict(new { status = "warning", message = "This Subject-Teacher is already assigned to this class." });
+            // ExecuteSqlRawAsync ensures one round-trip to the DB
+            var rowsAffected = await _db.Database.ExecuteSqlRawAsync(sql, parameters.ToArray());
+
+            return Ok(new
+            {
+                message = $"{rowsAffected} new records added, {model.Count - rowsAffected} duplicates ignored."
+            });
         }
-
-        // Create new CST entry
-        var newCST = new CSTModel
+        catch (Exception ex)
         {
-            ClassId = model.ClassId,
-            SCode = model.SCode,
-            TeacherId = model.TeacherId
-        };
-
-        _db.CST.Add(newCST);
-        _db.SaveChanges();
-
-        return Ok(new { status = "success", message = "Subject-Teacher assigned successfully!" });
+            // Log the exception (ex) here
+            return Ok(new { message = "Database sync failed.", error = ex.Message });
+        }
     }
 
 
@@ -110,7 +125,7 @@ public class PrincipalDashboardController : SchoolDbController
         {
             return BadRequest("Invalid Class ID");
         }
-        var students = _db.CS
+        var students = _db.ClassStudent
             .Where(cs => cs.ClassId == id && cs.IsActive)
             .Include(cs => cs.Student)
             .Select(cs => new CSDto
@@ -127,7 +142,7 @@ public class PrincipalDashboardController : SchoolDbController
             Students = students
         };
 
-        return View(data);
+        return PartialView(data);
     }
 
     // all teachers and subjects
@@ -136,7 +151,7 @@ public class PrincipalDashboardController : SchoolDbController
     {
         var teachers = _db.Users
             .Where(u => u.Role == "Teacher" && u.IsActive)
-            .Select(t => new { t.TeacherId, t.TeacherName })
+            .Select(t => new { t.UserId, t.FullName })
             .ToList();
 
         var subjects = _db.Subjects
@@ -160,17 +175,12 @@ public class PrincipalDashboardController : SchoolDbController
     public IActionResult Admission([FromBody] AdmiForm form)
     {
         if (!ModelState.IsValid)
-            return BadRequest(new { status = "error", message = "Invalid data." });
+            return Json(new { message = "Invalid data" });
 
         try
         {
             var oldNSNs = _db.Students.Select(s => s.NSN).ToList();
             var formNSNs = form.AdmissionForm.Select(s => s.NSN).ToList();
-
-            foreach (var st in oldNSNs)
-            {
-                Console.WriteLine($"admited astudents NSN : {st}");
-            }
 
             // Find new NSNs that are not already in database
             var newNSNs = formNSNs.Where(nsn => !oldNSNs.Contains(nsn)).ToList();
@@ -186,6 +196,7 @@ public class PrincipalDashboardController : SchoolDbController
                 newStudents.Add(new StudentModel
                 {
                     NSN = student.NSN,
+                    RegistrationN = student.RegistrationN,
                     StudentName = student.StudentName,
                     D_O_B = student.D_O_B,
                     Address = student.Address,
@@ -201,22 +212,20 @@ public class PrincipalDashboardController : SchoolDbController
             }
 
             _db.Students.AddRange(newStudents);
-            _db.CS.AddRange(newClassLinks);
+            _db.ClassStudent.AddRange(newClassLinks);
             _db.SaveChanges();
 
             return Json(new
             {
-                success = true,
-                added = newNSNs.Count,
-                duplicates = duplicateNSNs
+                message = $"Admitted: {newNSNs.Count}, duplicate: {duplicateNSNs}"
+
             });
         }
-        catch (Exception e)
+        catch (Exception)
         {
             return Json(new
             {
-                success = false,
-                info = e
+                message = "Some error occured"
             });
         }
     }
@@ -241,14 +250,14 @@ public class PrincipalDashboardController : SchoolDbController
     // subjects
     public IActionResult Subjects()
     {
-        var subjects = _db.Subjects.Where(s=>s.IsActive).ToList();
+        var subjects = _db.Subjects.Where(s => s.IsActive).ToList();
         return PartialView("Subjects", subjects);
     }
 
     //exams
     public IActionResult Exams()
     {
-        var exams = _db.ExamList.Where(e=>e.IsActive).ToList();
+        var exams = _db.ExamList.Where(e => e.IsActive).ToList();
         return PartialView("Exams", exams);
     }
 }

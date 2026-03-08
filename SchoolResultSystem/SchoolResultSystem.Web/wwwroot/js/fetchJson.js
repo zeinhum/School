@@ -20,7 +20,16 @@ export async function FetchJsonPost(microservice, payload) {
         return null;
     }
 }
-export function FetchJson(){
+
+// get request
+export async function FetchJson(microservice){
+    const resp = await fetch(microservice);
+    if(!resp.ok){
+        alert("Some error occured")
+        return;
+    }
+    const data = await resp.json();
+    return data;
 
 }
 

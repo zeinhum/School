@@ -4,8 +4,8 @@ namespace SchoolResultSystem.Web.Areas.Principal.Models
     {
         public string SCode { get; set; } = null!;
         public string SubjectName { get; set; } = null!;
-        public string TeacherId { get; set; } = null!;
-        public string TeacherName { get; set; } = null!;
+        public string UserId { get; set; } = null!;
+        public string FullName { get; set; } = null!;
     }
 
     public class CSTView
@@ -19,6 +19,7 @@ namespace SchoolResultSystem.Web.Areas.Principal.Models
     {
         public int ClassId { get; set; }
         public string SCode { get; set; } = null!;
-        public string TeacherId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
     }
+    
 }

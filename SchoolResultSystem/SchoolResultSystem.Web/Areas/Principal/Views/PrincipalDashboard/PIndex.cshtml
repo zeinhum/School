@@ -1,26 +1,23 @@
+@using Microsoft.AspNetCore.Mvc;
 @model string;
 @{
     ViewData["Title"] = "Principal Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
+    <link rel="stylesheet" href="~/css/dash.css" />
 }
 
 <!--<partial name="_header" /> !-->
-<div class="dashboard-header"></div>
+<partial name="_header" />
 
-<div class="dashboard-container">
+
     <!-- Main Dashboard Section -->
     <div class="dashboard">
 
-       
+        <!-- Right Navigation -->
+        <partial name="_RightNavBar" model="-1" />
 
         <div class="partial-container">Welcome! Select your tools.</div>
-       
 
-    <!-- Right Navigation -->
-    <partial name="_RightNavBar" model="-1" />
-</div>
+    </div>

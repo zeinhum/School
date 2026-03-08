@@ -2,6 +2,7 @@ export class Connection {
   constructor() {
     this.jsContainer = null;
   }
+  /*
   async #fetchurl(url, id) {
     try {
       const response = await fetch(url);
@@ -17,7 +18,7 @@ export class Connection {
       return null;
     }
   }
-
+*/
   redirect(url, id) {
     window.location.href = `/${url}/${id ? `?id=${id}` : ""}`;
 
@@ -26,7 +27,7 @@ export class Connection {
 
   async getHTML(url, id) {
     try {
-      const text = await this.#fetchurl(`/${url}${id ? `?id=${id}` : ""}`).then(
+      const text = await fetch(`/${url}${id ? `?id=${id}` : ""}`).then(
         (res) => res.text(),
       );
       if (text) return text;
@@ -34,17 +35,16 @@ export class Connection {
       return "No content loaded.";
     }
   }
-
+/*
   async fetchJson(url, payload) {
-    console.log("fetch json called")
+    console.log("fetch json called");
     if (!payload) {
       const jsonstring = await this.#fetchurl(url).then((res) => res.json());
       if (jsonstring) return jsonstring;
       return null;
     }
-    console.log("url", url)
+    console.log("url", url);
     const response = await fetch(url, {
-      
       method: "post",
       headers: {
         "Content-type": "application/json",
@@ -53,28 +53,37 @@ export class Connection {
     });
     if (response.ok) {
       const data = response.json();
-      console.log(data)
+      console.log(data);
       return data;
     } else {
       alert("something misbehaved.");
       return null;
     }
   }
-
-  async importjs(url=undefined) {
-
-    if(this.jsContainer){
-      this.jsContainer.destroy();
+*/
+  async importjs(url = undefined) {
+    if (this.jsContainer) {
+      if (typeof this.jsContainer.destroy === "function") {
+        this.jsContainer.destroy();
+      }
       this.jsContainer = null;
     }
-    if(!url) return
+
+    if (!url) return;
+
     try {
       const module = await import(`${url}.js`);
-      this.jsContainer = new module.default();
-      return this.jsContainer;
-    } catch (Exception) {
-      console.log(Exception);
-      alert("error at partial js component");
+
+      // Wait for the browser to finish the DOM update from innerHTML
+      return new Promise((resolve) => {
+        window.requestAnimationFrame(() => {
+          this.jsContainer = new module.default();
+          resolve(this.jsContainer);
+        });
+      });
+    } catch (exception) {
+      console.error("Error at partial JS component:", exception);
+      alert("Error loading component logic.");
     }
   }
 }

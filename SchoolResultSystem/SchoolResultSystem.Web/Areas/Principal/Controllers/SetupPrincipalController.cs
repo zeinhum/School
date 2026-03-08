@@ -145,13 +145,13 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
 
             foreach (var cl in data)
             {
-                if (existingNames.Contains(cl.ClassName))
+                if (existingNames.Contains(cl.ClassName) && existingNames.Contains(cl.ClassGrade))
                 {
                     skipped.Add(cl.ClassName);
                 }
                 else
                 {
-                    newClasses.Add(new ClassModel { ClassName = cl.ClassName });
+                    newClasses.Add(new ClassModel { ClassName = cl.ClassName, ClassGrade=cl.ClassGrade });
                 }
             }
 
@@ -179,7 +179,14 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
 
     [HttpPost]
     public IActionResult SaveSubject([FromBody] List<SubjectModel> data)
+
     {
+        Console.WriteLine("checking for data");
+         foreach(var dt in data)
+        {
+           Console.WriteLine(dt.SCode); 
+        }
+
         try
         {
             if (data == null || data.Count == 0)
@@ -216,6 +223,8 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
                     {
                         SCode = sub.SCode.Trim(),
                         SName = sub.SName.Trim(),
+                        SType = sub.SType.Trim(),
+                        LinkedPr = sub.LinkedPr.Trim()
                     });
                 }
             }
@@ -278,7 +287,7 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
     {
         try
         {
-            var teacherToDelete = _db.Users.FirstOrDefault(u => u.TeacherId == id);
+            var teacherToDelete = _db.Users.FirstOrDefault(u => u.UserId == id);
 
             if (teacherToDelete == null)
             {
@@ -301,8 +310,8 @@ public async Task<IActionResult> SaveSchool(SchoolInfoModel model, IFormFile log
     // create exams
     public IActionResult CreateExam()
     {
-        var allSubjects = _db.Subjects.Where(a => a.IsActive).ToList();
-        return View(allSubjects);
+        
+        return View();
     }
     
     public IActionResult DatabaseManagement()

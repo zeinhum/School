@@ -7,7 +7,7 @@ namespace SchoolResultSystem.Web.Models
     public class ClassSubjectModel
     {
         [Key]
-        public int tabId { get; set; }
+        public int rowId { get; set; }
         [Required]
         [ForeignKey("Class")]
         public int ClassId { get; set; }

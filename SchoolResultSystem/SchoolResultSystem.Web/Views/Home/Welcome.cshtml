@@ -13,11 +13,11 @@
         @foreach(var user in Model)
         {
             <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 15px;">
-                <p>User ID: @user.TeacherId</p>
+                <p>User ID: @user.UserId</p>
                 <p>Username: @user.UserName</p>
                 <p>Password: @user.Password</p>
                 <p>Role: @user.Role</p>
-                <p>Teacher Name: @user.TeacherName</p>
+                <p>Teacher Name: @user.UserName</p>
                 <p> is Active : @user.IsActive</p>
             </div>
         }

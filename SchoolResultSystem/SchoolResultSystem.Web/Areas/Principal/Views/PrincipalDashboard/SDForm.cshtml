@@ -1,64 +1,73 @@
 @using System.Security.Cryptography
 @model List<SchoolResultSystem.Web.Models.ClassModel>;
 @{
-    ViewData["Title"] = "Admin Dashboard";
-     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Student Admission";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
+    <link rel="stylesheet" href="~/css/dash.css" />
+    <link rel="stylesheet" href="~/css/admisson.css" />
 }
-<link rel="stylesheet" href="~/css/form.css" />
 
 <script type="module" src="/js/sdform.js"></script>
 
 <partial name="_header" />
 
 <div class="dashboard">
-    <div>
-        <div class="partial-container"></div>
 
-        <form class="form-container" action="/Principal/PrincipalDashboard/Admission" method="post">
-            
-            <h2 class="card-head">Student Admission Form</h2>
-<p class="error"></p>
-            <table class="form-card">
-                <thead>
-                    <tr>
-                        <th>NSN</th>
-                        <th>Name</th>
-                        <th>D.O.B</th>
-                        <th>Address</th>
-                        <th>Admission Date</th>
-                        <th>Class</th>
-                        <th>Add</th>
-                    </tr>
-                </thead>
+    <partial name="_RightNavBar" model="-3" />
 
-                <tbody class="form-data">
-                    <tr>
-                        <td><input type="text" name="NSN" placeholder="N-Student Number" size="10" required /></td>
-                        <td><input type="text" name="StudentName" placeholder="Student's Name" size="20" required />
-                        </td>
-                        <td><input type="date" name="D_O_B" required /></td>
-                        <td><input type="text" name="Address" placeholder="address" size="40" required /></td>
-                        <td><input type="date" name="AdmissionDate" required /></td>
-                        <td>
-                            <select class="selectClass" name="ClassId" required>
-                                <option value="" disabled selected>Select Class</option>
-                                @foreach (var cs in Model)
-                                {
-                                    <option value=@cs.ClassId>@cs.ClassName</option>
-                                }
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
 
-            <button type="submit" class="btn-form actions btn-success">Admit</button>
+    <div class="form-content">
+        <form class="card form-container" action="/Principal/PrincipalDashboard/Admission" method="post">
+
+            <div class="form-header">
+                <h2 class="card-head">Student Admission</h2>
+                <p class="subtitle">Fill in the details to register a new student to the system.</p>
+            </div>
+
+            <p class="error"></p>
+
+            <div class="table-responsive">
+                <table class="modern-table">
+                    <thead>
+                        <tr>
+                            <th>NSN</th>
+                            <th>Registration</th>
+                            <th>Student Name</th>
+                            <th>D.O.B</th>
+                            <th>Address</th>
+                            <th>Admission Date</th>
+                            <th>Class</th>
+                            <th>Row</th>
+                        </tr>
+                    </thead>
+                    <tbody class="form-data">
+                        <tr>
+                            <td><input type="text" name="NSN" placeholder="NSN" required /></td>
+                            <td><input type="text" name="RegistrationN" placeholder="Reg No." required /></td>
+                            <td><input type="text" name="StudentName" placeholder="Full Name" required /></td>
+                            <td><input type="date" name="D_O_B" required /></td>
+                            <td><input type="text" name="Address" placeholder="Home Address" required /></td>
+                            <td><input type="date" name="AdmissionDate" required /></td>
+                            <td>
+                                <select name="ClassId" required>
+                                    <option value="" disabled selected>Select Class</option>
+                                    @foreach (var cs in Model)
+                                    {
+                                        <option value="@cs.ClassId">@cs.ClassName</option>
+                                    }
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-footer">
+                <button type="submit" id="submit" class="btn-primary">Complete Admission</button>
+            </div>
         </form>
     </div>
-    <partial name="_RightNavBar" model="-3" />
+
 </div>

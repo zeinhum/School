@@ -5,11 +5,11 @@ import { SelectOption } from "./buttons/selectOption.js";
 export default class AnalyticsHandler {
   constructor() {
     // Cache important elements
-    this.board = document.querySelector(".analysis-board");
+    this.board = document.querySelector(".card");
     this.idEl = this.board?.querySelector("#id");
     this.selectTarget = this.board?.querySelector("#slect-target");
     this.selectAction = this.board?.querySelector("#select-action");
-    this.resultContainer = this.board?.querySelector(".result-container");
+    this.resultContainer = document.querySelector(".result-container");
     this.subSelection = this.board?.querySelector("#sub-action");
     this.actionButton = this.board?.querySelector(".action");
     this.actionLabel = "";
@@ -229,7 +229,7 @@ export default class AnalyticsHandler {
 
   // 🔥 NEW: Cleanup method - CRITICAL!
   destroy() {
-    console.log("AnalyticsHandler cleanup started");
+    //console.log("AnalyticsHandler cleanup started");
 
     // 1. Remove all event listeners
     this.boundHandlers.forEach((config, element) => {
@@ -266,6 +266,6 @@ export default class AnalyticsHandler {
     this.actionButton = null;
     this.actionLabel = "";
 
-    console.log("AnalyticsHandler cleanup complete");
+    //console.log("AnalyticsHandler cleanup complete");
   }
 }

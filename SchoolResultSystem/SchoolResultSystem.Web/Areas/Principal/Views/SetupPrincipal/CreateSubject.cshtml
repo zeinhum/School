@@ -1,46 +1,35 @@
-@{
-    ViewData["Title"] = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
-}
-<link rel="stylesheet" href="~/css/form.css" />
+<h2 class="card-head">Add Subjects </h2>
+<div class="card">
+    <div class="form-card">
+        <table class="">
 
-<script type="module" src="/js/classSubject.js"></script>
-
-<partial name="_header" />
-
-<div class="dashboard">
-<div><div class="partial-container"></div>
-    <form class="card form-container" action="/Principal/SetupPrincipal/SaveSubjec" method="post">
-        <p class="error"></p>
-        <h2 class="card-head">Add all subjects that the school teaches.</h2>
-
-        <table class="form-card">
-            
             <thead>
                 <tr>
                     <th>Subject Code</th>
                     <th>Subject Name</th>
-                    <th>Remove/Add</th>
+                    <th>Subject Type</th>
+                    <th>Link Practical</th>
+                    <th>Row</th>
                 </tr>
             </thead>
 
             <tbody class="form-data">
                 <tr>
-                    
-                    <td><input type="text" name="SCode" required size="2" placeholder="Subject Code"/></td>
-                    <td><input type="text" name="SName" required size="2" placeholder="Subject Name"/></td>
+
+                    <td><input type="text" name="SCode" size=2 required placeholder="Subject Code" /></td>
+                    <td><input type="text" name="SName" size=2 required placeholder="Subject Name" /></td>
+                    <td><select name="SType" data-change="subselected">
+                        <option value="null">-Select</option>
+                        <option value="theory">Theory</option>
+                        <option value="practical">Practical</option>
+                    </select>
+                </td>
+
+                <td class="pr" size=2>Not Selected</td>
 
                 </tr>
             </tbody>
         </table>
-
-        <button type="submit" class="btn-form actions btn-success">Save Subject</button>
-    </form>
-</div>
-    <partial name="_RightNavBar" model="-1" />
+        <button class="btn-primary" data-action="submit">Save Subjects</button>
+    </div>
 </div>

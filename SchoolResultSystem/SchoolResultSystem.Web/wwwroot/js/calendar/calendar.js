@@ -1,73 +1,69 @@
 import { FetchJsonPost, FetchJson } from "../fetchJson.js";
+import { PartialNaV } from "../UI/partialNav.js";
 
-class CalendarManager {
+export default class CalendarManager {
   constructor() {
-    this.weekendContainer = document.querySelector(".weekend-section");
-    this.leaveTableBody = document.querySelector(".leave-table tbody");
+    this.map = {
+      addRow: this.#addRow.bind(this),
+      removeRow: this.#removeRow.bind(this),
+      setCallendar: this.#setCallendar.bind(this),
+      reset: this.#reset,
+    };
+
+    this.nav = new PartialNaV(".partial-container", this.map);
   }
 
-  // -----------------------------
-  // WEEKEND METHODS
-  // -----------------------------
-
-  addWeekendRow() {
-    const row = document.createElement("div");
-    row.className = "weekend-row";
-    row.innerHTML = `
-            <input type="date" />
-            <button type="button" class="add-btn weekend-add">+</button>
-            <button type="button" class="remove-btn weekend-remove">-</button>
-        `;
-
-    this.weekendContainer.appendChild(row);
-    this.attachWeekendEvents(row);
+  async #setCallendar() {
+    const data = this.#extractData();
+    const confirmed = confirm("Add new entires to current year calendar?");
+    if (confirmed && data) {
+      console.log(data);
+      try {
+        const res = await FetchJsonPost(
+          "/Principal/LeaveCallender/SetCalendar",
+          data,
+        );
+        alert(res.message);
+      } catch (error) {
+        alert("Error occured");
+        console.log(error);
+      }
+    }
   }
 
-  attachWeekendEvents(row) {
-    const addBtn = row.querySelector(".weekend-add");
-    const removeBtn = row.querySelector(".weekend-remove");
+  async #reset() {
+    const confirmed = confirm(
+      "Callendar for this year will erase all entries, are you sure to do this?",
+    );
+    if (confirmed) {
+      try {
+        const res = await FetchJson("/Principal/LeaveCallender/ResetCalendar");
+        alert(res.message);
+      } catch (error) {
+        alert("Callendar could not be reset");
+      }
+    }
+  }
+  // HELPERS
 
-    addBtn.addEventListener("click", () => this.addWeekendRow());
-    removeBtn.addEventListener("click", () => row.remove());
+  #addRow(e) {
+    const weekendRow = e.target.closest("tr");
+    const newRow = weekendRow.cloneNode(true);
+    const tbody = e.target.closest("tbody");
+    tbody.appendChild(newRow);
   }
 
-  // -----------------------------
-  // LEAVE METHODS
-  // -----------------------------
-
-  addLeaveRow() {
-    const tr = document.createElement("tr");
-    tr.innerHTML = `
-            <td><input type="date" /></td>
-            <td><input type="text" placeholder="Reason" /></td>
-            <td>
-                <button type="button" class="add-btn leave-add">+</button>
-                <button type="button" class="remove-btn leave-remove">-</button>
-            </td>
-        `;
-
-    this.leaveTableBody.appendChild(tr);
-    this.attachLeaveEvents(tr);
+  #removeRow(e) {
+    const row = e.target.closest("tr");
+    row.remove();
   }
 
-  attachLeaveEvents(tr) {
-    const addBtn = tr.querySelector(".leave-add");
-    const removeBtn = tr.querySelector(".leave-remove");
-
-    addBtn.addEventListener("click", () => this.addLeaveRow());
-    removeBtn.addEventListener("click", () => tr.remove());
-  }
-
-  // -----------------------------
-  // EXTRACT DATA
-  // -----------------------------
-
-  extractData() {
+  #extractData() {
     const Weekdays = [];
     const Leaves = [];
 
     // Weekend extraction
-    document.querySelectorAll(".weekend-row").forEach((row) => {
+    document.querySelectorAll(".weekend tbody tr").forEach((row) => {
       const dateInput = row.querySelector('input[type="date"]');
       if (dateInput && dateInput.value) {
         Weekdays.push(dateInput.value);
@@ -92,47 +88,10 @@ class CalendarManager {
       Leaves,
     };
   }
-}
 
-// Initialize system after DOM loads
-document.addEventListener("DOMContentLoaded", () => {
-  const cleanBtn = document.getElementById("cleanbtn");
-  cleanBtn.addEventListener("click", async (e) => {
-    const confirmed = confirm(
-      "All entries of weekends and Leaves for this year will be deleted.\n Proceed?",
-    );
-    if (confirmed) {
-      const res = await FetchJson("/Principal/LeaveCallender/CleanCalendar");
-      alert(res.message);
-    }
-  });
-
-  const cm = new CalendarManager();
-
-  // Attach initial buttons
-  document
-    .querySelectorAll(".weekend-row")
-    .forEach((row) => cm.attachWeekendEvents(row));
-  document
-    .querySelectorAll(".leave-table tbody tr")
-    .forEach((tr) => cm.attachLeaveEvents(tr));
-
-  // Extract button
-  const submitBtn = document.getElementById("set-calendar");
-  if (submitBtn) {
-    submitBtn.addEventListener("click", async () => {
-      const data = cm.extractData();
-      const confirmed = confirm("Add new entires to current year calendar?");
-      if(confirmed){
-
-        const res = await FetchJsonPost(
-        "/Principal/LeaveCallender/SetCalendar",
-        data,
-      );
-      alert(res.message);
-      }
-      
-      
-    });
+  destroy() {
+    this.nav.destroy();
+    this.nav = null;
+    this.map={};
   }
-});
+}

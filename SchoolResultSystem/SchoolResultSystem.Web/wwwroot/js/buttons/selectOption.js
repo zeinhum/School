@@ -1,8 +1,10 @@
 // add option
 export class SelectOption {
-  constructor() {}
+  constructor() {
+    this.created = null;
+  }
   // add option to selected element
-  addOption(value, text, el) {
+  addOption(value, text, el = this.created) {
     const opt = document.createElement("option");
     opt.value = value;
     opt.textContent = text;
@@ -12,13 +14,23 @@ export class SelectOption {
   /// create element
   createEl(targ, el, id = null, clss = null) {
     const elmnt = document.createElement(el);
-
     if (id) elmnt.id = id;
     if (clss) elmnt.className = clss;
-
     targ.appendChild(elmnt);
-
+    this.created = elmnt;
     return elmnt;
+  }
+
+  // create element
+  innerElement(target, tagName, attr = {}) {
+    const element = document.createElement(tagName);
+    for (const [key, value] of Object.entries(attr)){
+      element.setAttribute(key, value);
+    }
+
+    target.appendChild(element);
+    this.created = element;
+    return element;
   }
 }
 

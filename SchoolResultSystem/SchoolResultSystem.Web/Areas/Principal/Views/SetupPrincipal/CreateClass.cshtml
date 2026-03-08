@@ -1,41 +1,25 @@
-@{
-    ViewData["Title"] = "Admin Dashboard";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-}
-@section Styles {
-<link rel="stylesheet" href="~/css/rightnav.css" />
-<link rel="stylesheet" href="~/css/cstview.css" />
-<link rel="stylesheet" href="~/css/header.css" />
-}
-<link rel="stylesheet" href="~/css/form.css" />
+<h2 class="card-head">Create Classes</h2>
+<div class="card">
 
-<script type="module" src="/js/addClasses.js"></script>
-<partial name="_header" />
-<div class="dashboard">
-    <div>
-        <div class="partial-container"></div>
-        <form class="card form-container" action="/Principal/SetupPrincipal/SaveClass" method="post">
-            <p class="error"></p>
-            <h2 class="card-head">Create Class</h2>
+    <div class="form-card">
+        <table class="">
+            <thead>
+                <tr>
+                    <th>Class Name</th>
+                    <th>Grade</th>
+                    <th>Row</th>
+                </tr>
+            </thead>
 
-            <table class="form-card">
+            <tbody class="form-data">
+                <tr>
+                    <td><input type="text" name="ClassName" required size="2" placeholder="Lumbini Lions" /></td>
+                    <td><input type="text" name="ClassGrade" required size="2" placeholder="SEE" /></td>
+                </tr>
 
-                <thead>
-                    <tr>
-                        <th>Class Name</th>
-                        <th>Add/Remove</th>
-                    </tr>
-                </thead>
-
-                <tbody class="form-data">
-                    <tr>
-                        <td><input type="text" name="ClassName" required size="2" /></td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <button type="submit" class="btn-form actions btn-success">Create Class</button>
-        </form>
+            </tbody>
+        </table>
+        <button class="btn-primary" data-action="submit">Create Classes</button>
     </div>
-    <partial name="_RightNavBar" model="-1" />
+
 </div>

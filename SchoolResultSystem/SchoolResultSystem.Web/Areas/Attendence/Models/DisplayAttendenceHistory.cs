@@ -7,7 +7,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Models
         
         public List<DateTime> Present{get;set;}=[];
         public List<DateTime>Absent{get;set;} =[];
-        public List<DateTime> Leaves{get;set;} = []!;
+        public List<DateTime> LeaveDates{get;set;} = []!;
         public List<DateTime> SchoolDays{get;set;}=[];
 
         public AttendenceRequestDto RequestData{get;set;} = new();

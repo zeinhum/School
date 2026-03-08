@@ -50,7 +50,7 @@ namespace SchoolResultSystem.Web.Controllers
 
 
                     //attendence
-                    bool Attendence = await TakeAttendence.TeacherAttendance(_db, user.TeacherId);
+                    bool Attendence = await TakeAttendence.TeacherAttendance(_db, user.UserId);
 
                     if (!Attendence)
                     {
@@ -106,13 +106,13 @@ namespace SchoolResultSystem.Web.Controllers
             // Session
             session.SetString("UserRole", user.Role);
             session.SetString("UserName", user.UserName);
-            session.SetString("UserId", user.TeacherId);
+            session.SetString("UserId", user.UserId);
 
             // TempData
             TempData["user"] = user.UserName;
             var school = _db.SchoolInfo.Select(s => s.Name).FirstOrDefault();
             TempData["schoolName"] = school;
-            TempData["userId"] = user.TeacherId;
+            TempData["userId"] = user.UserId;
 
         }
     }

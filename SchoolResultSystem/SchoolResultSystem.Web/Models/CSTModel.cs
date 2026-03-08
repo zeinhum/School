@@ -14,7 +14,7 @@ namespace SchoolResultSystem.Web.Models
         public string SCode { get; set; } = null!;
         [Required]
         [ForeignKey("User")] // teacher
-        public string TeacherId { get; set; } = null!;
+        public string UserId { get; set; } = null!;
         // Navigation properties
         public virtual ClassModel Class { get; set; } = null!;
         public virtual SubjectModel Subject { get; set; } = null!;

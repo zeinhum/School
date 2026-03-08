@@ -3,46 +3,89 @@
     ViewData["Title"] = "Login";
 }
 
-<link rel="stylesheet" href="~/css/admin-setup.css" />
-<div class="main-interface">
-    <div class="welcome">
-    @if(Model!=null){
-        <h2>@Model.Name</h2>
-    }
-        
-        @if(TempData["error"] !=null){
-            <p class="error">@TempData["error"]</p>
-        }
-    </div>
+<link rel="stylesheet" href="~/css/login.css" />
+<link rel="stylesheet" href="~/css/dash.css" />
 
-    
-    <div class="form-container">
-        
-        <form method="post" action="/Login/Authenticate" class="form-card">
-        <p>Please Sign In</p>            
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" id="username" name="username" required placeholder="Enter username"/>
-            </div>
+<div class="login-page">
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                
-                <input type="password" id="password" name="password" required placeholder="Enter password"/>
-            </div>
+    <div class="login-card">
 
-           
-            <button type="submit" class="btn-primary">Login</button>
-        
-            <p class="helpline">
-            @if(Model!=null){
-        
-    
-                <small>Contact: @Model.Phone</small> 
-                <small>| Email: @Model.Email</small>
+        <!-- Brand / School header -->
+        <div class="login-card__brand">
+            <span class="login-card__logo-mark">A</span>
+            <div class="login-card__brand-text">
+                @if (Model != null)
+                {
+                    <h2 class="login-card__school-name">@Model.Name</h2>
                 }
-            </p>
-        </form>
-    </div>
-</div>
+                <p class="login-card__system-name">AISTRONE School System</p>
+            </div>
+        </div>
 
+        <!-- Error message -->
+        @if (TempData["error"] != null)
+        {
+            <div class="login-card__error">
+                <span>@TempData["error"]</span>
+            </div>
+        }
+
+        <!-- Divider -->
+        <div class="login-card__divider">
+            <span>Sign In to Continue</span>
+        </div>
+
+        <!-- Form -->
+        <form method="post" action="/Login/Authenticate" class="login-form">
+
+            <div class="login-form__group">
+                <label for="username">Username</label>
+                <input type="text"
+                       id="username"
+                       name="username"
+                       required
+                       placeholder="Enter your username"
+                       autocomplete="username" />
+            </div>
+
+            <div class="login-form__group">
+                <label for="password">Password</label>
+                <input type="password"
+                       id="password"
+                       name="password"
+                       required
+                       placeholder="Enter your password"
+                       autocomplete="current-password" />
+            </div>
+
+            <button type="submit" class="btn-success login-form__submit">
+                Sign In
+            </button>
+
+        </form>
+
+        <!-- Footer -->
+        <div class="login-card__footer">
+            @if (Model != null)
+            {
+                <div class="login-card__contact">
+                    @if (!string.IsNullOrEmpty(Model.Phone))
+                    {
+                        <span>
+                            @Model.Phone
+                        </span>
+                    }
+                    @if (!string.IsNullOrEmpty(Model.Email))
+                    {
+                        <span>
+                            @Model.Email
+                        </span>
+                    }
+                </div>
+            }
+            <a href="/Home/Start" class="login-card__about">About AISTRONE</a>
+        </div>
+
+    </div>
+
+</div>

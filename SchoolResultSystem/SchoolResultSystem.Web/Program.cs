@@ -24,6 +24,12 @@ builder.Services.AddDbContext<SchoolDbContext>(options =>
 
 builder.WebHost.UseUrls("http://0.0.0.0:5000");
 
+// Add this line to register the accessor
+builder.Services.AddHttpContextAccessor();
+
+// Ensure session is also registered
+builder.Services.AddSession();
+
 var app = builder.Build();
 
 // ✅ Use session before routing

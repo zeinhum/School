@@ -8,7 +8,7 @@ namespace SchoolResultSystem.Web.Areas.Attendence.Model
 {
     public  class StudentAttendanceDTO
     {
-        public string TeacherId{get;set;}=null!;
+        public string UserId{get;set;}=null!;
         public int ClassId{get;set;}
         public List<StudentDetail> StudentDetails{get;set;} = null!;
 

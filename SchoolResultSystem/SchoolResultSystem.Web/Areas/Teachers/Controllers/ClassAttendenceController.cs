@@ -24,7 +24,7 @@ namespace SchoolResultSystem.Web.Areas.Teacher.Controllers
         public IActionResult AttendenceLayout(int classId)
         {
 
-            var CSObject = _db.CS.Where(s=>s.ClassId==classId && s.IsActive).ToList();
+            var CSObject = _db.ClassStudent.Where(s=>s.ClassId==classId && s.IsActive).ToList();
             return PartialView("_Attendence", CSObject);
         }
         public async Task<IActionResult> SubmitAttendence(StudentAttendanceDTO dto)
